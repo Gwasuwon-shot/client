@@ -27,7 +27,7 @@ export default function EditPageFooter() {
 
   const { mutate: patchSchdule } = useMutation(updateSchedule, {
     onSuccess: () => {
-      navigate("/change-schedule");
+      navigate("/schedule");
     },
     onError: (error) => {
       console.log(error);
