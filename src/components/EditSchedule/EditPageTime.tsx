@@ -8,7 +8,6 @@ import styled from "styled-components";
 export default function EditPageTime() {
   const [selectedTime, setSelectedTime] = useRecoilState(editSchedule);
   const { startTime, endTime } = selectedTime;
-
   // 2. 요일 시작, 종료시간 관리
 
   const [isStartPickerOpen, setIsStartPickerOpen] = useRecoilState<boolean>(openStartDetailState);

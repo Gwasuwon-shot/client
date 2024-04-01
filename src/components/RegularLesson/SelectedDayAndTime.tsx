@@ -1,48 +1,34 @@
-import {
-    cycleNumberState,
-    dateState,
-    dayState,
-    firstLessonDay,
-    focusDayState,
-    openFinishDetailState,
-    openStartDetailState,
-    temporarySchedule,
-} from "../../atom/timePicker/timePicker";
-import {useRecoilState, useRecoilValue} from 'recoil';
+import { useRecoilState } from "recoil";
+import { dayState, focusDayState, openFinishDetailState, openStartDetailState } from "../../atom/timePicker/timePicker";
 
-import React from 'react';
-import {RegularLessonGroupIc} from "../../assets";
-import styled from 'styled-components';
+import styled from "styled-components";
 
 interface selectedProps {
-    dayofweek : string;
-    startTime : string;
-    endTime : string;
+  dayofweek: string;
+  startTime: string;
+  endTime: string;
 }
 
-export default function SelectedDayAndTime(props : selectedProps) {
-
+export default function SelectedDayAndTime(props: selectedProps) {
     const { dayofweek, startTime, endTime } = props;
     const [selectedDays, setSelectedDays] = useRecoilState(dayState);
     const [focusDay, setFocusDay] = useRecoilState(focusDayState);
-
     
     const focusingDay = selectedDays.find((selectedDay) => selectedDay.dayOfWeek === dayofweek);
     
     const [isStartPickerOpen, setIsStartPickerOpen] = useRecoilState<boolean>(openStartDetailState);
 
     function handlStartTimePicker() {
-        setFocusDay(dayofweek)
+    setFocusDay(dayofweek);
         setIsStartPickerOpen(true);
     }
 
     const [isFinishPickerOpen, setIsFinishPickerOpen] = useRecoilState<boolean>(openFinishDetailState);
 
     function handleFinishTimePicker() {
-        setFocusDay(dayofweek)
+    setFocusDay(dayofweek);
         setIsFinishPickerOpen(true);
     }
-  
 
     return (
         <SelectedWrapper>
@@ -96,20 +82,20 @@ const SelectedWrapper = styled.article`
     border-radius: 7px;
     background-color: ${({ theme }) => theme.colors.green1}; 
     color: ${({ theme }) => theme.colors.green5}; 
-`
+`;
 
 const DayWrapper = styled.div`
     display: flex;
     width: 5rem;
     ${({ theme }) => theme.fonts.body03}; 
     color: ${({ theme }) => theme.colors.green5}; 
-`
+`;
 
 const TimeWrapper = styled.div`
     display: flex;
     gap: 1rem;
     width: 28rem;
-`
+`;
 
 const Time = styled.div`
     display: flex;
@@ -120,15 +106,14 @@ const Time = styled.div`
     height: 3.4rem;
     background-color: ${({ theme }) => theme.colors.green2}; 
     border-radius: 7px;
-`
+`;
 
 const TimeInfo = styled.p`
     ${({ theme }) => theme.fonts.body04}; 
     color: ${({ theme }) => theme.colors.grey0}; 
-`
+`;
 
 const DetailTime = styled.p`
     ${({ theme }) => theme.fonts.body04}; 
     color: ${({ theme }) => theme.colors.green5}; 
-`
-
+`;

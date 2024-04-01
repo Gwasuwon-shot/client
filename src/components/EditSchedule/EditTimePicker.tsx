@@ -5,10 +5,10 @@ import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { focusDayState, openFinishDetailState, openStartDetailState } from "../../atom/timePicker/timePicker";
 
+import { useRecoilState } from "recoil";
+import styled from "styled-components";
 import SwiperCore from "swiper";
 import { editSchedule } from "../../atom/EditSchedule/editSchedule";
-import styled from "styled-components";
-import { useRecoilState } from "recoil";
 
 interface EditDetailTimePickerPropType {
   setIsActive: React.Dispatch<React.SetStateAction<boolean>>;

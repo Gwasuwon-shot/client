@@ -9,10 +9,10 @@ import {
   openStartDetailState,
 } from "../../../atom/timePicker/timePicker";
 
-import SwiperCore from "swiper";
-import styled from "styled-components";
-import { useRecoilState } from "recoil";
 import { useState } from "react";
+import { useRecoilState } from "recoil";
+import styled from "styled-components";
+import SwiperCore from "swiper";
 
 export default function DetailTimePicker() {
   // 1. 오전 오후 관리
