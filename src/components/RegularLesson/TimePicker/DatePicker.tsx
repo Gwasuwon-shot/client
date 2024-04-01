@@ -4,9 +4,9 @@ import "swiper/swiper.min.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { dateState, dayState, firstLessonDay, openDatePickerState } from "../../../atom/timePicker/timePicker";
 
-import SwiperCore from "swiper";
-import styled from "styled-components";
 import { useRecoilState } from "recoil";
+import styled from "styled-components";
+import SwiperCore from "swiper";
 
 interface monthCalenderProps {
   month: number;
@@ -74,7 +74,7 @@ export default function DatePicker() {
   const [activeSlide, setActiveSlide] = useRecoilState(dateState);
   const [firstLesson, setfirstLesson] = useRecoilState(firstLessonDay);
   const [selectedDays, setSelectedDays] = useRecoilState(dayState);
-  
+
   function handleSlideChange(swiper: SwiperCore) {
     setActiveSlide({
       year: currentYear,
@@ -103,7 +103,7 @@ export default function DatePicker() {
       if (existingDayIndex === -1) {
         return [...prevSelectedDays, { dayOfWeek: day, startTime: "12:00", endTime: "12:00" }];
       } else {
-        return [...prevSelectedDays]
+        return [...prevSelectedDays];
       }
     });
   }
