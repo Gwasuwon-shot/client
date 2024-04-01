@@ -38,13 +38,17 @@ export default function EditPageTime() {
           </TimeButton>
         ) : (
           <TimeButton onClick={handlStartTimePicker} $isPickerDone={!isStartPickerOpen}>
-            {Number(selectedTime?.startTime.slice(0, 2)) <= 12 ? (
+            {Number(selectedTime?.startTime.slice(0, 2)) < 12 ? (
               <>
                 오전 {Number(selectedTime?.startTime.slice(0, 2))} {selectedTime?.startTime.slice(2)}
               </>
             ) : (
               <>
-                오후 {Number(selectedTime?.startTime.slice(0, 2)) - 12} {selectedTime?.startTime.slice(2)}
+                오후{" "}
+                {Number(selectedTime?.startTime.slice(0, 2)) === 12
+                  ? 12
+                  : Number(selectedTime?.startTime.slice(0, 2)) - 12}
+                {selectedTime?.startTime.slice(2)}
               </>
             )}
           </TimeButton>
@@ -56,13 +60,15 @@ export default function EditPageTime() {
           </TimeButton>
         ) : (
           <TimeButton onClick={handleFinishTimePicker} $isPickerDone={!isFinishPickerOpen}>
-            {Number(selectedTime?.endTime.slice(0, 2)) <= 12 ? (
+            {Number(selectedTime?.endTime.slice(0, 2)) < 12 ? (
               <>
                 오전 {Number(selectedTime?.endTime.slice(0, 2))} {selectedTime?.endTime.slice(2)}
               </>
             ) : (
               <>
-                오후 {Number(selectedTime?.endTime.slice(0, 2)) - 12} {selectedTime?.endTime.slice(2)}
+                오후{" "}
+                {Number(selectedTime?.endTime.slice(0, 2)) === 12 ? 12 : Number(selectedTime?.endTime.slice(0, 2)) - 12}
+                {selectedTime?.endTime.slice(2)}
               </>
             )}
           </TimeButton>
