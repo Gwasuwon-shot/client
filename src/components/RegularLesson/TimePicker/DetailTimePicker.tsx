@@ -59,15 +59,17 @@ export default function DetailTimePicker() {
 
   // 1) 시작 타임피커 완료시
   function handleConfirmStartTimePicker() {
-    const formattedHour = String(activeHourSlide).padStart(2, "0");
-    let newStartTime =
-      activeAmPmSlide === 0 ? `${formattedHour}:${activeMinuteSlide}` : `${activeHourSlide + 12}:${activeMinuteSlide}`;
-    if (newStartTime === "24:00")
-      newStartTime = "00:00";
+    const formattedHour =
+      activeHourSlide === 12 && activeAmPmSlide === 0 ? "00" : String(activeHourSlide).padStart(2, "0");
+
+    const newStartTime =
+      activeAmPmSlide === 0
+        ? `${formattedHour}:${activeMinuteSlide}`
+        : activeHourSlide === 12
+        ? `12:${activeMinuteSlide}`
+        : `${activeHourSlide + 12}`;
     setSelectedDays((prevSelectedDays) =>
-    prevSelectedDays.map((day) =>
-      day.dayOfWeek === focusDay ? { ...day, startTime: newStartTime } : day
-    )
+      prevSelectedDays.map((day) => (day.dayOfWeek === focusDay ? { ...day, startTime: newStartTime } : day)),
   );
     setFocusDay("");
     setIsStartPickerOpen(false);
@@ -83,15 +85,16 @@ export default function DetailTimePicker() {
 
   // 1) 종료 타임피커 완료시
   function handleConfirmFinishTimePicker() {
-    const formattedHour = String(activeHourSlide).padStart(2, "0");
-    let newEndTime =
-      activeAmPmSlide === 0 ? `${formattedHour}:${activeMinuteSlide}` : `${activeHourSlide + 12}:${activeMinuteSlide}`;
-    if (newEndTime === "24:00")
-      newEndTime = "00:00";
+    const formattedHour =
+      activeHourSlide === 12 && activeAmPmSlide === 0 ? "00" : String(activeHourSlide).padStart(2, "0");
+    const newEndTime =
+      activeAmPmSlide === 0
+        ? `${formattedHour}:${activeMinuteSlide}`
+        : activeHourSlide === 12
+        ? `12:${activeMinuteSlide}`
+        : `${activeHourSlide + 12}:${activeMinuteSlide}`;
     setSelectedDays((prevSelectedDays) =>
-      prevSelectedDays.map((day) =>
-        day.dayOfWeek === focusDay ? { ...day, endTime: newEndTime } : day
-      )
+      prevSelectedDays.map((day) => (day.dayOfWeek === focusDay ? { ...day, endTime: newEndTime } : day)),
     );
     
     setFocusDay("");
