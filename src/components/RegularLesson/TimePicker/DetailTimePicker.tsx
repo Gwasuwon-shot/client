@@ -50,7 +50,9 @@ export default function DetailTimePicker() {
   }
 
   // 2) swiper
-  const slidesMinute = Array.from({ length: 2 }, (_, index) => <SwiperSlide key={index}>{MINUTES[index]}분</SwiperSlide>);
+  const slidesMinute = Array.from({ length: 2 }, (_, index) => (
+    <SwiperSlide key={index}>{MINUTES[index]}분</SwiperSlide>
+  ));
 
   // 4. 시작시간 상태관리
   const [isStartPickerOpen, setIsStartPickerOpen] = useRecoilState<boolean>(openStartDetailState);
@@ -70,7 +72,7 @@ export default function DetailTimePicker() {
         : `${activeHourSlide + 12}`;
     setSelectedDays((prevSelectedDays) =>
       prevSelectedDays.map((day) => (day.dayOfWeek === focusDay ? { ...day, startTime: newStartTime } : day)),
-  );
+    );
     setFocusDay("");
     setIsStartPickerOpen(false);
   }
@@ -96,7 +98,7 @@ export default function DetailTimePicker() {
     setSelectedDays((prevSelectedDays) =>
       prevSelectedDays.map((day) => (day.dayOfWeek === focusDay ? { ...day, endTime: newEndTime } : day)),
     );
-    
+
     setFocusDay("");
     setIsFinishPickerOpen(false);
   }

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { RegisterLessonHeaderIc } from "../../assets";
 import styled from "styled-components";
+import { RegisterLessonHeaderIc } from "../../assets";
 
 export default function Header() {
   const navigate = useNavigate();

@@ -1,10 +1,8 @@
-import { RegularLessonNotebookIc, RegularLessonPencilIc } from "../../assets";
-import { openDatePickerState } from "../../atom/timePicker/timePicker";
-import React from "react";
-import { useMutation } from "react-query";
-import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
+import styled from "styled-components";
+import { RegularLessonNotebookIc, RegularLessonPencilIc } from "../../assets";
 import { editDateState } from "../../atom/EditSchedule/editDateState";
+import { openDatePickerState } from "../../atom/timePicker/timePicker";
 
 export default function LessonInformation() {
   const [isDatePickerOpen, setIsDatePickerOpen] = useRecoilState<boolean>(openDatePickerState);

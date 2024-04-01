@@ -4,9 +4,9 @@ import "swiper/swiper.min.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { cycleNumberState, openTimePickerState } from "../../../atom/timePicker/timePicker";
 
-import SwiperCore from "swiper";
-import styled from "styled-components";
 import { useRecoilState } from "recoil";
+import styled from "styled-components";
+import SwiperCore from "swiper";
 
 export default function TimePicker() {
   // [{'월':['12:00', '13:00']}, ]
