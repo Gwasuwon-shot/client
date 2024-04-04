@@ -1,24 +1,21 @@
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import StepRenderer from "../components/signup/StepRenderer";
-import { isCookieAuthenticated, isCookieNull, isLogin } from "../utils/common/isLogined";
 import { stepNum } from "../atom/signup/signup";
+import StepRenderer from "../components/signup/StepRenderer";
+import { isGuest } from "../utils/common/isLogined";
 
 export default function Signup() {
-  const navigate = useNavigate();
-
-  const LoginChecked = isLogin() || isCookieNull() || isCookieAuthenticated();
-
   const setStep = useSetRecoilState(stepNum);
 
-  useEffect(() => {
-    if (LoginChecked) {
-      navigate("/home");
-    } else {
-      setStep(1);
-    }
-  }, [LoginChecked]);
+  if (!isGuest) {
+    return <Navigate to="/home" replace />;
+  } else {
+    setStep(1);
+  }
 
-  return <div>{LoginChecked ? null : <StepRenderer />}</div>;
+  return (
+    <div>
+      <StepRenderer />
+    </div>
+  );
 }
