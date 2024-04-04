@@ -11,3 +11,7 @@ export function isCookieNull() {
 export function isCookieAuthenticated() {
   return getCookie("accessToken") === "false";
 }
+
+export const isGuest = (function () {
+  return !isLogin() || isCookieNull() || isCookieAuthenticated();
+})();
