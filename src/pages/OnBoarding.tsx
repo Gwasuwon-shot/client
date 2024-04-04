@@ -9,13 +9,16 @@ import "slick-carousel/slick/slick.css";
 import { styled } from "styled-components";
 import { SLIDER_SETTINGS } from "../core/OnBoarding";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import RoundBottomButton from "../components/common/RoundBottomButton";
+import { isGuest } from "../utils/common/isLogined";
 
 export default function OnBoarding() {
   const SwiperPages = [<FirstSwiper />, <SecondSwiper />, <ThirdSwiper />, <FourthSwiper />];
 
-  const navigate = useNavigate();
+  if (!isGuest) {
+    return <Navigate to="/home" replace />;
+  }
 
   return (
     <>
