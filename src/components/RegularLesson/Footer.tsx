@@ -19,7 +19,7 @@ import useModal from "../../hooks/useModal";
 import CreateImpossibleModal from "../modal/CreateImpossibleModal";
 
 export default function Footer() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const { openModal, showModal } = useModal();
 
   const isTimePickerOpen = useRecoilValue<boolean>(openTimePickerState);
@@ -30,34 +30,34 @@ export default function Footer() {
 
   const firstday = useRecoilValue(firstLessonDay);
 
-    let [isSame, setIsSame] = useState(false);
-    
-    // 저장버튼 활성화 로직 : 수업일시 확정요일 배열과 첫 수업일이 변경될 경우, 배열을 순회하여 해당 수업일이 존재하는지 체크
-    useEffect(() => {
+  let [isSame, setIsSame] = useState(false);
+
+  // 저장버튼 활성화 로직 : 수업일시 확정요일 배열과 첫 수업일이 변경될 경우, 배열을 순회하여 해당 수업일이 존재하는지 체크
+  useEffect(() => {
     setIsSame(selectedDays.some((day) => day.dayOfWeek === firstday));
-    }, [selectedDays, firstday]);
+  }, [selectedDays, firstday]);
 
   const validateTimes = useGetValidateTimeRange(selectedDays);
 
-    function moveToTuitionPayment() {
+  function moveToTuitionPayment() {
     if (validateTimes.every((result) => result.isSuccess) && isSame) {
-            navigate("/tuition-payment");
+      navigate("/tuition-payment");
     } else {
       showModal();
-        }
     }
-    
-    return (
+  }
+
+  return (
     <>
       {openModal && (
         <AlretModalWrapper>
           <CreateImpossibleModal />
         </AlretModalWrapper>
       )}
-        <FooterWrapper>
+      <FooterWrapper>
         <FooterButtonWrapper selected={isSame} onClick={moveToTuitionPayment}>
           <FooterButton disabled={isSame}> 저장 </FooterButton>
-            </FooterButtonWrapper>
+        </FooterButtonWrapper>
         {isTimePickerOpen && (
           <ModalWrapper>
             <TimePicker />
@@ -73,49 +73,49 @@ export default function Footer() {
             <DetailTimePicker />
           </ModalWrapper>
         )}
-        </FooterWrapper>
+      </FooterWrapper>
     </>
-    );
+  );
 }
 
 const FooterWrapper = styled.div`
-    display: flex;
-    
-    width: 32rem;
-    height: 7rem;
+  display: flex;
+
+  width: 32rem;
+  height: 7rem;
 `;
 
 const FooterButtonWrapper = styled.footer<{ selected: boolean }>`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    position: fixed;
-    bottom: 0;
+  position: fixed;
+  bottom: 0;
 
-    width: 32rem;
-    height: 6.3rem;
-    padding: 0.8rem;
+  width: 32rem;
+  height: 6.3rem;
+  padding: 0.8rem;
 
-    background-color: ${({ theme }) => theme.colors.grey50}; 
-    ${({ selected, theme }) => selected && `background-color: ${theme.colors.green5};`}
+  background-color: ${({ theme }) => theme.colors.grey50};
+  ${({ selected, theme }) => selected && `background-color: ${theme.colors.green5};`}
 `;
 
 const FooterButton = styled.button<{ disabled: boolean }>`
-    display: flex;
-    
-    ${({ theme }) => theme.fonts.body02};
-    color: ${({ theme }) => theme.colors.grey200}; 
-    ${({ disabled, theme }) => disabled && `color: ${theme.colors.white};`}
+  display: flex;
+
+  ${({ theme }) => theme.fonts.body02};
+  color: ${({ theme }) => theme.colors.grey200};
+  ${({ disabled, theme }) => disabled && `color: ${theme.colors.white};`}
 `;
 
 const ModalWrapper = styled.div`
-    display: flex;
+  display: flex;
 
-    position: fixed;
-    bottom: 0;
-    
-    width: 100%;
+  position: fixed;
+  bottom: 0;
+
+  width: 100%;
 `;
 
 const AlretModalWrapper = styled.div`
