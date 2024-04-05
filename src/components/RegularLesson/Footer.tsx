@@ -8,19 +8,15 @@ import SelectedDayAndTime from './SelectedDayAndTime';
 import TimePicker from '../../components/RegularLesson/TimePicker/TimePicker';
 import styled from 'styled-components';
 import { useNavigate } from "react-router-dom";
-import {useRecoilState} from 'recoil';
+import useGetValidateTimeRange from "../../hooks/useGetValidateTimeRange";
+import useModal from "../../hooks/useModal";
+import CreateImpossibleModal from "../modal/CreateImpossibleModal";
 
 export default function Footer() {
     
     const navigate = useNavigate();
-    
-    const [isTimePickerOpen, setIsTimePickerOpen] = useRecoilState<boolean>(openTimePickerState);
-    const [isDatePickerOpen, setIsDatePickerOpen] = useRecoilState<boolean>(openDatePickerState);
-    const [isStartPickerOpen, setIsStartPickerOpen] = useRecoilState<boolean>(openStartDetailState);
-    const [isFinishPickerOpen, setIsFinishPickerOpen] = useRecoilState<boolean>(openFinishDetailState);
+  const { openModal, showModal } = useModal();
 
-    const [firstday, setFirstday] = useRecoilState(firstLessonDay);
-    const [selectedDays, setSelectedDays] = useRecoilState(dayState);
 
     let [isSame, setIsSame] = useState(false);
     
@@ -46,6 +42,12 @@ export default function Footer() {
     }
     
     return (
+    <>
+      {openModal && (
+        <AlretModalWrapper>
+          <CreateImpossibleModal />
+        </AlretModalWrapper>
+      )}
         <FooterWrapper>
             <FooterButtonWrapper selected = {isSame} onClick = {moveToTuitionPayment}> 
                 <FooterButton disabled = {isSame}> 저장 </FooterButton>
@@ -54,6 +56,7 @@ export default function Footer() {
             {isDatePickerOpen && <ModalWrapper> <DatePicker /> </ModalWrapper>}
             {(isStartPickerOpen || isFinishPickerOpen) && <ModalWrapper> <DetailTimePicker /> </ModalWrapper>}
         </FooterWrapper>
+    </>
     );
 }
 

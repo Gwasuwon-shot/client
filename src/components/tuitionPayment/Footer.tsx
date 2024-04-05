@@ -15,7 +15,6 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { createLesson } from "../../api/createLesson";
 import useModal from "../../hooks/useModal";
-import CreateImpossibleModal from "../modal/CreateImpossibleModal";
 
 interface scheduleListProps {
   dayOfWeek: string;
@@ -94,8 +93,8 @@ export default function Footer() {
       handleMoveToLessonShare();
     },
     onError: (error: any) => {
-      if (error.response.data.message === "수업 시작시간이 종료시간보다 늦습니다. ") {
-        showModal();
+      if (error.response.data.message === "은행 값이 유효하지 않습니다.") {
+        alert("유효하지 않은 은행 값입니다. 관리자에게 문의 바랍니다.");
       }
     },
     useErrorBoundary: false,
@@ -107,12 +106,6 @@ export default function Footer() {
 
   return (
     <>
-      {openModal && (
-        <ModalWrapper>
-          <CreateImpossibleModal />
-        </ModalWrapper>
-      )}
-
       <FooterWrapper>
         <FooterButtonWrapper isFooterGreen={isFooterGreen} onClick={() => PostLessonInformation(postInformation)}>
           <FooterButton isFooterGreen={isFooterGreen}> 다음 </FooterButton>
