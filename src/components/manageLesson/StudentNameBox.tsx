@@ -25,6 +25,7 @@ export default function StudentNameBox() {
   }
 
   function handleGotoLessonInfoList() {
+    //TODO: https://tutice.slack.com/archives/C06SNBM3L3E/p1712238264456269
     navigate(`/lesson-info/${manageLessonId}`, { state: true });
   }
 
