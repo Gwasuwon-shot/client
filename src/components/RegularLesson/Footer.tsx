@@ -1,22 +1,34 @@
-import { dayState, firstLessonDay, focusDayState } from "../../atom/timePicker/timePicker";
-import { openDatePickerState, openFinishDetailState, openStartDetailState, openTimePickerState } from "../../atom/timePicker/timePicker";
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from "react";
+import {
+  dayState,
+  firstLessonDay,
+  openDatePickerState,
+  openFinishDetailState,
+  openStartDetailState,
+  openTimePickerState,
+} from "../../atom/timePicker/timePicker";
 
-import DatePicker from '../../components/RegularLesson/TimePicker/DatePicker';
-import DetailTimePicker from '../../components/RegularLesson/TimePicker/DetailTimePicker';
-import SelectedDayAndTime from './SelectedDayAndTime';
-import TimePicker from '../../components/RegularLesson/TimePicker/TimePicker';
-import styled from 'styled-components';
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import styled from "styled-components";
+import DatePicker from "../../components/RegularLesson/TimePicker/DatePicker";
+import DetailTimePicker from "../../components/RegularLesson/TimePicker/DetailTimePicker";
+import TimePicker from "../../components/RegularLesson/TimePicker/TimePicker";
 import useGetValidateTimeRange from "../../hooks/useGetValidateTimeRange";
 import useModal from "../../hooks/useModal";
 import CreateImpossibleModal from "../modal/CreateImpossibleModal";
 
 export default function Footer() {
-    
     const navigate = useNavigate();
   const { openModal, showModal } = useModal();
 
+  const isTimePickerOpen = useRecoilValue<boolean>(openTimePickerState);
+  const isDatePickerOpen = useRecoilValue(openDatePickerState);
+  const isStartPickerOpen = useRecoilValue(openStartDetailState);
+  const isFinishPickerOpen = useRecoilValue(openFinishDetailState);
+  const selectedDays = useRecoilValue(dayState);
+
+  const firstday = useRecoilValue(firstLessonDay);
 
     let [isSame, setIsSame] = useState(false);
     
@@ -49,12 +61,24 @@ export default function Footer() {
         </AlretModalWrapper>
       )}
         <FooterWrapper>
-            <FooterButtonWrapper selected = {isSame} onClick = {moveToTuitionPayment}> 
-                <FooterButton disabled = {isSame}> 저장 </FooterButton>
+        <FooterButtonWrapper selected={isSame} onClick={moveToTuitionPayment}>
+          <FooterButton disabled={isSame}> 저장 </FooterButton>
             </FooterButtonWrapper>
-            {isTimePickerOpen && <ModalWrapper> <TimePicker /> </ModalWrapper>}
-            {isDatePickerOpen && <ModalWrapper> <DatePicker /> </ModalWrapper>}
-            {(isStartPickerOpen || isFinishPickerOpen) && <ModalWrapper> <DetailTimePicker /> </ModalWrapper>}
+        {isTimePickerOpen && (
+          <ModalWrapper>
+            <TimePicker />
+          </ModalWrapper>
+        )}
+        {isDatePickerOpen && (
+          <ModalWrapper>
+            <DatePicker />
+          </ModalWrapper>
+        )}
+        {(isStartPickerOpen || isFinishPickerOpen) && (
+          <ModalWrapper>
+            <DetailTimePicker />
+          </ModalWrapper>
+        )}
         </FooterWrapper>
     </>
     );
@@ -65,9 +89,9 @@ const FooterWrapper = styled.div`
     
     width: 32rem;
     height: 7rem;
-`
+`;
 
-const FooterButtonWrapper = styled.footer<{selected: boolean}>`
+const FooterButtonWrapper = styled.footer<{ selected: boolean }>`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -81,15 +105,15 @@ const FooterButtonWrapper = styled.footer<{selected: boolean}>`
 
     background-color: ${({ theme }) => theme.colors.grey50}; 
     ${({ selected, theme }) => selected && `background-color: ${theme.colors.green5};`}
-`
+`;
 
-const FooterButton = styled.button<{disabled: boolean}>`
+const FooterButton = styled.button<{ disabled: boolean }>`
     display: flex;
     
     ${({ theme }) => theme.fonts.body02};
     color: ${({ theme }) => theme.colors.grey200}; 
     ${({ disabled, theme }) => disabled && `color: ${theme.colors.white};`}
-`
+`;
 
 const ModalWrapper = styled.div`
     display: flex;
@@ -98,4 +122,11 @@ const ModalWrapper = styled.div`
     bottom: 0;
     
     width: 100%;
-`
+`;
+
+const AlretModalWrapper = styled.div`
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  width: 100dvw;
+`;

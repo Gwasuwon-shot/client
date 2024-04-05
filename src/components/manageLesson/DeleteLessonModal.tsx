@@ -1,10 +1,10 @@
 import React from "react";
-import styled from "styled-components";
-import { BasicDoubleModal } from "../common";
-import { QueryClient, useMutation, useQueryClient } from "react-query";
-import { deleteLesson } from "../../api/deleteLesson";
+import { useMutation, useQueryClient } from "react-query";
 import { useRecoilValue } from "recoil";
+import styled from "styled-components";
+import { deleteLesson } from "../../api/deleteLesson";
 import { attendanceLesson } from "../../atom/attendanceCheck/attendanceLesson";
+import { BasicDoubleModal } from "../common";
 
 interface DeleteLessonModalProps {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,7 +29,6 @@ export default function DeleteLessonModal(props: DeleteLessonModalProps) {
   });
 
   function handleClickConfirmDelete(): void {
-    console.log("수업을 삭제중");
     deleteLessonStatus();
   }
 

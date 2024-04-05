@@ -1,9 +1,9 @@
 import { ChangeEvent, useState } from "react";
 import { studentNameState, subjectNameState } from "../../atom/common/datePicker";
 
-import { RegisterLessonInputIc } from "../../assets";
-import styled from "styled-components";
 import { useRecoilState } from "recoil";
+import styled from "styled-components";
+import { RegisterLessonInputIc } from "../../assets";
 
 interface NameInputSectionProp {
   $nameFocused: boolean;
@@ -46,16 +46,16 @@ export default function LessonInput() {
 
   const isWarning = !isNameValid && studentName.length > 0;
 
-  function handleNameDelete () {
+  function handleNameDelete() {
     setStudentName("");
     setSubjectInputFocused(false);
-  };
-  
+  }
+
   function handleLessonDelete() {
     setSubjectName("");
     setNameInputFocused(false);
   }
-  
+
   return (
     <InputWrapper>
       <NameInputSection $nameFocused={isNameInputFocused}>
@@ -68,7 +68,7 @@ export default function LessonInput() {
           onFocus={handleNameInputFocus}
         />
         {isWarning && <WarningMessage> 이름은 최소 2자 이상 입력해주세요 </WarningMessage>}
-        {isNameInputFocused && <RegisterLessonInputIcon  onClick={handleNameDelete}/>}
+        {isNameInputFocused && <RegisterLessonInputIcon onClick={handleNameDelete} />}
       </NameInputSection>
 
       <SubjectInputSection $subjectFocused={isSubjectInputFocused} $isWarning={isWarning}>
@@ -80,7 +80,7 @@ export default function LessonInput() {
           onChange={handleSubjectInputChange}
           onFocus={handleSubjectInputFocus}
         />
-        {isSubjectInputFocused && <RegisterLessonInputIcon onClick={handleLessonDelete}/>}
+        {isSubjectInputFocused && <RegisterLessonInputIcon onClick={handleLessonDelete} />}
       </SubjectInputSection>
     </InputWrapper>
   );

@@ -1,14 +1,13 @@
-import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
-import { format, isSameDay } from "date-fns";
-import { editSchedule } from "../../../atom/EditSchedule/editSchedule";
 import { editDateState } from "../../../atom/EditSchedule/editDateState";
+import { editSchedule } from "../../../atom/EditSchedule/editSchedule";
 
-import { editScheduleType } from "../../../type/editSchedule/editScheduleType";
-import { editDateStateTypes } from "../../../type/editSchedule/editDateType";
 import { useRecoilState } from "recoil";
+import { editDateStateTypes } from "../../../type/editSchedule/editDateType";
+import { editScheduleType } from "../../../type/editSchedule/editScheduleType";
 
 import { EditPencilIc } from "../../../assets";
 import useGetAttendanceExist from "../../../hooks/useGetAttendanceExist";
@@ -66,7 +65,6 @@ function EditScheduleButton(props: editScheduleButtonType) {
 
   function ModalOpen() {
     setCannotEditModalOpen(true);
-    console.log("here");
     console.log(cannotEditModalOpen);
     console.log(attendanceExist?.data);
   }

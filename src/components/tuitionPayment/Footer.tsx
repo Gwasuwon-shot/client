@@ -107,12 +107,16 @@ export default function Footer() {
   return (
     <>
       <FooterWrapper>
-        <FooterButtonWrapper isFooterGreen={isFooterGreen} onClick={() => PostLessonInformation(postInformation)}>
-          <FooterButton isFooterGreen={isFooterGreen}> 다음 </FooterButton>
+        <FooterButtonWrapper $isFooterGreen={isFooterGreen} onClick={() => PostLessonInformation(postInformation)}>
+          <FooterButton $isFooterGreen={isFooterGreen}> 다음 </FooterButton>
         </FooterButtonWrapper>
       </FooterWrapper>
     </>
   );
+}
+
+interface isFooterGreenProps {
+  $isFooterGreen: boolean;
 }
 
 const ModalWrapper = styled.div`
@@ -125,7 +129,7 @@ const FooterWrapper = styled.div`
   height: 9rem;
 `;
 
-const FooterButtonWrapper = styled.footer<{ isFooterGreen: boolean }>`
+const FooterButtonWrapper = styled.footer<isFooterGreenProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -137,13 +141,14 @@ const FooterButtonWrapper = styled.footer<{ isFooterGreen: boolean }>`
   height: 6.3rem;
   padding: 0.8rem;
 
-  ${({ theme, isFooterGreen }) =>
-    isFooterGreen ? `background-color: ${theme.colors.green5};` : `background-color: ${theme.colors.grey50};`}
+  ${({ theme, $isFooterGreen }) =>
+    $isFooterGreen ? `background-color: ${theme.colors.green5};` : `background-color: ${theme.colors.grey50};`}
 `;
 
-const FooterButton = styled.button<{ isFooterGreen: boolean }>`
+const FooterButton = styled.button<isFooterGreenProps>`
   display: flex;
 
   ${({ theme }) => theme.fonts.body02};
-  ${({ theme, isFooterGreen }) => (isFooterGreen ? `color: ${theme.colors.grey0};` : `color: ${theme.colors.grey200};`)}
+  ${({ theme, $isFooterGreen }) =>
+    $isFooterGreen ? `color: ${theme.colors.grey0};` : `color: ${theme.colors.grey200};`}
 `;

@@ -12,7 +12,7 @@ interface BasicDoubleModalProps {
 
 export default function BasicDoubleModal(props: BasicDoubleModalProps) {
   const { children, leftButtonName, rightButtonName, handleClickLeftButton, handleClickRightButton } = props;
-  const { modalRef, closeModal } = useModal();
+  const { modalRef } = useModal();
 
   return (
     <ModalWrapper ref={modalRef}>
