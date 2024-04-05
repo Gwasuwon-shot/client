@@ -69,7 +69,7 @@ export default function DetailTimePicker() {
         ? `${formattedHour}:${activeMinuteSlide}`
         : activeHourSlide === 12
         ? `12:${activeMinuteSlide}`
-        : `${activeHourSlide + 12}`;
+        : `${activeHourSlide + 12}:${activeMinuteSlide}`;
     setSelectedDays((prevSelectedDays) =>
       prevSelectedDays.map((day) => (day.dayOfWeek === focusDay ? { ...day, startTime: newStartTime } : day)),
     );
