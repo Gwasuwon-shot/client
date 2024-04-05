@@ -35,9 +35,13 @@ export default function Footer() {
         }
     }, [selectedDays, firstday]);
 
+  const validateTimes = useGetValidateTimeRange(selectedDays);
+
     function moveToTuitionPayment() {
-        if (isSame) {
+    if (validateTimes.every((result) => result.isSuccess) && isSame) {
             navigate("/tuition-payment");
+    } else {
+      showModal();
         }
     }
     
