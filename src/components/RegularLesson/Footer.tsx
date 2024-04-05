@@ -34,13 +34,7 @@ export default function Footer() {
     
     // 저장버튼 활성화 로직 : 수업일시 확정요일 배열과 첫 수업일이 변경될 경우, 배열을 순회하여 해당 수업일이 존재하는지 체크
     useEffect(() => {
-        setIsSame(false);
-        for (let idx in selectedDays) {
-            if (selectedDays[idx].dayOfWeek === firstday) {
-                setIsSame(true);
-                break;
-            }
-        }
+    setIsSame(selectedDays.some((day) => day.dayOfWeek === firstday));
     }, [selectedDays, firstday]);
 
   const validateTimes = useGetValidateTimeRange(selectedDays);
