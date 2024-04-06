@@ -68,6 +68,7 @@ export default function ChangeModal(props: modalType) {
                         selectedDate={selectedDate}
                         idx={idx}
                       />
+                      {/* 삭제 이벤트 추가 */}
                       <RemoveSchedule />
                     </ScheduleEditWrapper>
                   )}
