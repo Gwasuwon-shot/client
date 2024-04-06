@@ -1,7 +1,7 @@
 import { useQueries } from "react-query";
 import { getValidateTimeRange } from "../api/getValidateTimeRange ";
 
-export default function useGetValidateTimeRange(selectedDays: selectedDaysType[]) {
+export default function useGetValidateTimesRange(selectedDays: selectedDaysType[]) {
   const validateTimeResult = useQueries(
     selectedDays.map((day) => ({
       queryKey: ["getValidateTimeRange", day.dayOfWeek, day.endTime, day.startTime],

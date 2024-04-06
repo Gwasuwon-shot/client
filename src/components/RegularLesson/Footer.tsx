@@ -14,7 +14,7 @@ import styled from "styled-components";
 import DatePicker from "../../components/RegularLesson/TimePicker/DatePicker";
 import DetailTimePicker from "../../components/RegularLesson/TimePicker/DetailTimePicker";
 import TimePicker from "../../components/RegularLesson/TimePicker/TimePicker";
-import useGetValidateTimeRange from "../../hooks/useGetValidateTimeRange";
+import useGetValidateTimesRange from "../../hooks/useGetValidateTimeRange";
 import useModal from "../../hooks/useModal";
 import CreateImpossibleModal from "../modal/CreateImpossibleModal";
 
@@ -37,7 +37,7 @@ export default function Footer() {
     setIsSame(selectedDays.some((day) => day.dayOfWeek === firstday));
   }, [selectedDays, firstday]);
 
-  const validateTimes = useGetValidateTimeRange(selectedDays);
+  const validateTimes = useGetValidateTimesRange(selectedDays);
 
   function moveToTuitionPayment() {
     if (validateTimes.every((result) => result.isSuccess) && isSame) {
@@ -50,9 +50,9 @@ export default function Footer() {
   return (
     <>
       {openModal && (
-        <AlretModalWrapper>
+        <AlertModalWrapper>
           <CreateImpossibleModal />
-        </AlretModalWrapper>
+        </AlertModalWrapper>
       )}
       <FooterWrapper>
         <FooterButtonWrapper selected={isSame} onClick={moveToTuitionPayment}>
@@ -118,7 +118,7 @@ const ModalWrapper = styled.div`
   width: 100%;
 `;
 
-const AlretModalWrapper = styled.div`
+const AlertModalWrapper = styled.div`
   position: fixed;
   z-index: 10;
   top: 0;
