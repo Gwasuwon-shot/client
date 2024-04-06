@@ -15,7 +15,6 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { createLesson } from "../../api/createLesson";
 import useModal from "../../hooks/useModal";
-import CreateImpossibleModal from "../modal/CreateImpossibleModal";
 
 interface scheduleListProps {
   dayOfWeek: string;
@@ -94,8 +93,8 @@ export default function Footer() {
       handleMoveToLessonShare();
     },
     onError: (error: any) => {
-      if (error.response.data.message === "수업 시작시간이 종료시간보다 늦습니다. ") {
-        showModal();
+      if (error.response.data.message === "은행 값이 유효하지 않습니다.") {
+        alert("유효하지 않은 은행 값입니다. 관리자에게 문의 바랍니다.");
       }
     },
     useErrorBoundary: false,
@@ -107,19 +106,17 @@ export default function Footer() {
 
   return (
     <>
-      {openModal && (
-        <ModalWrapper>
-          <CreateImpossibleModal />
-        </ModalWrapper>
-      )}
-
       <FooterWrapper>
-        <FooterButtonWrapper isFooterGreen={isFooterGreen} onClick={() => PostLessonInformation(postInformation)}>
-          <FooterButton isFooterGreen={isFooterGreen}> 다음 </FooterButton>
+        <FooterButtonWrapper $isFooterGreen={isFooterGreen} onClick={() => PostLessonInformation(postInformation)}>
+          <FooterButton $isFooterGreen={isFooterGreen}> 다음 </FooterButton>
         </FooterButtonWrapper>
       </FooterWrapper>
     </>
   );
+}
+
+interface isFooterGreenProps {
+  $isFooterGreen: boolean;
 }
 
 const ModalWrapper = styled.div`
@@ -132,7 +129,7 @@ const FooterWrapper = styled.div`
   height: 9rem;
 `;
 
-const FooterButtonWrapper = styled.footer<{ isFooterGreen: boolean }>`
+const FooterButtonWrapper = styled.footer<isFooterGreenProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -144,13 +141,14 @@ const FooterButtonWrapper = styled.footer<{ isFooterGreen: boolean }>`
   height: 6.3rem;
   padding: 0.8rem;
 
-  ${({ theme, isFooterGreen }) =>
-    isFooterGreen ? `background-color: ${theme.colors.green5};` : `background-color: ${theme.colors.grey50};`}
+  ${({ theme, $isFooterGreen }) =>
+    $isFooterGreen ? `background-color: ${theme.colors.green5};` : `background-color: ${theme.colors.grey50};`}
 `;
 
-const FooterButton = styled.button<{ isFooterGreen: boolean }>`
+const FooterButton = styled.button<isFooterGreenProps>`
   display: flex;
 
   ${({ theme }) => theme.fonts.body02};
-  ${({ theme, isFooterGreen }) => (isFooterGreen ? `color: ${theme.colors.grey0};` : `color: ${theme.colors.grey200};`)}
+  ${({ theme, $isFooterGreen }) =>
+    $isFooterGreen ? `color: ${theme.colors.grey0};` : `color: ${theme.colors.grey200};`}
 `;

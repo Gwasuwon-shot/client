@@ -12,23 +12,19 @@ import {
   paymentOrder,
 } from "../../atom/tuitionPayment/tuitionPayment";
 
-import styled from "styled-components";
 import { useRecoilState } from "recoil";
-
-interface NameInputSectionProp {
-  nameFocused: boolean;
-}
+import styled from "styled-components";
 
 interface AccountInputSectionProp {
-  accountFocused: boolean;
+  $accountFocused: boolean;
 }
 
 interface BankProp {
-  bankFocused: boolean;
+  $bankFocused: boolean;
 }
 
 interface MoneyProp {
-  moneyFocused: boolean;
+  $moneyFocused: boolean;
 }
 
 export default function PaymentInput() {
@@ -57,13 +53,13 @@ export default function PaymentInput() {
     setMoneyFocused(false);
     setAccountNumInputFocused(true);
   }
-  
+
   function handleAccountNumInputChange(event: ChangeEvent<HTMLInputElement>) {
     const inputValue = event.target.value;
-    const numericValue = Number(inputValue); 
-  
+    const numericValue = Number(inputValue);
+
     if (!isNaN(numericValue)) {
-      setAccountNum(numericValue.toString()); 
+      setAccountNum(numericValue.toString());
     }
   }
 
@@ -96,14 +92,13 @@ export default function PaymentInput() {
 
   function handleMoneyChange(event: ChangeEvent<HTMLInputElement>) {
     const inputValue = event.target.value;
-    const strippedValue = inputValue.replace(/,/g, '').replace('원', ''); 
+    const strippedValue = inputValue.replace(/,/g, "").replace("원", "");
     const numericValue = Number(strippedValue);
-    
+
     if (!isNaN(numericValue)) {
-      setMoney(numericValue); 
+      setMoney(numericValue);
     }
   }
-  
 
   // 5. checkbox
   const [order, setOrder] = useRecoilState<string>(paymentOrder);
@@ -121,7 +116,7 @@ export default function PaymentInput() {
   function handleNameDelete() {
     setPersonName("");
   }
-  
+
   function handleAccountDelete() {
     setAccountNum("");
   }
@@ -140,10 +135,10 @@ export default function PaymentInput() {
     setBankFocused(false);
     setMoneyFocused(false);
   }
-  
+
   return (
     <InputWrapper>
-      <NameInputSection nameFocused={isNameInputFocused}>
+      <NameInputSection $nameFocused={isNameInputFocused}>
         <InputName> 입금자명 </InputName>
         <NameInput
           type="text"
@@ -152,10 +147,10 @@ export default function PaymentInput() {
           onChange={handleNameInputChange}
           onFocus={handleNameInputFocus}
         />
-        {isNameInputFocused && <RegisterLessonInputIcon onClick = {handleNameDelete}/>}
+        {isNameInputFocused && <RegisterLessonInputIcon onClick={handleNameDelete} />}
       </NameInputSection>
 
-      <AccountInputSection accountFocused={isAccountNumInputFocused}>
+      <AccountInputSection $accountFocused={isAccountNumInputFocused}>
         <InputName> 계좌번호 </InputName>
         <AccountInput
           type="text"
@@ -164,10 +159,10 @@ export default function PaymentInput() {
           onChange={handleAccountNumInputChange}
           onFocus={handleAccountNumInputFocus}
         />
-        {isAccountNumInputFocused && <RegisterLessonInputIcon onClick = {handleAccountDelete}/>}
+        {isAccountNumInputFocused && <RegisterLessonInputIcon onClick={handleAccountDelete} />}
       </AccountInputSection>
 
-      <BankInputSection bankFocused={isBankFocused}>
+      <BankInputSection $bankFocused={isBankFocused}>
         <InputName> 은행명 </InputName>
         <BankInput
           type="text"
@@ -176,10 +171,10 @@ export default function PaymentInput() {
           onChange={handleBankChange}
           onFocus={handleBankFocus}
         />
-        {isBankFocused && <RegisterLessonInputIcon onClick = {handleBankDelete}/>}
+        {isBankFocused && <RegisterLessonInputIcon onClick={handleBankDelete} />}
       </BankInputSection>
 
-      <MoneyInputSection moneyFocused={isMoneyFocused}>
+      <MoneyInputSection $moneyFocused={isMoneyFocused}>
         <InputName> 회차당 과외비 </InputName>
         <MoneyInput
           placeholder="금액을 입력해주세요"
@@ -187,12 +182,12 @@ export default function PaymentInput() {
           onChange={handleMoneyChange}
           onFocus={handleMoneyFocus}
         />
-        {isMoneyFocused && <RegisterLessonInputIcon onClick = {handleMoneyDelete}/>}
+        {isMoneyFocused && <RegisterLessonInputIcon onClick={handleMoneyDelete} />}
       </MoneyInputSection>
 
       <CheckboxWrapper>
         <CheckboxHeader> 입금 방식</CheckboxHeader>
-        <CheckboxLabel onClick ={handleOrder}>
+        <CheckboxLabel onClick={handleOrder}>
           <CheckboxInput type="checkbox" checked={order === "선불"} onChange={handleFirstChange} />
           {order === "선불" ? (
             <CheckboxIcon as={TuitionPaymentRadioButtonCheckedIc} />
@@ -201,7 +196,7 @@ export default function PaymentInput() {
           )}
           <CheckboxP> 선불 </CheckboxP>
         </CheckboxLabel>
-        <CheckboxLabel onClick ={handleOrder}>
+        <CheckboxLabel onClick={handleOrder}>
           <CheckboxInput type="checkbox" checked={order === "후불"} onChange={handleLastChange} />
           {order === "후불" ? (
             <CheckboxIcon as={TuitionPaymentRadioButtonCheckedIc} />
@@ -213,6 +208,10 @@ export default function PaymentInput() {
       </CheckboxWrapper>
     </InputWrapper>
   );
+}
+
+interface NameInputSectionProp {
+  $nameFocused: boolean;
 }
 
 const InputWrapper = styled.div`
@@ -234,7 +233,7 @@ const NameInputSection = styled.section<NameInputSectionProp>`
   height: 5.6rem;
   margin-bottom: 1.3rem;
 
-  border-bottom: 1px solid ${({ theme, nameFocused }) => (nameFocused ? theme.colors.green5 : theme.colors.grey70)};
+  border-bottom: 1px solid ${({ theme, $nameFocused }) => ($nameFocused ? theme.colors.green5 : theme.colors.grey70)};
 `;
 
 const AccountInputSection = styled.section<AccountInputSectionProp>`
@@ -248,7 +247,7 @@ const AccountInputSection = styled.section<AccountInputSectionProp>`
   margin-bottom: 1.3rem;
 
   border-bottom: 1px solid
-    ${({ theme, accountFocused }) => (accountFocused ? theme.colors.green5 : theme.colors.grey70)};
+    ${({ theme, $accountFocused }) => ($accountFocused ? theme.colors.green5 : theme.colors.grey70)};
 `;
 
 const InputName = styled.h1`
@@ -294,7 +293,7 @@ const BankInputSection = styled.section<BankProp>`
   height: 5.6rem;
   margin-bottom: 1.3rem;
 
-  border-bottom: 1px solid ${({ theme, bankFocused }) => (bankFocused ? theme.colors.green5 : theme.colors.grey70)};
+  border-bottom: 1px solid ${({ theme, $bankFocused }) => ($bankFocused ? theme.colors.green5 : theme.colors.grey70)};
 `;
 
 const BankInput = styled.input`
@@ -319,7 +318,7 @@ const MoneyInputSection = styled.section<MoneyProp>`
   height: 5.6rem;
   margin-bottom: 1.3rem;
 
-  border-bottom: 1px solid ${({ theme, moneyFocused }) => (moneyFocused ? theme.colors.green5 : theme.colors.grey70)};
+  border-bottom: 1px solid ${({ theme, $moneyFocused }) => ($moneyFocused ? theme.colors.green5 : theme.colors.grey70)};
 `;
 
 const MoneyInput = styled.input`

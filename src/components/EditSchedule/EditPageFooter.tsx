@@ -5,13 +5,15 @@ import { useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { getValidateTimeRange } from "../../api/getValidateTimeRange ";
 import { updateSchedule } from "../../api/updateSchedule";
 import { editDateState } from "../../atom/EditSchedule/editDateState";
 import { editSchedule } from "../../atom/EditSchedule/editSchedule";
-import { isModalOpen } from "../../atom/common/isModalOpen";
 import EditDatePicker from "./EditDatePicker";
 import EditFooterButton from "./EditFooterButton";
 import EditDetailTimePicker from "./EditTimePicker";
+import useModal from "../../hooks/useModal";
+import CreateImpossibleModal from "../modal/CreateImpossibleModal";
 
 export default function EditPageFooter() {
   const [isDatePickerOpen, setIsDatePickerOpen] = useRecoilState<boolean>(openDatePickerState);
@@ -21,7 +23,7 @@ export default function EditPageFooter() {
   const { year, month, date } = useRecoilValue(editDateState);
   const { idx, startTime, endTime } = useRecoilValue(editSchedule);
   const navigate = useNavigate();
-  const [openModal, setOpenModal] = useRecoilState<boolean>(isModalOpen);
+  const { openModal, showModal } = useModal();
 
   const patchEditDate = String(year) + "-" + String(month).padStart(2, "0") + "-" + String(date).padStart(2, "0");
 
@@ -34,18 +36,35 @@ export default function EditPageFooter() {
     },
   });
 
+  const validateTimeMutation = useMutation(
+    ["validateTimeRange", startTime, endTime],
+    () => getValidateTimeRange({ startTime, endTime }),
+    {
+      onSuccess: () => {
+        patchSchdule({
+          idx: idx,
+          date: patchEditDate,
+          startTime: startTime,
+          endTime: endTime,
+        });
+      },
+      onError: () => {
+        showModal();
+      },
+    },
+  );
+
   function handleEditLesson(): void {
-    patchSchdule({
-      idx: idx,
-      date: patchEditDate,
-      startTime: startTime,
-      endTime: endTime,
-    });
-    setOpenModal(false);
+    validateTimeMutation.mutate();
   }
 
   return (
     <>
+      {openModal && (
+        <AlertModalWrapper>
+          <CreateImpossibleModal />
+        </AlertModalWrapper>
+      )}
       <EditFooterButton onClick={() => handleEditLesson()} isActive={isActive} disabled={!isActive} />
       {isDatePickerOpen && (
         <ModalWrapper>
@@ -66,4 +85,11 @@ const ModalWrapper = styled.div`
   justify-content: center;
   position: fixed;
   bottom: 0;
+`;
+
+const AlertModalWrapper = styled.div`
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  width: 100dvw;
 `;

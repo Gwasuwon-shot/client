@@ -1,26 +1,22 @@
-import { RegularLessonCalenderIc, RegularLessonClockIc } from "../../assets";
+import { RegularLessonCalenderIc } from "../../assets";
+import { studentNameState, subjectNameState } from "../../atom/common/datePicker";
 import {
   cycleNumberState,
   dateState,
   dayState,
   firstLessonDay,
-  focusDayState,
-  openFinishDetailState,
-  openStartDetailState,
   temporarySchedule,
 } from "../../atom/timePicker/timePicker";
-import { studentNameState, subjectNameState } from "../../atom/common/datePicker";
 
-import RoundBottomButton from "../common/RoundBottomButton";
-import SelectedDayAndTime from "./SelectedDayAndTime";
-import { getTemporarySchedule } from "../../api/getTemporarySchedule";
-import styled from "styled-components";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
+import styled from "styled-components";
+import { getTemporarySchedule } from "../../api/getTemporarySchedule";
+import SelectedDayAndTime from "./SelectedDayAndTime";
 
 interface DayProp {
-  isSelected: boolean;
+  $isSelected: boolean;
 }
 
 interface Day {
@@ -48,17 +44,15 @@ export default function LessonDate() {
   const [firstLesson, setfirstLesson] = useRecoilState(firstLessonDay);
 
   function handleDayButton(day: string) {
-
     setSelectedDays((prevSelectedDays) => {
       const existingDayIndex = prevSelectedDays.findIndex((selectedDay) => selectedDay.dayOfWeek === day);
-  
+
       if (day == firstLesson) {
         if (existingDayIndex === -1) {
           return [...prevSelectedDays, { dayOfWeek: day, startTime: "12:00", endTime: "12:00" }];
         } else {
-          return [...prevSelectedDays]
+          return [...prevSelectedDays];
         }
-      
       } else {
         if (existingDayIndex !== -1) {
           const newSelectedDays = [...prevSelectedDays];
@@ -68,10 +62,9 @@ export default function LessonDate() {
           return [...prevSelectedDays, { dayOfWeek: day, startTime: "12:00", endTime: "12:00" }];
         }
       }
-      
     });
   }
-  
+
   // post 로직 추가
 
   const [studentName, setStudentName] = useRecoilState(studentNameState);
@@ -107,7 +100,6 @@ export default function LessonDate() {
 
   return (
     <LessonDateWrapper>
-
       <IconWrapper>
         <SectionName> 일정 등록 </SectionName>
       </IconWrapper>
@@ -117,7 +109,7 @@ export default function LessonDate() {
           <Day
             key={index}
             onClick={() => handleDayButton(day)}
-            isSelected={selectedDays.some(selectedDay => selectedDay.dayOfWeek === day)}>
+            $isSelected={selectedDays.some((selectedDay) => selectedDay.dayOfWeek === day)}>
             {day}
           </Day>
         ))}
@@ -126,12 +118,11 @@ export default function LessonDate() {
       {selectedDays.map((day, index) => (
         <SelectedDayAndTime key={index} dayofweek={day.dayOfWeek} startTime={day.startTime} endTime={day.endTime} />
       ))}
-      
+
       <ModalWrapper>
         <RegularLessonCalenderIcon />
         <ModalButton onClick={() => postTemporary(postInformation)}> 캘린더로 기존 일정 확인하기 </ModalButton>
       </ModalWrapper>
-      
     </LessonDateWrapper>
   );
 }
@@ -152,7 +143,6 @@ const SectionName = styled.h1`
   color: ${({ theme }) => theme.colors.grey300};
 `;
 
-
 const DayWrapper = styled.section`
   display: flex;
   justify-content: center;
@@ -171,10 +161,9 @@ const Day = styled.button<DayProp>`
   ${({ theme }) => theme.fonts.body02};
   color: ${({ theme }) => theme.colors.grey300};
   background-color: ${({ theme }) => theme.colors.grey50};
-  ${({ isSelected, theme }) => isSelected && `background-color: ${theme.colors.green4}`};
-  ${({ isSelected, theme }) => isSelected && `color: ${theme.colors.white}`};
+  ${({ $isSelected, theme }) => $isSelected && `background-color: ${theme.colors.green4}`};
+  ${({ $isSelected, theme }) => $isSelected && `color: ${theme.colors.white}`};
 `;
-
 
 const ModalWrapper = styled.section`
   display: flex;
@@ -183,8 +172,7 @@ const ModalWrapper = styled.section`
   margin-bottom: 1rem;
 `;
 
-const RegularLessonCalenderIcon = styled(RegularLessonCalenderIc)`
-`;
+const RegularLessonCalenderIcon = styled(RegularLessonCalenderIc)``;
 
 const ModalButton = styled.button`
   margin-left: 0.3rem;
