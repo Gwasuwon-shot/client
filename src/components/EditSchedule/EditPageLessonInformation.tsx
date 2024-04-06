@@ -19,9 +19,9 @@ export default function LessonInformation() {
       </IconWrapper>
       <LessonWrapper>
         <Turn></Turn>
-        <LessonDate>
+        <LessonDate onClick={handleDatePicker}>
           <LessonDateName> 수업일 </LessonDateName>
-          <LessonDateEditButton type="button" onClick={handleDatePicker}>
+          <LessonDateEditButton type="button">
             {year}년 {month}월 {date}일 {dayOfWeek}요일
           </LessonDateEditButton>
           <RegularLessonPencilIcon />
