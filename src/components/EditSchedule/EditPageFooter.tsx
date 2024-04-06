@@ -27,7 +27,7 @@ export default function EditPageFooter() {
 
   const patchEditDate = String(year) + "-" + String(month).padStart(2, "0") + "-" + String(date).padStart(2, "0");
 
-  const { mutate: patchSchdule } = useMutation(updateSchedule, {
+  const { mutate: patchSchedule } = useMutation(updateSchedule, {
     onSuccess: () => {
       navigate("/schedule");
     },
@@ -41,7 +41,7 @@ export default function EditPageFooter() {
     () => getValidateTimeRange({ startTime, endTime }),
     {
       onSuccess: () => {
-        patchSchdule({
+        patchSchedule({
           idx: idx,
           date: patchEditDate,
           startTime: startTime,
