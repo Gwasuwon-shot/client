@@ -1,7 +1,8 @@
 import axios from "axios";
 import { getCookie } from "./cookie";
 
-export async function patchDeviceToken(token: string) {
+export async function patchDeviceToken(token: string | null) {
+  console.log(getCookie("accessToken"));
   const data = await axios.patch(
     `${import.meta.env.VITE_APP_BASE_URL}/api/user/device-token`,
     { deviceToken: token },
