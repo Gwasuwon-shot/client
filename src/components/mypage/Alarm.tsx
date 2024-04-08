@@ -2,13 +2,9 @@ import { AppCheckTokenResult } from "firebase/app-check";
 import { getToken } from "firebase/messaging";
 import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
-import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { patchDeviceToken } from "../../api/patchDeviceToken";
 import { AlarmDeniedIc, AlarmGrantedIc } from "../../assets";
-import { userRoleData } from "../../atom/loginUser/loginUser";
-import { connectLessonId } from "../../atom/registerLesson/registerLesson";
 import { messaging } from "../../core/notification/settingFCM";
 import { registerServiceWorker } from "../../utils/common/notification";
 
@@ -17,10 +13,6 @@ export default function Alarm() {
   const [deviceToken, setDeviceToken] = useState<AppCheckTokenResult>({
     token: "",
   });
-  const userRole = useRecoilValue(userRoleData);
-  const navigate = useNavigate();
-
-  const [lessonIndex, setLessonIndex] = useRecoilState(connectLessonId);
 
   async function checkPermission() {
     const permission = await Notification.requestPermission();
@@ -36,9 +28,13 @@ export default function Alarm() {
     checkPermission();
   }, []);
 
-  async function handleAllowNotification() {
-    const permission = await Notification.requestPermission();
+  function handleAlarm() {
+    if (!isGranted) {
+      handleAllowNotification();
+    }
+  }
 
+  async function handleAllowNotification() {
     registerServiceWorker();
 
     const token = await getToken(messaging, {
@@ -62,12 +58,6 @@ export default function Alarm() {
       console.log(err);
     },
   });
-
-  function handleAlarm() {
-    if (!isGranted) {
-      handleAllowNotification();
-    }
-  }
 
   return (
     <>
