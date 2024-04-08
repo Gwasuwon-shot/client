@@ -1,4 +1,3 @@
-import { AppCheckTokenResult } from "firebase/app-check";
 import { getToken } from "firebase/messaging";
 import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
@@ -6,36 +5,42 @@ import styled from "styled-components";
 import { patchDeviceToken } from "../../api/patchDeviceToken";
 import { AlarmDeniedIc, AlarmGrantedIc } from "../../assets";
 import { messaging } from "../../core/notification/settingFCM";
+import useServiceWorkerRegistration from "../../hooks/useServiceWorkerRegistration";
 import { registerServiceWorker } from "../../utils/common/notification";
 
 export default function Alarm() {
+  const isRegistered = useServiceWorkerRegistration();
+  // 알림 허용 API 추가
   const [isGranted, setIsGranted] = useState(false);
-  const [deviceToken, setDeviceToken] = useState<AppCheckTokenResult>({
+  const [deviceToken, setDeviceToken] = useState<{ token: string | null }>({
     token: "",
   });
 
-  async function checkPermission() {
-    const permission = await Notification.requestPermission();
-
-    if (permission === "granted") {
-      setIsGranted(true);
+  function handleAlarm() {
+    if (!isGranted) {
+      checkNotificationPermission();
     } else {
-      setIsGranted(false);
+      handleBanNotification();
     }
   }
 
-  useEffect(() => {
-    checkPermission();
-  }, []);
-
-  function handleAlarm() {
-    if (!isGranted) {
-      handleAllowNotification();
+  async function checkNotificationPermission() {
+    const permission = Notification.permission;
+    switch (permission) {
+      case "granted":
+        handleAllowNotification();
+        break;
+      case "default":
+        const response = await Notification.requestPermission();
+        response === "granted" ? handleAllowNotification() : alert("브라우저 알림 권한을 거부했습니다.");
+        break;
+      default:
+        alert("브라우저 알림 권한을 거부했습니다.");
     }
   }
 
   async function handleAllowNotification() {
-    registerServiceWorker();
+    !isRegistered && registerServiceWorker();
 
     const token = await getToken(messaging, {
       vapidKey: import.meta.env.VITE_APP_VAPID_KEY,
@@ -46,12 +51,21 @@ export default function Alarm() {
     });
   }
 
+  async function handleBanNotification() {
+    setDeviceToken({
+      token: null,
+    });
+  }
+
   useEffect(() => {
-    deviceToken?.token !== "" && deviceToken?.token !== undefined && patchingDeviceToken(deviceToken?.token);
+    const token = deviceToken?.token;
+    if (token === null || token) {
+      patchingDeviceToken(token);
+    }
   }, [deviceToken]);
 
   const { mutate: patchingDeviceToken } = useMutation(patchDeviceToken, {
-    onSuccess: (res) => {
+    onSuccess: () => {
       setIsGranted(true);
     },
     onError: (err) => {
