@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getCookie } from "./cookie";
+import { getCookie } from "../cookie";
 
 export async function patchDeviceToken(token: string | null) {
   const data = await axios.patch(
