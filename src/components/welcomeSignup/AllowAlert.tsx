@@ -3,19 +3,17 @@ import { getToken } from "firebase/messaging";
 import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { styled } from "styled-components";
-import { patchDeviceToken } from "../../api/patchDeviceToken";
+import { getLessonByTeacher } from "../../api/getLessonByTeacher";
+import { patchDeviceToken } from "../../api/myPage/patchDeviceToken";
 import { postNotificationRequest } from "../../api/postNotificationRequest";
 import { BackButtonSignupIc, BellWelcomeIc } from "../../assets";
 import { userRoleData } from "../../atom/loginUser/loginUser";
-import { connectLessonId } from "../../atom/registerLesson/registerLesson";
 import { messaging } from "../../core/notification/settingFCM";
 import { registerServiceWorker } from "../../utils/common/notification";
 import SignupTitleLayout from "../signup/SignupTitleLayout";
 import ButtonLayout from "./ButtonLayout";
-import useGetAllLessons from "../../hooks/useGetAllLessons";
-import { getLessonByTeacher } from "../../api/getLessonByTeacher";
 
 interface lessonListType {
   idx: number;
