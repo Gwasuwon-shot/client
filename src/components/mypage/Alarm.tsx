@@ -1,23 +1,19 @@
 import { getToken } from "firebase/messaging";
-import { useEffect, useState } from "react";
-import { useMutation } from "react-query";
 import styled from "styled-components";
-import { patchDeviceToken } from "../../api/patchDeviceToken";
 import { AlarmDeniedIc, AlarmGrantedIc } from "../../assets";
 import { messaging } from "../../core/notification/settingFCM";
+import useGetNotificationStatus from "../../hooks/myPage/useGetNotificationStatus";
+import useUpdateDeviceToken from "../../hooks/myPage/useUpdateDeviceToken";
 import useServiceWorkerRegistration from "../../hooks/useServiceWorkerRegistration";
 import { registerServiceWorker } from "../../utils/common/notification";
 
 export default function Alarm() {
   const isRegistered = useServiceWorkerRegistration();
-  // 알림 허용 API 추가
-  const [isGranted, setIsGranted] = useState(false);
-  const [deviceToken, setDeviceToken] = useState<{ token: string | null }>({
-    token: "",
-  });
+  const allowNotification = useGetNotificationStatus();
+  const updateDeviceToken = useUpdateDeviceToken();
 
-  function handleAlarm() {
-    if (!isGranted) {
+  async function handleAlarm() {
+    if (!allowNotification) {
       checkNotificationPermission();
     } else {
       handleBanNotification();
@@ -26,61 +22,44 @@ export default function Alarm() {
 
   async function checkNotificationPermission() {
     const permission = Notification.permission;
-    switch (permission) {
-      case "granted":
+    if (permission === "granted") {
+      handleAllowNotification();
+    } else if (permission === "default") {
+      const response = await Notification.requestPermission();
+      if (response === "granted") {
         handleAllowNotification();
-        break;
-      case "default":
-        const response = await Notification.requestPermission();
-        response === "granted" ? handleAllowNotification() : alert("브라우저 알림 권한을 거부했습니다.");
-        break;
-      default:
+      } else {
         alert("브라우저 알림 권한을 거부했습니다.");
+      }
+    } else {
+      alert("브라우저 알림 권한을 거부했습니다.");
     }
   }
 
   async function handleAllowNotification() {
-    !isRegistered && registerServiceWorker();
-
-    const token = await getToken(messaging, {
-      vapidKey: import.meta.env.VITE_APP_VAPID_KEY,
-    });
-
-    setDeviceToken({
-      token: token,
-    });
+    if (confirm("정말로 알림을 켜시겠습니까?")) {
+      if (!isRegistered) {
+        registerServiceWorker();
+      }
+      const token = await getToken(messaging, { vapidKey: import.meta.env.VITE_APP_VAPID_KEY });
+      updateDeviceToken(token);
+    }
   }
 
   async function handleBanNotification() {
-    setDeviceToken({
-      token: null,
-    });
-  }
-
-  useEffect(() => {
-    const token = deviceToken?.token;
-    if (token === null || token) {
-      patchingDeviceToken(token);
+    if (confirm("정말로 알림을 끄시겠습니까?")) {
+      updateDeviceToken(null);
     }
-  }, [deviceToken]);
-
-  const { mutate: patchingDeviceToken } = useMutation(patchDeviceToken, {
-    onSuccess: () => {
-      setIsGranted(true);
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
+  }
 
   return (
     <>
       <TitleWrapper>
         <TitleText>푸시 알림</TitleText>
       </TitleWrapper>
-      <ContentWrapper>
+      <ContentWrapper onClick={handleAlarm}>
         <ContentText>알림 허용</ContentText>
-        <div onClick={handleAlarm}>{isGranted ? <AlarmGrantedIcon /> : <AlarmDeniedIcon />}</div>
+        {allowNotification ? <AlarmGrantedIcon /> : <AlarmDeniedIcon />}
       </ContentWrapper>
     </>
   );
