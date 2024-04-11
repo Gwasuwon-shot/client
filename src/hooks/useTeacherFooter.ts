@@ -25,7 +25,7 @@ export default function useTeacherFooter() {
         navigate("/manage-lesson");
         break;
       case TEACHER_FOOTER_CATEGORY.my:
-        navigate("/mypage");
+        navigate("/myPage");
         break;
       default:
         break;

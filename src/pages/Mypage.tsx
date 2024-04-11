@@ -1,15 +1,14 @@
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { userRoleData } from "../atom/loginUser/loginUser";
-import { ParentsFooter } from "../components/common";
-import TeacherFooter from "../components/common/TeacherFooter";
-import Account from "../components/myPage/Account";
-import Alarm from "../components/myPage/Alarm";
-import Feedback from "../components/myPage/Feedback";
+import { ParentsFooter, TeacherFooter } from "../components/common";
 import Header from "../components/myPage/Header";
+import AlarmAllow from "../components/myPage/AlarmAllow";
 import Terms from "../components/myPage/Terms";
+import Feedback from "../components/myPage/Feedback";
+import Account from "../components/myPage/Account";
 
-export default function Mypage() {
+export default function MyPage() {
   const userRole = useRecoilValue(userRoleData);
 
   function checkIsTeacher() {
