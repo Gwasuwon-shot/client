@@ -1,7 +1,6 @@
-import React from "react";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import { styled } from "styled-components";
 import { copyAccountNumberLessonInfoIc } from "../../assets";
-import { CopyToClipboard } from "react-copy-to-clipboard";
 
 interface LessonInfoItemProps {
   detailCategory: string;
@@ -11,20 +10,21 @@ interface LessonInfoItemProps {
 
 export default function LessonInfoItemLayout(props: LessonInfoItemProps) {
   const { detailCategory, content, isBankAccount } = props;
+  const  isLectureFee = detailCategory === "수업비"
   return (
     <LessonInfoItemLayoutWrapper>
       <LessonInfoDetailCategory>{detailCategory}</LessonInfoDetailCategory>
       <LessonInfoContent>
-        {isBankAccount ? (
-          <CopyToClipboard text={content} onCopy={() => alert("계좌번호가 복사되었습니다.")}>
-            <CopyAccountNumberIconWrapper>
-              <CopyAccountNumberIcon />
-              {content}
-            </CopyAccountNumberIconWrapper>
-          </CopyToClipboard>
-        ) : (
-          <span>{content}</span>
-        )}
+      {isBankAccount ? (
+        <CopyToClipboard text={content} onCopy={() => alert("계좌번호가 복사되었습니다.")}>
+          <CopyAccountNumberIconWrapper>
+            <CopyAccountNumberIcon />
+            {content}
+          </CopyAccountNumberIconWrapper>
+        </CopyToClipboard>
+      ) : (
+        <span>{isLectureFee ? `${Number(content).toLocaleString()}원` : content}</span>
+      )}
       </LessonInfoContent>
     </LessonInfoItemLayoutWrapper>
   );
