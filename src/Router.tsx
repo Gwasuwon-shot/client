@@ -32,7 +32,7 @@ import TimePickerPage from "./pages/TimePickerPage";
 import TuitionPayment from "./pages/TuitionPayment";
 import WelcomeSignup from "./pages/WelcomeSignup";
 import PrivateRoute from "./utils/common/privateRoute";
-import MyPage from "./pages/MyPage";
+import MyPage from "./pages/Mypage";
 
 export default function Router() {
   return (
