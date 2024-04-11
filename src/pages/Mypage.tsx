@@ -1,16 +1,15 @@
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { userRoleData } from "../atom/loginUser/loginUser";
-import { ParentsFooter } from "../components/common";
-import TeacherFooter from "../components/common/TeacherFooter";
-import Account from "../components/mypage/Account";
-import Alarm from "../components/mypage/Alarm";
-import Feedback from "../components/mypage/Feedback";
+import { ParentsFooter, TeacherFooter } from "../components/common";
 import Header from "../components/mypage/Header";
+import AlarmAllow from "../components/mypage/AlarmAllow";
 import Terms from "../components/mypage/Terms";
+import Feedback from "../components/mypage/Feedback";
+import Account from "../components/mypage/Account";
 
-export default function Mypage() {
-  const [userRole, setUserRole] = useRecoilState(userRoleData);
+export default function MyPage() {
+  const userRole = useRecoilValue(userRoleData);
 
   function checkIsTeacher() {
     return userRole === "선생님";
@@ -20,7 +19,7 @@ export default function Mypage() {
     <>
       <MyPageWrapper>
         <Header />
-        <Alarm />
+        <AlarmAllow />
         <Terms />
         <Feedback />
         <Account />

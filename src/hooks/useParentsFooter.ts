@@ -22,7 +22,7 @@ export default function useParentsFooter() {
         navigate("/parent-calendar");
         break;
       case PARENTS_FOOTER_CATEGORY.my:
-        navigate("/mypage");
+        navigate("/myPage");
         break;
       default:
         break;

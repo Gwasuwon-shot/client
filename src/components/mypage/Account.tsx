@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { isModalOpen } from "../../atom/common/isModalOpen";
@@ -10,7 +9,6 @@ export default function Account() {
   const [openModal, setOpenModal] = useRecoilState<boolean>(isModalOpen);
   const [isCheckingLogout, setIsCheckingLogout] = useState(false);
   const [isCheckingDeleteAccount, setIsCheckingDeleteAccount] = useState(false);
-  const navigate = useNavigate();
 
   function handleLogout() {
     setOpenModal(true);
