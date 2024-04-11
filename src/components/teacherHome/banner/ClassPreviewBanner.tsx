@@ -136,7 +136,7 @@ const Student = styled.p`
   ${({ theme }) => theme.fonts.title03};
 `;
 
-const ClassStatusWrapper = styled.p`
+const ClassStatusWrapper = styled.div`
   display: flex;
 
   margin-top: 0.3rem;

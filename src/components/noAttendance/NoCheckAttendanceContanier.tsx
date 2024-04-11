@@ -1,7 +1,8 @@
 import React from "react";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
 import { attendanceLesson } from "../../atom/attendanceCheck/attendanceLesson";
+import { attendanceStatus } from "../../atom/attendanceCheck/attendanceStatus";
 import { STUDENT_COLOR } from "../../core/common/studentColor";
 import { scheduleType } from "../../type/common/scheduleType";
 import NoCheckPageAttendanceButton from "../common/NoCheckPageAttendanceButton";
@@ -39,7 +40,8 @@ export default function NoCheckAttendanceContanier(props: NoCheckAttendanceConta
   const { setOpenModal, lesson, schedule } = props;
   const { idx, studentName, subject } = lesson;
   const { startTime, endTime, expectedCount } = schedule;
-  const [selectedLesson, setSelectedLesson] = useRecoilState(attendanceLesson);
+  const setSelectedLesson = useSetRecoilState(attendanceLesson);
+  const setAttendanceData = useSetRecoilState(attendanceStatus);
 
   function handleAttendanceCheck(): void {
     setSelectedLesson({
@@ -49,6 +51,7 @@ export default function NoCheckAttendanceContanier(props: NoCheckAttendanceConta
       scheduleIdx: schedule?.idx,
       subject: subject,
     });
+    setAttendanceData({ idx: schedule?.idx, status: "" });
     setOpenModal(true);
   }
 

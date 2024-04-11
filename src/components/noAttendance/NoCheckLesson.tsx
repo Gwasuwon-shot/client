@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { styled } from "styled-components";
 import { attendanceLesson } from "../../atom/attendanceCheck/attendanceLesson";
-import { attendanceStatus } from "../../atom/attendanceCheck/attendanceStatus";
 import { isModalOpen } from "../../atom/common/isModalOpen";
 import useGetMissingAttendanceSchedule from "../../hooks/useGetMissingAttendanceSchedule";
 import AttendanceCheckModal from "../common/AttendanceCheckModal";
@@ -39,7 +38,7 @@ interface MissingAttendanceData {
 
 export default function NoCheckLesson() {
   const { missingAttendanceSchedule } = useGetMissingAttendanceSchedule();
-  const [selectedLesson, setSelectedLesson] = useRecoilState(attendanceLesson);
+  const selectedLesson = useRecoilValue(attendanceLesson);
   const [openModal, setOpenModal] = useRecoilState<boolean>(isModalOpen);
   const [isCheckingModalOpen, setIsCheckingModalOpen] = useState<boolean>(false);
 
@@ -50,6 +49,7 @@ export default function NoCheckLesson() {
           missingAttendanceSchedule?.map(
             ({ date, dayOfWeek, missingAttedanceScheduleList }: MissingAttendanceData, idx: number) => {
               return (
+                // TODO: unique key 에러 확인해보기
                 <NoAttendanceContainer key={idx}>
                   <NoAttendanceDate>
                     {new Date(date).getMonth() + 1}월 {new Date(date).getDate()}일 ({dayOfWeek})
