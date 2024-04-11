@@ -7,7 +7,7 @@ import useUpdateDeviceToken from "../../hooks/myPage/useUpdateDeviceToken";
 import useServiceWorkerRegistration from "../../hooks/useServiceWorkerRegistration";
 import { registerServiceWorker } from "../../utils/common/notification";
 
-export default function Alarm() {
+export default function AlarmAllow() {
   const isRegistered = useServiceWorkerRegistration();
   const allowNotification = useGetNotificationStatus();
   const updateDeviceToken = useUpdateDeviceToken();

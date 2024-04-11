@@ -20,7 +20,7 @@ export default function Mypage() {
     <>
       <MyPageWrapper>
         <Header />
-        <Alarm />
+        <AlarmAllow />
         <Terms />
         <Feedback />
         <Account />
