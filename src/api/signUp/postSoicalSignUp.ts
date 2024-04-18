@@ -1,10 +1,8 @@
-import { useRecoilValue } from "recoil";
-import { newSocialUser } from "../../atom/signup/signup";
+import { NewSocialUserTypes } from "../../type/SignUp/newUserDataType";
 import { client } from "../axios";
 import { getCookie } from "../cookie";
 
-export async function postSocialSignUp() {
-  const newUser = useRecoilValue(newSocialUser);
+export async function postSocialSignUp(newUser: NewSocialUserTypes) {
   const data = await client.post(`/api/auth/local/sign-up`, newUser, {
     headers: {
       "Content-Type": "application/json",

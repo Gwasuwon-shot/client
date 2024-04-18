@@ -10,12 +10,7 @@ import { styled } from "styled-components";
 import { SLIDER_SETTINGS } from "../core/OnBoarding";
 
 import { Link, Navigate } from "react-router-dom";
-import {
-  KakaoDefaultLoginIc,
-  KakaoUsedLoginIc,
-  NaverDefaultLoginIc,
-  NaverUsedLoginIc,
-} from "../assets";
+import { KakaoDefaultLoginIc, KakaoUsedLoginIc, NaverDefaultLoginIc, NaverUsedLoginIc } from "../assets";
 import { KAKAO_AUTH_URL } from "../core/Login/kakaoPath";
 import { isGuest } from "../utils/common/isLogined";
 
@@ -26,16 +21,11 @@ export default function OnBoarding() {
     // loginTempSignUp({ socialToken: "", provider: "카카오" });
   };
 
-  const SwiperPages = [
-    <FirstSwiper />,
-    <SecondSwiper />,
-    <ThirdSwiper />,
-    <FourthSwiper />,
-  ];
+  const SwiperPages = [<FirstSwiper />, <SecondSwiper />, <ThirdSwiper />, <FourthSwiper />];
 
-  if (!isGuest) {
-    return <Navigate to="/home" replace />;
-  }
+  // if (!isGuest) {
+  //   return <Navigate to="/home" replace />;
+  // }
 
   return (
     <>

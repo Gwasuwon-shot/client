@@ -24,8 +24,6 @@ export default function UserPhone() {
 
   const { reverseRole } = useReverseRole();
 
-  const postSocialSignUp = usePostSocialSignup();
-
   const digitNumber = number.replace(/\D+/g, "");
 
   useEffect(() => {
@@ -56,19 +54,21 @@ export default function UserPhone() {
 
   const successToConfirmCode = () => {
     setNewUser((prev) => ({ ...prev, phone: digitNumber }));
+    console.log();
   };
 
   const sendValidNumber = useSendValidNumber(successToSendCode);
   const validatePhone = useValidatePhone({ successToConfirmCode, WrongCode });
+  const postSocialSignUp = usePostSocialSignup(newUser);
 
   const handleClickSend = () => {
-    sendValidNumber.mutate(digitNumber);
-    // successToSendCode();
+    // sendValidNumber.mutate(digitNumber);
+    successToSendCode();
+    successToConfirmCode();
   };
 
   const handleClickConfirm = () => {
-    validatePhone.mutate({ number: digitNumber, validCode: validCode });
-    // successToConfirmCode();
+    // validatePhone.mutate({ number: digitNumber, validCode: validCode });
     postSocialSignUp.mutate();
   };
 
@@ -96,17 +96,11 @@ export default function UserPhone() {
                 type="tel"
                 onInputChange={handleChangeValidNum}
               />
-              <InputHint
-                text="인증번호를 정확히 입력해 주세요"
-                color="red"
-                isVisible={isWrong}
-              />
+              <InputHint text="인증번호를 정확히 입력해 주세요" color="red" isVisible={isWrong} />
             </>
           )}
         </InputWrapper>
-        {isCodeSent && isVisible && (
-          <InputHint text="문자로 인증문자를 전송했어요" color="green" />
-        )}
+        {isCodeSent && isVisible && <InputHint text="문자로 인증문자를 전송했어요" color="green" />}
         <InputBtnLayout
           labelText="휴대폰 번호"
           placeholder="번호 ‘-’ 제외하고 입력"
@@ -115,11 +109,7 @@ export default function UserPhone() {
           onInputChange={handleChangePhoneNum}
           onClickButton={handleClickSend}
         />
-        <SubmitButton
-          disabled={!isDone}
-          $isActive={isDone}
-          onClick={handleClickConfirm}
-        >
+        <SubmitButton disabled={!isDone} $isActive={isDone} onClick={handleClickConfirm}>
           인증번호 확인
         </SubmitButton>
       </Container>
@@ -156,9 +146,7 @@ const SubmitButton = styled.button<{ $isActive: boolean }>`
   right: 0;
   height: 6.3rem;
   margin-left: -1.6rem;
-  background-color: ${({ theme, $isActive }) =>
-    $isActive ? theme.colors.green5 : theme.colors.grey50};
-  color: ${({ theme, $isActive }) =>
-    $isActive ? theme.colors.grey0 : theme.colors.grey200};
+  background-color: ${({ theme, $isActive }) => ($isActive ? theme.colors.green5 : theme.colors.grey50)};
+  color: ${({ theme, $isActive }) => ($isActive ? theme.colors.grey0 : theme.colors.grey200)};
   ${({ theme }) => theme.fonts.body01};
 `;
