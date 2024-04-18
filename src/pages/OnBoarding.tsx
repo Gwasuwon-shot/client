@@ -10,11 +10,21 @@ import { styled } from "styled-components";
 import { SLIDER_SETTINGS } from "../core/OnBoarding";
 
 import { Link, Navigate } from "react-router-dom";
-import RoundBottomButton from "../components/common/RoundBottomButton";
+import {
+  KakaoDefaultLoginIc,
+  KakaoUsedLoginIc,
+  NaverDefaultLoginIc,
+  NaverUsedLoginIc,
+} from "../assets";
 import { isGuest } from "../utils/common/isLogined";
 
 export default function OnBoarding() {
-  const SwiperPages = [<FirstSwiper />, <SecondSwiper />, <ThirdSwiper />, <FourthSwiper />];
+  const SwiperPages = [
+    <FirstSwiper />,
+    <SecondSwiper />,
+    <ThirdSwiper />,
+    <FourthSwiper />,
+  ];
 
   if (!isGuest) {
     return <Navigate to="/home" replace />;
@@ -32,15 +42,13 @@ export default function OnBoarding() {
         </SliderWrapper>
 
         <ButtonWrapper>
-          <Link to="/signup">
-            <RoundBottomButton buttonMessage="시작하기" />
-          </Link>
+          <NaverLogin />
+          <KakaoLogin />
         </ButtonWrapper>
 
-        <DividingLine />
-
         <GoToLoginMessage>
-          이미 계정이 있으신가요? 바로&nbsp;<Link to="/login">로그인 하기</Link>
+          계속함으로써&nbsp;<Link to="/login">이용약관</Link>&nbsp;및&nbsp;
+          <Link to="/login">개인정보처리방침</Link>에 동의합니다
         </GoToLoginMessage>
       </OnBoardingWrapper>
     </>
@@ -87,7 +95,9 @@ const SliderWrapper = styled.section`
 
 const ButtonWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  gap: 1rem;
 `;
 
 const GoToLoginMessage = styled.p`
@@ -101,13 +111,26 @@ const GoToLoginMessage = styled.p`
   color: #7c7e7e;
 
   > a {
-    color: ${({ theme }) => theme.colors.green5};
+    color: ${({ theme }) => theme.colors.grey900};
   }
 `;
 
-const DividingLine = styled.hr`
-  width: 83.75%;
-  height: 0.1rem;
-  background-color: #f4f4f4;
-  border: 0;
+const NaverLogin = styled(NaverDefaultLoginIc)`
+  width: 100%;
+  height: 100%;
+`;
+
+const NaverUsedLogin = styled(NaverUsedLoginIc)`
+  width: 100%;
+  height: 100%;
+`;
+
+const KakaoLogin = styled(KakaoDefaultLoginIc)`
+  width: 100%;
+  height: 100%;
+`;
+
+const KakaoUsedLogin = styled(KakaoUsedLoginIc)`
+  width: 100%;
+  height: 100%;
 `;
