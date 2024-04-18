@@ -13,6 +13,5 @@ export const postKaKaoSignup = async (token: string) => {
       },
     }
   );
-
   return response.data.data;
 };

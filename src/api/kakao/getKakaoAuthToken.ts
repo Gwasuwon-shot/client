@@ -17,7 +17,6 @@ export const getLoginAuthToken = async () => {
       },
     });
 
-    console.log(response);
     return response.data;
   }
 };
