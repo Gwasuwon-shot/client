@@ -16,9 +16,16 @@ import {
   NaverDefaultLoginIc,
   NaverUsedLoginIc,
 } from "../assets";
+import { KAKAO_AUTH_URL } from "../core/Login/kakaoPath";
 import { isGuest } from "../utils/common/isLogined";
 
 export default function OnBoarding() {
+  // const { mutate: loginTempSignUp } = usePostLoginTempSignup();
+  const naviagateToKaKao = () => {
+    window.location.href = KAKAO_AUTH_URL;
+    // loginTempSignUp({ socialToken: "", provider: "카카오" });
+  };
+
   const SwiperPages = [
     <FirstSwiper />,
     <SecondSwiper />,
@@ -43,7 +50,7 @@ export default function OnBoarding() {
 
         <ButtonWrapper>
           <NaverLogin />
-          <KakaoLogin />
+          <KakaoLogin onClick={naviagateToKaKao} />
         </ButtonWrapper>
 
         <GoToLoginMessage>

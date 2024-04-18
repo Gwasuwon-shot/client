@@ -16,5 +16,5 @@ export const newUserData = atom<NewUserDataTypes>({
 
 export const newSocialUser = atom<NewSocialUserTypes>({
   key: "newSocialUser",
-  default: { role: "", name: "", phone: "", isMarketing: false },
+  default: { role: "", name: "", phone: "", isMarketing: true },
 });
