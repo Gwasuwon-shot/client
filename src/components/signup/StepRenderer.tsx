@@ -2,24 +2,22 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { stepNum } from "../../atom/signup/signup";
 import Role from "./Role";
-import NameEmail from "./NameEmail";
-import PasswordFrame from "./PasswordFrame";
-import AgreeCheckingFrame from "./AgreeCheckingFrame";
+import UserName from "./UserName";
+import UserPhone from "./UserPhone";
 
 export default function StepRenderer() {
   const step = useRecoilValue(stepNum);
   const navigate = useNavigate();
+
   switch (step) {
     case 0:
       navigate(-1);
       break;
     case 1:
-      return <Role />;
+      return <Role />; //0
     case 2:
-      return <AgreeCheckingFrame />;
+      return <UserName />; //25
     case 3:
-      return <NameEmail />;
-    case 4:
-      return <PasswordFrame />;
+      return <UserPhone />; //50 | 75
   }
 }
