@@ -1,7 +1,7 @@
 // src/hooks/useSocialLogin.js
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { setCookie } from "../../api/cookie";
+import { removeCookie, setCookie } from "../../api/cookie";
 import { postLoginTempSignup } from "../../api/signUp/postLoginTempSignup";
 
 interface usePostLoginTempSignupProps {
@@ -34,12 +34,14 @@ export default function usePostLoginTempSignup() {
         secure: true,
       });
       if (data.code === 200) {
+        removeCookie("status");
         navigate("/home");
       } else {
         navigate("/signup");
       }
     },
-    onError: (error) => {
+    onError: () => {
+      console.error();
       navigate("/error");
     },
   });

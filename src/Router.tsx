@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
@@ -105,7 +105,7 @@ function fallbackRender({ error, resetErrorBoundary }: any) {
     if (error.response.data.code === 401) {
       resetErrorBoundary();
       removeCookie("accessToken");
-      return <Login />;
+      return <Navigate to="/" />;
     }
   } else {
     return <ErrorPage resetErrorBoundary={resetErrorBoundary} />;

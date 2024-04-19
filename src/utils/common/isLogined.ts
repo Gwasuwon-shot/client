@@ -18,6 +18,6 @@ export function isTempUser() {
 
 export const isGuest = (function () {
   return (
-    !isLogin() || isCookieNull() || isCookieAuthenticated() || isTempUser()
+    isTempUser() || !isLogin() || isCookieNull() || isCookieAuthenticated()
   );
 })();
