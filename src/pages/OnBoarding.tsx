@@ -22,6 +22,7 @@ import { KAKAO_AUTH_URL } from "../core/Login/kakaoPath";
 export default function OnBoarding() {
   const naviagateToKaKao = () => {
     window.location.href = KAKAO_AUTH_URL;
+    // loginTempSignUp({ socialToken: "", provider: "카카오" });
   };
 
   const lastLogin = getCookie("lastLogin");
@@ -33,6 +34,9 @@ export default function OnBoarding() {
     <FourthSwiper />,
   ];
 
+  // if (!isGuest) {
+  //   return <Navigate to="/home" replace />;
+  // }
   // if (!isGuest) {
   //   return <Navigate to="/home" replace />;
   // }

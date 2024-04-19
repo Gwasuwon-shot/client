@@ -17,16 +17,14 @@ export default function usePostLoginTempSignup() {
   });
 
   const mutation = useMutation({
-    mutationFn: async ({
-      socialToken,
-      provider,
-    }: usePostLoginTempSignupProps) => {
+    mutationFn: async ({ socialToken, provider }: usePostLoginTempSignupProps) => {
       return await postLoginTempSignup({
         socialToken,
         provider,
       });
     },
     onSuccess: (data) => {
+      console.log(data);
       setCookie("accessToken", data.data.accessToken, {
         secure: true,
       });

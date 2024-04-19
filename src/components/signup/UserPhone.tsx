@@ -53,6 +53,7 @@ export default function UserPhone() {
 
   const successToConfirmCode = () => {
     setNewUser((prev) => ({ ...prev, phone: digitNumber }));
+    console.log();
   };
 
   const sendValidNumber = useSendValidNumber(successToSendCode);
