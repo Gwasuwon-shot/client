@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { newSocialUser, stepNum } from "../../atom/signup/signup";
 import { BUTTON_TEXT } from "../../core/signup/signUpTextLabels";
-import useReverseRole from "../../hooks/signupLogin/usereverseRole";
+import useReverseRole from "../../hooks/signupLogin/useReverseRole";
 import BackButton from "../common/BackButton";
 import ProgressBar from "../common/ProgressBar";
 import InputLayout from "./InputLayout";

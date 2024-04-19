@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { newSocialUser } from "../../atom/signup/signup";
-import useReverseRole from "../../hooks/signupLogin/usereverseRole";
+import useReverseRole from "../../hooks/signupLogin/useReverseRole";
 import BackButton from "../common/BackButton";
 import ProgressBar from "../common/ProgressBar";
 import InputHint from "./InputHint";
