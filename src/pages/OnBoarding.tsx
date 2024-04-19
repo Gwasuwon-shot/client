@@ -9,7 +9,8 @@ import "slick-carousel/slick/slick.css";
 import { styled } from "styled-components";
 import { SLIDER_SETTINGS } from "../core/OnBoarding";
 
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { getCookie } from "../api/cookie";
 import {
   KakaoDefaultLoginIc,
   KakaoUsedLoginIc,
@@ -17,14 +18,13 @@ import {
   NaverUsedLoginIc,
 } from "../assets";
 import { KAKAO_AUTH_URL } from "../core/Login/kakaoPath";
-import { isGuest } from "../utils/common/isLogined";
 
 export default function OnBoarding() {
-  // const { mutate: loginTempSignUp } = usePostLoginTempSignup();
   const naviagateToKaKao = () => {
     window.location.href = KAKAO_AUTH_URL;
-    // loginTempSignUp({ socialToken: "", provider: "카카오" });
   };
+
+  const lastLogin = getCookie("lastLogin");
 
   const SwiperPages = [
     <FirstSwiper />,
@@ -33,9 +33,9 @@ export default function OnBoarding() {
     <FourthSwiper />,
   ];
 
-  if (!isGuest) {
-    return <Navigate to="/home" replace />;
-  }
+  // if (!isGuest) {
+  //   return <Navigate to="/home" replace />;
+  // }
 
   return (
     <>
@@ -49,13 +49,17 @@ export default function OnBoarding() {
         </SliderWrapper>
 
         <ButtonWrapper>
-          <NaverLogin />
-          <KakaoLogin onClick={naviagateToKaKao} />
+          {lastLogin === "naver" ? <NaverUsedLogin /> : <NaverLogin />}
+          {lastLogin === "kakao" ? (
+            <KakaoUsedLogin onClick={naviagateToKaKao} />
+          ) : (
+            <KakaoLogin />
+          )}
         </ButtonWrapper>
 
         <GoToLoginMessage>
-          계속함으로써&nbsp;<Link to="/login">이용약관</Link>&nbsp;및&nbsp;
-          <Link to="/login">개인정보처리방침</Link>에 동의합니다
+          계속함으로써&nbsp;<Link to="/">이용약관</Link>&nbsp;및&nbsp;
+          <Link to="/">개인정보처리방침</Link>에 동의합니다
         </GoToLoginMessage>
       </OnBoardingWrapper>
     </>

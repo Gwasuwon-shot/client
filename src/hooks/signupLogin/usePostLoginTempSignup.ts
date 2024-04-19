@@ -12,6 +12,10 @@ interface usePostLoginTempSignupProps {
 export default function usePostLoginTempSignup() {
   const navigate = useNavigate();
 
+  setCookie("lastLogin", "kakao", {
+    secure: true,
+  });
+
   const mutation = useMutation({
     mutationFn: async ({
       socialToken,
@@ -29,7 +33,11 @@ export default function usePostLoginTempSignup() {
       setCookie("refreshToken", data.data.refreshToken, {
         secure: true,
       });
-      navigate("/signup");
+      if (data.code === 200) {
+        navigate("/home");
+      } else {
+        navigate("/signup");
+      }
     },
     onError: (error) => {
       navigate("/error");
