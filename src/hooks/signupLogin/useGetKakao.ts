@@ -1,6 +1,7 @@
 import { useMutation } from "react-query";
+import { setCookie } from "../../api/cookie";
 import { getLoginAuthToken } from "../../api/kakao/getKakaoAuthToken";
-import { getKakaoUserInfo } from "../../api/signUp/getKakaoUserInfo";
+import { getKakaoUserInfo } from "../../api/kakao/getKakaoUserInfo";
 
 interface useGetLoginTokenProps {
   handleLoginToken: (token: string) => void;
@@ -8,6 +9,10 @@ interface useGetLoginTokenProps {
 
 const useGetLoginToken = (props: useGetLoginTokenProps) => {
   const { handleLoginToken } = props;
+
+  setCookie("lastLogin", "kakao", {
+    secure: true,
+  });
 
   const mutation = useMutation({
     mutationFn: async () => {

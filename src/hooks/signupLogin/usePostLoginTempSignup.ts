@@ -12,7 +12,7 @@ interface usePostLoginTempSignupProps {
 export default function usePostLoginTempSignup() {
   const navigate = useNavigate();
 
-  setCookie("lastLogin", "kakao", {
+  setCookie("status", "temp", {
     secure: true,
   });
 

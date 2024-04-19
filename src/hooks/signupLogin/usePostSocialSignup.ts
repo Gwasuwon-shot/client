@@ -6,6 +6,7 @@ import { NewSocialUserTypes } from "../../type/SignUp/newUserDataType";
 
 export default function usePostSocialSignup(newUser: NewSocialUserTypes) {
   const navigate = useNavigate();
+  removeCookie("status");
 
   const mutation = useMutation({
     mutationFn: async () => {
