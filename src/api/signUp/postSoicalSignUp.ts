@@ -1,11 +1,11 @@
 import { NewSocialUserTypes } from "../../type/SignUp/newUserDataType";
 import { client } from "../axios";
-import { getCookie } from "../cookie";
+import { getCookie, removeCookie } from "../cookie";
 
 export async function postSocialSignUp(newUser: NewSocialUserTypes) {
   const { role, name, phone, isMarketing } = newUser;
   const data = await client.post(
-    `/api/auth/local/sign-up`,
+    `/api/user/sign-up`,
     {
       role: role,
       name: name,
@@ -19,5 +19,6 @@ export async function postSocialSignUp(newUser: NewSocialUserTypes) {
       },
     }
   );
+  removeCookie("status");
   return data;
 }

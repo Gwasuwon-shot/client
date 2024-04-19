@@ -40,20 +40,15 @@ export default function UserPhone() {
   const successToSendCode = () => {
     setIsCodeSent(true);
     setIsVisible(true);
+    setNewUser((prev) => ({ ...prev, phone: digitNumber }));
   };
 
   const WrongCode = () => {
     setIsWrong(true);
   };
 
-  const successToConfirmCode = () => {
-    setNewUser((prev) => ({ ...prev, phone: digitNumber }));
-    console.log();
-  };
-
   const sendValidNumber = useSendValidNumber(successToSendCode);
   const validatePhone = useValidatePhone({
-    successToConfirmCode,
     WrongCode,
     newUser,
   });

@@ -4,13 +4,11 @@ import { NewSocialUserTypes } from "../../type/SignUp/newUserDataType";
 import usePostSocialSignup from "./usePostSocialSignup";
 
 interface useValidatePhone {
-  successToConfirmCode: () => void;
   WrongCode: () => void;
   newUser: NewSocialUserTypes;
 }
 
 export default function useValidatePhone({
-  successToConfirmCode,
   WrongCode,
   newUser,
 }: useValidatePhone) {
@@ -30,7 +28,6 @@ export default function useValidatePhone({
       });
     },
     onSuccess: async () => {
-      successToConfirmCode();
       postSocialSignUp.mutate();
     },
     onError: () => {
