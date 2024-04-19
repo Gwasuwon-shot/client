@@ -34,12 +34,7 @@ export default function UserPhone() {
 
   const handleChangeValidNum = (value: string) => {
     setValidCode(value);
-
-    if (AUTH_CODE_PATTERN.test(value)) {
-      setIsDone(true);
-    } else {
-      setIsDone(false);
-    }
+    setIsDone(AUTH_CODE_PATTERN.test(value));
   };
 
   const successToSendCode = () => {
