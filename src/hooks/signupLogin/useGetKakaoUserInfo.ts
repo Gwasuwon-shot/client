@@ -12,8 +12,8 @@ const useGetLoginToken = (props: useGetLoginTokenProps) => {
     mutationFn: async () => {
       return await getLoginAuthToken();
     },
-    onError: () => {
-      console.log("error");
+    onError: (error) => {
+      console.log(error);
     },
     onSuccess: (data) => {
       handleLoginToken(data.access_token);

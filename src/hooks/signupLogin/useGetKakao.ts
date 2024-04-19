@@ -13,8 +13,8 @@ const useGetLoginToken = (props: useGetLoginTokenProps) => {
     mutationFn: async () => {
       return await getLoginAuthToken();
     },
-    onError: () => {
-      console.log("error");
+    onError: (error) => {
+      console.log(error);
     },
     onSuccess: async (data) => {
       const UserId = await getKakaoUserInfo(data.access_token);

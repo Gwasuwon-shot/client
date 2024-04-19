@@ -12,8 +12,8 @@ import { editScheduleType } from "../../../type/editSchedule/editScheduleType";
 import { EditPencilIc } from "../../../assets";
 import useGetAttendanceExist from "../../../hooks/useGetAttendanceExist";
 
-import CannotEditModal from "./CannotEditModal";
 import { isModalOpen } from "../../../atom/common/isModalOpen";
+import CannotEditModal from "./CannotEditModal";
 
 interface editScheduleButtonType {
   lessonIdx: number;
@@ -72,15 +72,18 @@ function EditScheduleButton(props: editScheduleButtonType) {
 
   function ModalOpen() {
     setCannotEditModalOpen(true);
-    console.log(cannotEditModalOpen);
-    console.log(attendanceExist?.data);
   }
 
   return (
     <>
       <EditScheduleButtonWrapper
-        onClick={() => moveClickEditPage({ lessonIdx, schedule, idx, selectedDate })}></EditScheduleButtonWrapper>
-      {cannotEditModalOpen && <CannotEditModal setCannotEditModalOpen={setCannotEditModalOpen} />}
+        onClick={() =>
+          moveClickEditPage({ lessonIdx, schedule, idx, selectedDate })
+        }
+      ></EditScheduleButtonWrapper>
+      {cannotEditModalOpen && (
+        <CannotEditModal setCannotEditModalOpen={setCannotEditModalOpen} />
+      )}
     </>
   );
 }
