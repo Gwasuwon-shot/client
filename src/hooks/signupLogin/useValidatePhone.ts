@@ -1,17 +1,20 @@
 import { useMutation } from "react-query";
-import { useNavigate } from "react-router-dom";
 import { postValidatePhone } from "../../api/signUp/postValidatePhone";
+import { NewSocialUserTypes } from "../../type/SignUp/newUserDataType";
+import usePostSocialSignup from "./usePostSocialSignup";
 
 interface useValidatePhone {
   successToConfirmCode: () => void;
   WrongCode: () => void;
+  newUser: NewSocialUserTypes;
 }
 
 export default function useValidatePhone({
   successToConfirmCode,
   WrongCode,
+  newUser,
 }: useValidatePhone) {
-  const navigate = useNavigate();
+  const postSocialSignUp = usePostSocialSignup(newUser);
 
   const mutation = useMutation({
     mutationFn: async ({
@@ -28,6 +31,7 @@ export default function useValidatePhone({
     },
     onSuccess: async () => {
       successToConfirmCode();
+      postSocialSignUp.mutate();
     },
     onError: () => {
       WrongCode();

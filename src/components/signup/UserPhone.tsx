@@ -3,7 +3,6 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { newSocialUser } from "../../atom/signup/signup";
 import { AUTH_CODE_PATTERN } from "../../core/signup/regex";
-import usePostSocialSignup from "../../hooks/signupLogin/usePostSocialSignup";
 import useReverseRole from "../../hooks/signupLogin/useReverseRole";
 import useSendValidNumber from "../../hooks/signupLogin/useSendValidNumber";
 import useValidatePhone from "../../hooks/signupLogin/useValidatePhone";
@@ -23,8 +22,6 @@ export default function UserPhone() {
   const [isWrong, setIsWrong] = useState(false);
 
   const { reverseRole } = useReverseRole();
-
-  const postSocialSignUp = usePostSocialSignup();
 
   const digitNumber = number.replace(/\D+/g, "");
 
@@ -59,17 +56,18 @@ export default function UserPhone() {
   };
 
   const sendValidNumber = useSendValidNumber(successToSendCode);
-  const validatePhone = useValidatePhone({ successToConfirmCode, WrongCode });
+  const validatePhone = useValidatePhone({
+    successToConfirmCode,
+    WrongCode,
+    newUser,
+  });
 
   const handleClickSend = () => {
     sendValidNumber.mutate(digitNumber);
-    // successToSendCode();
   };
 
   const handleClickConfirm = () => {
     validatePhone.mutate({ number: digitNumber, validCode: validCode });
-    // successToConfirmCode();
-    postSocialSignUp.mutate();
   };
 
   return (
