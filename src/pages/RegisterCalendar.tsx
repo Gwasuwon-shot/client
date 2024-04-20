@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { addMonths, subMonths } from "date-fns";
+import { useState } from "react";
 import styled from "styled-components";
-import { subMonths, addMonths } from "date-fns";
-import YearandMonth from "../components/Calendar/YearandMonth";
 import Dayofweek from "../components/Calendar/Dayofweek";
 import Days from "../components/Calendar/RegisterLesson/Days";
 import YearandMonthRegister from "../components/Calendar/RegisterLesson/YearandMonthRegister";

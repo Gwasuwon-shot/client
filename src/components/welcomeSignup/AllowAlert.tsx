@@ -36,7 +36,8 @@ export default function AllowAlert() {
 
   const MAIN_TEXT = `쉬운 관리를 위해\n알림을 활성화 해보세요 `;
 
-  const SUB_TEXT = "푸시알림을 활성화를 통해 출결,\n수업비 관리 도움을 받을 수 있어요";
+  const SUB_TEXT =
+    "푸시알림을 활성화를 통해 출결,\n수업비 관리 도움을 받을 수 있어요";
 
   async function checkIfLessonExists() {
     const data = await getLessonByTeacher();
@@ -67,7 +68,9 @@ export default function AllowAlert() {
   }
 
   useEffect(() => {
-    deviceToken?.token !== "" && deviceToken?.token !== undefined && patchingDeviceToken(deviceToken?.token);
+    deviceToken?.token !== "" &&
+      deviceToken?.token !== undefined &&
+      patchingDeviceToken(deviceToken?.token);
   }, [deviceToken]);
 
   // 디바이브 토큰 가져오기
@@ -83,9 +86,7 @@ export default function AllowAlert() {
 
   // 디바이스토큰 업데이트
   const { mutate: patchingDeviceToken } = useMutation(patchDeviceToken, {
-    onSuccess: (res) => {
-      console.log(userRole);
-    },
+    onSuccess: () => {},
     onError: (err) => {
       console.log(err);
     },

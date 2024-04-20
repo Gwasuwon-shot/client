@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { newSocialUser } from "../../atom/signup/signup";
+import { AUTH_CODE_PATTERN } from "../../core/signup/regex";
 import useReverseRole from "../../hooks/signupLogin/useReverseRole";
+import useSendValidNumber from "../../hooks/signupLogin/useSendValidNumber";
+import useValidatePhone from "../../hooks/signupLogin/useValidatePhone";
 import BackButton from "../common/BackButton";
 import ProgressBar from "../common/ProgressBar";
 import InputHint from "./InputHint";
@@ -12,11 +15,15 @@ import SignupTitleLayout from "./SignupTitleLayout";
 export default function UserPhone() {
   const [newUser, setNewUser] = useRecoilState(newSocialUser);
   const [number, setNumber] = useState("");
+  const [validCode, setValidCode] = useState("");
   const [isCodeSent, setIsCodeSent] = useState(false);
   const [isDone, setIsDone] = useState(false);
-  const { reverseRole } = useReverseRole();
   const [isVisible, setIsVisible] = useState(true);
   const [isWrong, setIsWrong] = useState(false);
+
+  const { reverseRole } = useReverseRole();
+
+  const digitNumber = number.replace(/\D+/g, "");
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(false), 5000);
@@ -25,11 +32,33 @@ export default function UserPhone() {
 
   const handleChangePhoneNum = (value: string) => setNumber(value);
 
-  const handleClickSend = () => {
-    const digitNumber = number.replace(/\D+/g, "");
-    setNewUser((prev) => ({ ...prev, phone: digitNumber }));
+  const handleChangeValidNum = (value: string) => {
+    setValidCode(value);
+    setIsDone(AUTH_CODE_PATTERN.test(value));
+  };
+
+  const successToSendCode = () => {
     setIsCodeSent(true);
     setIsVisible(true);
+    setNewUser((prev) => ({ ...prev, phone: digitNumber }));
+  };
+
+  const WrongCode = () => {
+    setIsWrong(true);
+  };
+
+  const sendValidNumber = useSendValidNumber(successToSendCode);
+  const validatePhone = useValidatePhone({
+    WrongCode,
+    newUser,
+  });
+
+  const handleClickSend = () => {
+    sendValidNumber.mutate(digitNumber);
+  };
+
+  const handleClickConfirm = () => {
+    validatePhone.mutate({ number: digitNumber, validCode: validCode });
   };
 
   return (
@@ -54,7 +83,7 @@ export default function UserPhone() {
                 labelText="인증번호"
                 placeholder="숫자 8자리 입력"
                 type="tel"
-                onInputChange={() => setIsDone(true)}
+                onInputChange={handleChangeValidNum}
               />
               <InputHint
                 text="인증번호를 정확히 입력해 주세요"
@@ -78,7 +107,7 @@ export default function UserPhone() {
         <SubmitButton
           disabled={!isDone}
           $isActive={isDone}
-          onClick={() => console.log("postUserInfo")}
+          onClick={handleClickConfirm}
         >
           인증번호 확인
         </SubmitButton>

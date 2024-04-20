@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
@@ -16,8 +16,10 @@ import LessonInfo from "./pages/LessonInfo";
 import LessonShare from "./pages/LessonShare";
 import Loading from "./pages/Loading";
 import Login from "./pages/Login";
+import LoginLoading from "./pages/LoginLoading";
 import ManageLessonDetail from "./pages/ManageLessonDetail";
 import ManageLessonMain from "./pages/ManageLessonMain";
+import MyPage from "./pages/Mypage";
 import NoAttendanceCheck from "./pages/NoAttendanceCheck";
 import OnBoarding from "./pages/OnBoarding";
 import ParentCalendar from "./pages/ParentCalendar";
@@ -32,7 +34,6 @@ import TimePickerPage from "./pages/TimePickerPage";
 import TuitionPayment from "./pages/TuitionPayment";
 import WelcomeSignup from "./pages/WelcomeSignup";
 import PrivateRoute from "./utils/common/privateRoute";
-import MyPage from "./pages/Mypage";
 
 export default function Router() {
   return (
@@ -46,6 +47,7 @@ export default function Router() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/lesson-share" element={<LessonShare />} />
+            <Route path="/login-loading" element={<LoginLoading />} />
 
             <Route element={<PrivateRoute authentication={true} />}>
               <Route path="/home" element={<Home />} />
@@ -82,7 +84,7 @@ function fallbackRender({ error, resetErrorBoundary }: any) {
     if (error.response.data.code === 401) {
       resetErrorBoundary();
       removeCookie("accessToken");
-      return <Login />;
+      return <Navigate to="/" />;
     }
   } else {
     return <ErrorPage resetErrorBoundary={resetErrorBoundary} />;

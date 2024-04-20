@@ -1,8 +1,5 @@
 import { atom } from "recoil";
-import {
-  NewSocialUserTypes,
-  NewUserDataTypes,
-} from "../../type/SignUp/newUserDataType";
+import { NewSocialUserTypes, NewUserDataTypes } from "../../type/SignUp/newUserDataType";
 
 export const stepNum = atom<number>({
   key: "stepNum",
@@ -16,5 +13,5 @@ export const newUserData = atom<NewUserDataTypes>({
 
 export const newSocialUser = atom<NewSocialUserTypes>({
   key: "newSocialUser",
-  default: { role: "", name: "", phone: "", isMarketing: false },
+  default: { role: "", name: "", phone: "", isMarketing: true },
 });
