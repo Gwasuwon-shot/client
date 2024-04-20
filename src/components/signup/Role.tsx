@@ -1,30 +1,24 @@
 import { useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
-import RoleCheckSignupIc from "../../assets/icon/RoleCheckSignupIc.svg";
-import RoleNoneCheckSignupIc from "../../assets/icon/RoleNoneCheckSignupIc.svg";
-import { newUserData, stepNum } from "../../atom/signup/signup";
-import { BUTTON_TEXT, ROLE_NAME, ROLE_SUB_TEXT, SIGNUP_TITLE } from "../../core/signup/signUpTextLabels";
+import { stepNum } from "../../atom/signup/signup";
+import { BUTTON_TEXT, SIGNUP_TITLE } from "../../core/signup/signUpTextLabels";
+import { BottomButton } from "../common";
 import BackButton from "../common/BackButton";
-import BottomButton from "../common/BottomButton";
 import ProgressBar from "../common/ProgressBar";
+import RoleBlock from "./RoleBlock";
 import SignupTitleLayout from "./SignupTitleLayout";
 
 export default function Role() {
-  const [role, setRole] = useState("");
   const [isActive, setIsActive] = useState(false);
   const setStep = useSetRecoilState(stepNum);
-  const [newUser, setNewUser] = useRecoilState(newUserData);
-
-  function handleRadioClick(e: React.MouseEvent<HTMLInputElement>) {
-    const target = e.target as HTMLInputElement;
-    setIsActive(true);
-    setRole(target.value);
-  }
 
   function handleDoneClick() {
-    setNewUser((prev) => ({ ...prev, role: role }));
     setStep(2);
+  }
+
+  function handleIsActive() {
+    setIsActive(true);
   }
 
   return (
@@ -32,47 +26,12 @@ export default function Role() {
       <BackButtonWrapper>
         <BackButton />
       </BackButtonWrapper>
-      <ProgressBar progress={25} />
+      <ProgressBar progress={0} />
       <Container>
         <SignupTitleLayout>{SIGNUP_TITLE.whichRole}</SignupTitleLayout>
         <RadioWrapper>
-          <RoleRapper>
-            <RadioButton
-              type="radio"
-              name="role"
-              value="선생님"
-              id="TEACHER"
-              onClick={(e: React.MouseEvent<HTMLInputElement>) => handleRadioClick(e)}
-              $RoleNoneCheckSignupIc={RoleNoneCheckSignupIc}
-              $RoleCheckSignupIc={RoleCheckSignupIc}
-            />
-            <TextWrapper>
-              <RadioNameWrapper>
-                <RadioBoldName htmlFor="TEACHER">{ROLE_NAME.teacher} </RadioBoldName>
-                <RadioPlainName htmlFor="TEACHER">{ROLE_SUB_TEXT.signupBy} </RadioPlainName>
-              </RadioNameWrapper>
-              <RadioSubName htmlFor="TEACHER"> {ROLE_SUB_TEXT.teacherText} </RadioSubName>
-            </TextWrapper>
-          </RoleRapper>
-
-          <RoleRapper>
-            <RadioButton
-              type="radio"
-              name="role"
-              value="부모님"
-              id="PARENTS"
-              onClick={(e: React.MouseEvent<HTMLInputElement>) => handleRadioClick(e)}
-              $RoleNoneCheckSignupIc={RoleNoneCheckSignupIc}
-              $RoleCheckSignupIc={RoleCheckSignupIc}
-            />
-            <TextWrapper>
-              <RadioNameWrapper>
-                <RadioBoldName htmlFor="PARENTS">{ROLE_NAME.parent} </RadioBoldName>
-                <RadioPlainName htmlFor="PARENTS">{ROLE_SUB_TEXT.signupBy} </RadioPlainName>
-              </RadioNameWrapper>
-              <RadioSubName htmlFor="PARENTS"> {ROLE_SUB_TEXT.parentsText}</RadioSubName>
-            </TextWrapper>
-          </RoleRapper>
+          <RoleBlock type="학부모님" handleIsActive={handleIsActive} />
+          <RoleBlock type="선생님" handleIsActive={handleIsActive} />
         </RadioWrapper>
       </Container>
       <BottomButton
@@ -106,8 +65,11 @@ const RoleRapper = styled.div`
   margin-left: 0.9em;
 `;
 
-const RadioButton = styled.input<{ $RoleNoneCheckSignupIc: string; $RoleCheckSignupIc: string }>`
-  background-image: url(${({ $RoleNoneCheckSignupIc }) => $RoleNoneCheckSignupIc});
+const RadioButton = styled.input<{
+  $RoleNoneCheckSignupIc: string;
+  $RoleCheckSignupIc: string;
+}>`
+  background-image: url(${(props) => props.$RoleNoneCheckSignupIc});
   background-size: cover;
 
   width: 4rem;
@@ -117,7 +79,7 @@ const RadioButton = styled.input<{ $RoleNoneCheckSignupIc: string; $RoleCheckSig
   margin-right: 2rem;
 
   &:checked {
-    background-image: url(${({ $RoleCheckSignupIc }) => $RoleCheckSignupIc});
+    background-image: url(${(props) => props.$RoleCheckSignupIc});
   }
 `;
 

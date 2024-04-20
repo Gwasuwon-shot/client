@@ -10,8 +10,8 @@ import { userRoleData } from "../../atom/loginUser/loginUser";
 import { connectLessonId } from "../../atom/registerLesson/registerLesson";
 import { lessonCode } from "../../atom/share/share";
 import { lessonCodeAndPaymentId } from "../../atom/tuitionPayment/tuitionPayment";
-import RegexField from "../signup/RegexField";
-import TextLabelLayout from "../signup/TextLabelLayout";
+import InputHint from "../signup/InputHint";
+import TextLabel from "../signup/TextLabel";
 import LoginButton from "./LoginButton";
 
 export default function LoginInput() {
@@ -84,31 +84,43 @@ export default function LoginInput() {
   return (
     <form>
       <InputEmailWrapper $email={email} $emailFocus={emailFocus}>
-        <TextLabelLayout labelText="이메일" />
+        <TextLabel>이메일</TextLabel>
         <Inputfield
           onFocus={() => setEmailFocus(true)}
           onBlur={() => setEmailFocus(false)}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handelEmailChange(e)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handelEmailChange(e)
+          }
           type="text"
           placeholder="이메일을 입력하세요."
         />
       </InputEmailWrapper>
       <InputPasswordWrapper $password={password} $pwFocus={pwFocus}>
-        <TextLabelLayout labelText="비밀번호" />
+        <TextLabel>비밀번호</TextLabel>
         <PasswordIconWrapper>
           <Inputfield
             onFocus={() => setPwFocus(true)}
             onBlur={() => setPwFocus(false)}
             autoComplete="off"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handlePasswordChange(e)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handlePasswordChange(e)
+            }
             type={pwViewing}
             placeholder="비밀번호를 입력하세요"
           />
           {viewingIcon()}
         </PasswordIconWrapper>
       </InputPasswordWrapper>
-      <LoginButton onClick={handleLoginClick} isActive={isActive} disabled={!isActive} />
-      <ErrorMessage>{isError && <RegexField unMatchText={"로그인 실패 다시 시도하십시오"} />}</ErrorMessage>
+      <LoginButton
+        onClick={handleLoginClick}
+        isActive={isActive}
+        disabled={!isActive}
+      />
+      <ErrorMessage>
+        {isError && (
+          <InputHint text="로그인 실패 다시 시도하십시오" color="red" />
+        )}
+      </ErrorMessage>
     </form>
   );
 }
@@ -122,10 +134,14 @@ const InputEmailWrapper = styled.div<{ $emailFocus: boolean; $email: string }>`
   margin-bottom: 2rem;
 
   border-bottom: 0.1rem solid
-    ${({ theme, $emailFocus, $email }) => ($emailFocus || $email ? theme.colors.green5 : theme.colors.grey70)};
+    ${({ theme, $emailFocus, $email }) =>
+      $emailFocus || $email ? theme.colors.green5 : theme.colors.grey70};
 `;
 
-const InputPasswordWrapper = styled.div<{ $pwFocus: boolean; $password: string }>`
+const InputPasswordWrapper = styled.div<{
+  $pwFocus: boolean;
+  $password: string;
+}>`
   display: flex;
   flex-direction: column;
 
@@ -134,7 +150,8 @@ const InputPasswordWrapper = styled.div<{ $pwFocus: boolean; $password: string }
   margin-bottom: 2rem;
 
   border-bottom: 0.1rem solid
-    ${({ theme, $pwFocus, $password }) => ($pwFocus || $password ? theme.colors.green5 : theme.colors.grey70)};
+    ${({ theme, $pwFocus, $password }) =>
+      $pwFocus || $password ? theme.colors.green5 : theme.colors.grey70};
 `;
 
 const Inputfield = styled.input`

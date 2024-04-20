@@ -101,3 +101,8 @@ export { ReactComponent as ManageLessonEditIc } from "./icon/manageLessonEditIc.
 export { ReactComponent as MissingMainteanceConfirmIc } from "./icon/missingMainteanceConfirmIc.svg";
 export { ReactComponent as DoneAttendanceIc } from "./icon/doneAttendanceIc.svg";
 export { ReactComponent as GotoHomeButton } from "./icon/gotoHomeButton.svg";
+export { ReactComponent as RemoveInputIc } from "./icon/RemoveInputIc.svg";
+export { ReactComponent as KakaoDefaultLoginIc } from "./icon/kakaoDefaultLoginIc.svg";
+export { ReactComponent as NaverDefaultLoginIc } from "./icon/naverDefaultLoginIc.svg";
+export { ReactComponent as KakaoUsedLoginIc } from "./icon/kakaoUsedLoginIc.svg";
+export { ReactComponent as NaverUsedLoginIc } from "./icon/naverUsedLoginIc.svg";
