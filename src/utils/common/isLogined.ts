@@ -12,6 +12,10 @@ export function isCookieAuthenticated() {
   return getCookie("accessToken") === "false";
 }
 
+export function isTempUser() {
+  return getCookie("tempToken");
+}
+
 export const isGuest = (function () {
-  return !isLogin() || isCookieNull() || isCookieAuthenticated();
+  return isTempUser() || !isLogin() || isCookieNull() || isCookieAuthenticated();
 })();

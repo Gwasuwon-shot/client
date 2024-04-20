@@ -9,10 +9,8 @@ export default function useGetLessonRegularSchedule(lessonIdx: number) {
       onError: (error) => {
         console.log(error);
       },
-    },
+    }
   );
-
-  console.log(lessonRegularSchedule);
 
   return { lessonRegularSchedule };
 }

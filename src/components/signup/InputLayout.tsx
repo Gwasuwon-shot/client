@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
 import { RemoveInputIc } from "../../assets";
-import { AUTH_CODE_PATTERN } from "../../core/signup/regex";
 import useFormattedPhoneNumber from "../../hooks/signupLogin/usePhoneNumberFormat";
 import CheckButton from "./CheckButton";
 import CountdownTimer from "./CountdownTimer";
@@ -79,6 +78,7 @@ export function InputBtnLayout({
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setIsExist(true);
     const { value } = e.target;
+    onInputChange(value);
     if (type === "tel") {
       setPhoneNumber(value);
     }
@@ -127,12 +127,10 @@ export function InputTimerLayout({
   const [isExist, setIsExist] = useState(false);
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setIsExist(true);
     const { value } = e.target;
     setInputValue(value);
-    if (AUTH_CODE_PATTERN.test(value)) {
-      onInputChange(value);
-      setIsExist(true);
-    }
+    onInputChange(value);
   }
 
   function handleClickReset() {

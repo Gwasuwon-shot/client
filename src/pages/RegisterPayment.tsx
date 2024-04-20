@@ -5,7 +5,11 @@ import styled from "styled-components";
 import { updatePaymentRecord } from "../api/updatePaymentRecord";
 import { EditPaymentIc, FruitPaymentIc } from "../assets";
 import { managingStatus } from "../atom/mangeLesson/managingStatus";
-import { openPaymentPicker, paymentDateState, paymentSuccessSnackBar } from "../atom/registerPayment/registerPayment";
+import {
+  openPaymentPicker,
+  paymentDateState,
+  paymentSuccessSnackBar,
+} from "../atom/registerPayment/registerPayment";
 import RoundBottomMiniButton from "../components/common/RoundBottomMiniButton";
 import StudentNameLabel from "../components/common/StudentNameLabel";
 import PaymentDatePicker from "../components/registerPayment/PaymentDatePicker";
@@ -20,10 +24,14 @@ export default function RegisterPayment() {
   const { studentName, subject } = useGetLessonDetail(Number(manageLessonId));
   // const [student, setStudentName] = useRecoilState<string>(studentNameState);
   // const [subjectName, setSubjectName] = useRecoilState<string>(subjectNameState);
-  const { idx, cycle, startDate, endDate } = useGetPaymentRecordCycle(Number(state?.paymentIdx));
+  const { idx, cycle, startDate, endDate } = useGetPaymentRecordCycle(
+    Number(state?.paymentIdx)
+  );
   const [successPay, setSuccessPay] = useRecoilState(paymentSuccessSnackBar);
   const [isOpenPicker, setIsOpenPicker] = useRecoilState(openPaymentPicker);
-  const [activeDateSlide, setActiveDateSlide] = useRecoilState(paymentDateState);
+  const [activeDateSlide, setActiveDateSlide] = useRecoilState(
+    paymentDateState
+  );
   const navigate = useNavigate();
   const [status, setStatus] = useRecoilState(managingStatus);
 
@@ -89,8 +97,8 @@ export default function RegisterPayment() {
           <FruitPaymentIcon />
           <Count>{state?.count}번째 결실</Count>
           <LessonDate>
-            {new Date(startDate).getMonth() + 1}.{new Date(startDate).getDate()}~{new Date(endDate).getMonth() + 1}.
-            {new Date(endDate).getDate()}
+            {new Date(startDate).getMonth() + 1}.{new Date(startDate).getDate()}
+            ~{new Date(endDate).getMonth() + 1}.{new Date(endDate).getDate()}
           </LessonDate>
         </FruitWrapper>
         <Sub>입금일</Sub>

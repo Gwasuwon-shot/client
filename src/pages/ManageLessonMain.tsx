@@ -4,19 +4,19 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { AddTreeCodeButtonManageIc } from "../assets";
 import { attendanceStatus } from "../atom/attendanceCheck/attendanceStatus";
+import { isModalOpen } from "../atom/common/isModalOpen";
 import { isSnackBarOpen } from "../atom/common/isSnackBarOpen";
 import CancelLessonMaintenanceSnackBar from "../components/common/CancelLessonMaintenanceSnackBar";
 import TeacherFooter from "../components/common/TeacherFooter";
-import MainLessons from "../components/manageLesson/MainLessons";
-import SuccessLessonMaintenanceSanckBar from "../components/modal/SuccessLessonMaintenanceSanckBar";
-import MissingMainteanceLessons from "../components/manageLesson/MissingMainteanceLessons";
-import { isModalOpen } from "../atom/common/isModalOpen";
-import ExtensionLessonModal from "../components/manageLesson/ExtensionLessonModal";
 import DeleteLessonModal from "../components/manageLesson/DeleteLessonModal";
+import ExtensionLessonModal from "../components/manageLesson/ExtensionLessonModal";
+import FinishedLessons from "../components/manageLesson/FinishedLessons";
+import MainLessons from "../components/manageLesson/MainLessons";
+import MissingMainteanceLessons from "../components/manageLesson/MissingMainteanceLessons";
+import SuccessLessonMaintenanceSanckBar from "../components/modal/SuccessLessonMaintenanceSanckBar";
 import useGetAllLessons from "../hooks/useGetAllLessons";
 import useGetMissingMaintenanceLesson from "../hooks/useGetMissingMaintenanceLesson";
 import { lessonListType } from "../type/manageLesson/lessonListType";
-import FinishedLessons from "../components/manageLesson/FinishedLessons";
 
 export default function ManageLessonMain() {
   const [snackBarOpen, setSanckBarOpen] = useRecoilState(isSnackBarOpen);
@@ -73,10 +73,16 @@ export default function ManageLessonMain() {
   return (
     <>
       {openModal && isClickedDeleteButton && (
-        <DeleteLessonModal setIsClickedDeleteButton={setIsClickedDeleteButton} setOpenModal={setOpenModal} />
+        <DeleteLessonModal
+          setIsClickedDeleteButton={setIsClickedDeleteButton}
+          setOpenModal={setOpenModal}
+        />
       )}
       {openModal && isClickedMainteance && (
-        <ExtensionLessonModal setIsClickedMainteance={setIsClickedMainteance} setIsSuccess={setIsSuccess} />
+        <ExtensionLessonModal
+          setIsClickedMainteance={setIsClickedMainteance}
+          setIsSuccess={setIsSuccess}
+        />
       )}
       {snackBarOpen && isSucces && <SuccessLessonMaintenanceSanckBar />}
       {snackBarOpen && !isSucces && <CancelLessonMaintenanceSnackBar />}
@@ -84,7 +90,9 @@ export default function ManageLessonMain() {
         <MainLessonsHeader>수업관리</MainLessonsHeader>
         <TitleWrapper>
           <Title>나의 수업</Title>
-          <EditButton onClick={EditPageClick}>{isClickedEdit ? "완료" : "편집"}</EditButton>
+          <EditButton onClick={EditPageClick}>
+            {isClickedEdit ? "완료" : "편집"}
+          </EditButton>
         </TitleWrapper>
         {missingMaintenanceLessonList && (
           <MissingMainteanceLessons
@@ -94,10 +102,16 @@ export default function ManageLessonMain() {
           />
         )}
         {teacherLessonList && (
-          <MainLessons handleConfirmDeleteLesson={handleConfirmDeleteLesson} isClickedEdit={isClickedEdit} />
+          <MainLessons
+            handleConfirmDeleteLesson={handleConfirmDeleteLesson}
+            isClickedEdit={isClickedEdit}
+          />
         )}
         {finishedLessonList && (
-          <FinishedLessons handleConfirmDeleteLesson={handleConfirmDeleteLesson} isClickedEdit={isClickedEdit} />
+          <FinishedLessons
+            handleConfirmDeleteLesson={handleConfirmDeleteLesson}
+            isClickedEdit={isClickedEdit}
+          />
         )}
         <AddTreeCodeButtonManageIcon onClick={handleMakeTreeCode} />
       </MainLessonsWrapper>

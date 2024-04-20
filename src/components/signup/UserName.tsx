@@ -1,7 +1,6 @@
-import styled from "styled-components";
-// import AgreeChecking from "./AgreeChecking";
 import { useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
+import styled from "styled-components";
 import { newSocialUser, stepNum } from "../../atom/signup/signup";
 import { BUTTON_TEXT } from "../../core/signup/signUpTextLabels";
 import useReverseRole from "../../hooks/signupLogin/useReverseRole";
@@ -102,31 +101,4 @@ const ButtonText = styled.p`
 
   top: -1rem;
   ${({ theme }) => theme.fonts.body01};
-`;
-
-const InputNameWrapper = styled.div<{ $nameFocus: boolean; $isName: boolean }>`
-  display: flex;
-  flex-direction: column;
-
-  width: 28rem;
-
-  margin-top: 3.2rem;
-
-  border-bottom: 0.1rem solid
-    ${({ theme, $nameFocus, $isName }) =>
-      $nameFocus || $isName ? theme.colors.green5 : theme.colors.grey70};
-`;
-
-const InputField = styled.input`
-  padding: 0;
-  height: 2rem;
-  margin-top: 1em;
-  margin-bottom: 1.1rem;
-  margin-left: 0.2rem;
-  ${({ theme }) => theme.fonts.title03};
-
-  &textarea::placeholder {
-    color: ${({ theme }) => theme.colors.grey400};
-    ${({ theme }) => theme.fonts.title03};
-  }
 `;

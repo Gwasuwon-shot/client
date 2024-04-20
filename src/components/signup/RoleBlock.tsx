@@ -17,7 +17,11 @@ export default function RoleBlock(props: RoleBlockProps) {
 
   function handleRadioClick(e: React.MouseEvent<HTMLInputElement>) {
     const target = e.target as HTMLInputElement;
-    setNewUser((prev) => ({ ...prev, role: target.value }));
+    if (target.value === "학부모님") {
+      setNewUser((prev) => ({ ...prev, role: "부모님" }));
+    } else {
+      setNewUser((prev) => ({ ...prev, role: target.value }));
+    }
     handleIsActive();
   }
 
@@ -35,15 +39,10 @@ export default function RoleBlock(props: RoleBlockProps) {
       <TextWrapper>
         <RadioNameWrapper>
           <RadioBoldName htmlFor={type}>{type}</RadioBoldName>
-          <RadioPlainName htmlFor={type}>
-            {ROLE_SUB_TEXT.signupBy}
-          </RadioPlainName>
+          <RadioPlainName htmlFor={type}>{ROLE_SUB_TEXT.signupBy}</RadioPlainName>
         </RadioNameWrapper>
         <RadioSubName htmlFor={type}>
-          {" "}
-          {type === "선생님"
-            ? ROLE_SUB_TEXT.teacherText
-            : ROLE_SUB_TEXT.parentsText}
+          {type === "선생님" ? ROLE_SUB_TEXT.teacherText : ROLE_SUB_TEXT.parentsText}
         </RadioSubName>
       </TextWrapper>
     </RoleRapper>
