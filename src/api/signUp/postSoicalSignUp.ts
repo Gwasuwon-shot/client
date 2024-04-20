@@ -17,8 +17,7 @@ export async function postSocialSignUp(newUser: NewSocialUserTypes) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getCookie("accessToken")}`,
       },
-    }
+    },
   );
-  removeCookie("status");
   return data;
 }

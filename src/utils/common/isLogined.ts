@@ -13,11 +13,9 @@ export function isCookieAuthenticated() {
 }
 
 export function isTempUser() {
-  return getCookie("status") === "temp";
+  return getCookie("tempToken");
 }
 
 export const isGuest = (function () {
-  return (
-    isTempUser() || !isLogin() || isCookieNull() || isCookieAuthenticated()
-  );
+  return isTempUser() || !isLogin() || isCookieNull() || isCookieAuthenticated();
 })();

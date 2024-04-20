@@ -3,40 +3,61 @@ import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { removeCookie, setCookie } from "../../api/cookie";
 import { postLoginTempSignup } from "../../api/signUp/postLoginTempSignup";
+import { useSetRecoilState } from "recoil";
+import { userRoleData } from "../../atom/loginUser/loginUser";
 
 interface usePostLoginTempSignupProps {
   socialToken: string;
   provider: string;
 }
 
+interface tempSignResType {
+  accessToken: string;
+  refreshToken: string;
+  user: {
+    name: string;
+    role: "부모님" | "선생님";
+  };
+}
+
 export default function usePostLoginTempSignup() {
   const navigate = useNavigate();
+  const setUserRole = useSetRecoilState(userRoleData);
 
-  setCookie("status", "temp", {
-    secure: true,
-  });
+  const setTempToken = (data: tempSignResType) => {
+    setCookie("tempToken", data.accessToken, {
+      secure: true,
+    });
+  };
+
+  const setToken = (data: tempSignResType) => {
+    setUserRole(data.user.role);
+    removeCookie("tempToken");
+
+    setCookie("accessToken", data.accessToken, {
+      secure: true,
+      path: "/",
+    });
+
+    // setCookie("refreshToken", data.refreshToken, {
+    //   secure: true,
+    //   path: "/",
+    // });
+  };
 
   const mutation = useMutation({
-    mutationFn: async ({
-      socialToken,
-      provider,
-    }: usePostLoginTempSignupProps) => {
+    mutationFn: async ({ socialToken, provider }: usePostLoginTempSignupProps) => {
       return await postLoginTempSignup({
         socialToken,
         provider,
       });
     },
     onSuccess: (data) => {
-      setCookie("accessToken", data.data.accessToken, {
-        secure: true,
-      });
-      setCookie("refreshToken", data.data.refreshToken, {
-        secure: true,
-      });
       if (data.code === 200) {
-        removeCookie("status");
+        setToken(data.data);
         navigate("/home");
       } else {
+        setTempToken(data.data);
         navigate("/signup");
       }
     },
