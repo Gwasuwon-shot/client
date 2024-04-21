@@ -7,7 +7,7 @@ export default function NoClassParentsHome() {
   const navigate = useNavigate();
 
   function handleMoveToOnboarding() {
-    navigate("/");
+    // navigate("/");
   }
 
   return (
