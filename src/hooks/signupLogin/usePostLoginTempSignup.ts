@@ -52,7 +52,6 @@ export default function usePostLoginTempSignup() {
       });
     },
     onSuccess: (data) => {
-      console.log(data.data.user.role);
       setUserRole(data.data.user.role);
       if (data.code === 200) {
         setToken(data.data);

@@ -9,11 +9,6 @@ interface useGetLoginTokenProps {
 
 const useGetLoginToken = (props: useGetLoginTokenProps) => {
   const { handleLoginToken } = props;
-
-  setCookie("lastLogin", "kakao", {
-    secure: true,
-  });
-
   const mutation = useMutation({
     mutationFn: async () => {
       return await getLoginAuthToken();

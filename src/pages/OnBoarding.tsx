@@ -10,7 +10,7 @@ import { styled } from "styled-components";
 import { SLIDER_SETTINGS } from "../core/OnBoarding";
 
 import { Link, Navigate } from "react-router-dom";
-import { getCookie } from "../api/cookie";
+import { getCookie, setCookie } from "../api/cookie";
 import { KakaoDefaultLoginIc, KakaoUsedLoginIc, NaverDefaultLoginIc, NaverUsedLoginIc } from "../assets";
 import { KAKAO_AUTH_URL } from "../core/Login/kakaoPath";
 import { isGuest } from "../utils/common/isLogined";
@@ -35,10 +35,18 @@ export default function OnBoarding() {
   }, []);
 
   const navigateToKaKao = () => {
+    setCookie("lastLogin", "kakao", {
+      secure: true,
+    });
+
     window.location.href = KAKAO_AUTH_URL;
   };
 
   const navigateToNaver = () => {
+    setCookie("lastLogin", "kakao", {
+      secure: true,
+    });
+
     (naverRef.current?.children[0] as HTMLElement)?.click();
   };
 
@@ -63,7 +71,7 @@ export default function OnBoarding() {
 
         <ButtonWrapper>
           <NaverLoginFeat ref={naverRef} id="naverIdLogin">
-            네이버 테스트{" "}
+            네이버 테스트
           </NaverLoginFeat>
           {lastLogin === "naver" ? (
             <NaverUsedLogin onClick={navigateToNaver} />
