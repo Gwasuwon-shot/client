@@ -14,6 +14,13 @@ const queryClient = new QueryClient({
   },
 });
 
+declare global {
+  interface Window {
+    Kakao: any;
+    naver: any;
+  }
+}
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <CookiesProvider>
     <QueryClientProvider client={queryClient}>
