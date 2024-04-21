@@ -5,6 +5,7 @@ import { useMutation } from "react-query";
 import { patchLogout } from "../../api/patchLogout";
 import { useNavigate } from "react-router-dom";
 import { getCookie, removeCookie } from "../../api/cookie";
+import { isLogin } from "../../utils/common/isLogined";
 
 interface LogoutModalProps {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,7 +23,9 @@ export default function LogoutModal(props: LogoutModalProps) {
   const { mutate: patchingLogout } = useMutation(patchLogout, {
     onSuccess: (res) => {
       removeCookie("accessToken", {});
-      navigate("/");
+      if (!isLogin()) {
+        navigate("/");
+      }
     },
     onError: (err) => {
       console.log(err);
