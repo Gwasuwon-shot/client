@@ -10,10 +10,5 @@ export default function Home() {
     return userRole === "선생님";
   }
 
-  return (
-    <>
-      <div id="naverIdLogin"></div>
-      {checkIsTeacher() ? <TeacherHome /> : <ParentsHome />}
-    </>
-  );
+  return <>{checkIsTeacher() ? <TeacherHome /> : <ParentsHome />}</>;
 }

@@ -43,7 +43,7 @@ export default function OnBoarding() {
   };
 
   const navigateToNaver = () => {
-    setCookie("lastLogin", "kakao", {
+    setCookie("lastLogin", "naver", {
       secure: true,
     });
 
