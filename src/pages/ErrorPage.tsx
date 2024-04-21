@@ -14,7 +14,7 @@ export default function ErrorPage(prop: ErrorProps) {
 
   function handleMoveToHome() {
     resetErrorBoundary();
-    navigate("/home");
+    navigate("/");
   }
 
   return (

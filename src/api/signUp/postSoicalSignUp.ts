@@ -15,7 +15,7 @@ export async function postSocialSignUp(newUser: NewSocialUserTypes) {
     {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${getCookie("accessToken")}`,
+        Authorization: `Bearer ${getCookie("tempToken")}`,
       },
     },
   );
