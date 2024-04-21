@@ -14,38 +14,31 @@ import { getCookie } from "../api/cookie";
 import { KakaoDefaultLoginIc, KakaoUsedLoginIc, NaverDefaultLoginIc, NaverUsedLoginIc } from "../assets";
 import { KAKAO_AUTH_URL } from "../core/Login/kakaoPath";
 import { isGuest } from "../utils/common/isLogined";
-import { NAVER_AUTH_URL, NAVER_CLIENT_ID, NAVER_REDIRECT_URI } from "../core/Login/naverPath";
+import { NAVER_CLIENT_ID, NAVER_REDIRECT_URI } from "../core/Login/naverPath";
 import { useEffect, useRef } from "react";
 
 export default function OnBoarding() {
   const { naver } = window;
-  console.log(NAVER_AUTH_URL);
   const naverRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let naverLogin = new window.naver.LoginWithNaverId({
+    const naverLogin = new window.naver.LoginWithNaverId({
       clientId: NAVER_CLIENT_ID,
       callbackUrl: NAVER_REDIRECT_URI,
-      loginButton: { color: "white", type: 3, height: "50" },
+      callbackHandle: true,
+      loginButton: {
+        color: "black",
+        type: 1,
+      },
     });
     naverLogin.init();
-    naverLogin.logout();
-    try {
-      naverLogin.getLoginStatus((status: any) => {
-        console.log(naverLogin.user);
-        if (status) {
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
   }, []);
 
   const navigateToKaKao = () => {
     window.location.href = KAKAO_AUTH_URL;
   };
 
-  const navigateToNaver = () => {=
+  const navigateToNaver = () => {
     (naverRef.current?.children[0] as HTMLElement)?.click();
   };
 
