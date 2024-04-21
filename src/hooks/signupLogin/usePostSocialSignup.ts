@@ -1,6 +1,6 @@
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { setCookie } from "../../api/cookie";
+import { getCookie, setCookie } from "../../api/cookie";
 import { postSocialSignUp } from "../../api/signUp/postSoicalSignUp";
 import { NewSocialUserTypes } from "../../type/SignUp/newUserDataType";
 
@@ -18,7 +18,10 @@ export default function usePostSocialSignup(newUser: NewSocialUserTypes) {
       setCookie("refreshToken", data.data.refreshToken, {
         secure: true,
       });
-      navigate("/home");
+
+      if (getCookie("accessToken") !== "") {
+        navigate("/home");
+      }
     },
     onError: (error) => {
       console.log(error);

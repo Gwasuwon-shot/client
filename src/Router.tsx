@@ -34,6 +34,7 @@ import TimePickerPage from "./pages/TimePickerPage";
 import TuitionPayment from "./pages/TuitionPayment";
 import WelcomeSignup from "./pages/WelcomeSignup";
 import PrivateRoute from "./utils/common/privateRoute";
+import NaverRedirect from "./pages/NaverRedirect";
 
 export default function Router() {
   return (
@@ -48,6 +49,7 @@ export default function Router() {
             <Route path="/login" element={<Login />} />
             <Route path="/lesson-share" element={<LessonShare />} />
             <Route path="/login-loading" element={<LoginLoading />} />
+            <Route path="/naver-redirect" element={<NaverRedirect />} />
 
             <Route element={<PrivateRoute authentication={true} />}>
               <Route path="/home" element={<Home />} />
