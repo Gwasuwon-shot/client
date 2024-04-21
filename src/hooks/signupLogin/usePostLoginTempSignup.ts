@@ -31,7 +31,6 @@ export default function usePostLoginTempSignup() {
   };
 
   const setToken = (data: tempSignResType) => {
-    setUserRole(data.user.role);
     removeCookie("tempToken");
 
     setCookie("accessToken", data.accessToken, {
@@ -53,6 +52,7 @@ export default function usePostLoginTempSignup() {
       });
     },
     onSuccess: (data) => {
+      setUserRole(data.data.user.role);
       if (data.code === 200) {
         setToken(data.data);
         navigate("/home");
