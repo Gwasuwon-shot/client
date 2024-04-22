@@ -47,7 +47,9 @@ export default function Landing() {
       secure: true,
     });
 
-    (naverRef.current?.children[0] as HTMLElement)?.click();
+    if (naverRef.current && naverRef.current.children[0]) {
+      (naverRef.current.children[0] as HTMLElement).click();
+    }
   };
 
   const lastLogin = getCookie("lastLogin");
