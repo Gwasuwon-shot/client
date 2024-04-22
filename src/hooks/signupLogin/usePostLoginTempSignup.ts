@@ -1,9 +1,9 @@
 // src/hooks/useSocialLogin.js
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import { removeCookie, setCookie } from "../../api/cookie";
 import { postLoginTempSignup } from "../../api/signUp/postLoginTempSignup";
-import { useSetRecoilState } from "recoil";
 import { userRoleData } from "../../atom/loginUser/loginUser";
 
 interface usePostLoginTempSignupProps {
@@ -52,8 +52,8 @@ export default function usePostLoginTempSignup() {
       });
     },
     onSuccess: (data) => {
-      setUserRole(data.data.user.role);
       if (data.code === 200) {
+        setUserRole(data.data.user.role);
         setToken(data.data);
         navigate("/home");
       } else {
