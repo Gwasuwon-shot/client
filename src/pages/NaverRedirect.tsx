@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import usePostLoginTempSignup from "../hooks/signupLogin/usePostLoginTempSignup";
 import { getNaverUserInfo } from "../api/naver/getNaverUserInfo";
+import usePostLoginTempSignup from "../hooks/signupLogin/usePostLoginTempSignup";
 
 export default function NaverRedirect() {
   const [auth, setAuth] = useState("");
@@ -10,6 +10,7 @@ export default function NaverRedirect() {
   useEffect(() => {
     async function fetchAndSetUserInfo() {
       const token = window.location.href.split("=")[1].split("&")[0];
+      console.log(token);
       try {
         const socialId = await getNaverUserInfo(token);
         setAuth(socialId);
@@ -18,7 +19,9 @@ export default function NaverRedirect() {
       }
     }
 
-    fetchAndSetUserInfo();
+    if (window.location.href) {
+      fetchAndSetUserInfo();
+    }
   }, []);
 
   useEffect(() => {
