@@ -1,8 +1,7 @@
 import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
+import { ProxyOptions, defineConfig } from "vite";
 import svgr from "vite-plugin-svgr";
 import tsconfigPaths from "vite-tsconfig-paths";
-import { ProxyOptions } from "vite";
 
 // 프록시 설정
 const proxy: Record<string, string | ProxyOptions> = {

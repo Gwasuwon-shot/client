@@ -17,20 +17,21 @@ import { SLIDER_SETTINGS } from "../core/OnBoarding";
 import { isGuest } from "../utils/common/isLogined";
 
 export default function Landing() {
-  const { naver } = window;
   const naverRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const naverLogin = new window.naver.LoginWithNaverId({
-      clientId: NAVER_CLIENT_ID,
-      callbackUrl: NAVER_REDIRECT_URI,
-      callbackHandle: true,
-      loginButton: {
-        color: "black",
-        type: 1,
-      },
-    });
-    naverLogin.init();
+    if (window.naver) {
+      const naverLogin = new window.naver.LoginWithNaverId({
+        clientId: NAVER_CLIENT_ID,
+        callbackUrl: NAVER_REDIRECT_URI,
+        callbackHandle: true,
+        loginButton: {
+          color: "black",
+          type: 1,
+        },
+      });
+      naverLogin.init();
+    }
   }, []);
 
   const navigateToKaKao = () => {
