@@ -77,6 +77,7 @@ export { ReactComponent as MyActiveTeacherFooterIc } from "./icon/myActiveTeache
 export { ReactComponent as MyPageUnselectedParentsHomeIc } from "./icon/myPageUnselectedParentsHomeIc.svg";
 export { ReactComponent as MyTeacherFooterIc } from "./icon/myTeacherFooterIc.svg";
 export { ReactComponent as NaverDefaultLoginIc } from "./icon/naverDefaultLoginIc.svg";
+export { ReactComponent as NaverUsedLoginIc } from "./icon/naverUsedLoginIc.svg";
 export { ReactComponent as NextArrowManageLessonIc } from "./icon/nextArrowManageLessonIc.svg";
 export { ReactComponent as nextArrowWelcomeIc } from "./icon/nextArrowWelcomeIc.svg";
 export { ReactComponent as NoClassLogoTeacherHomeIc } from "./icon/noClassLogoTeacherHomeIc.svg";
@@ -105,7 +106,7 @@ export { ReactComponent as TuticeWithTextCommonIc } from "./icon/tuticeWithTextC
 export { ReactComponent as UpcomingClassLogoTeacherHomeIc } from "./icon/upcomingClassLogoTeacherHomeIc.svg";
 export { ReactComponent as XButtonSnackBarIc } from "./icon/xButtonSnackBarIc.svg";
 export { ReactComponent as CancelButton } from "./icon/x_btn.svg";
-export { ReactComponent as OnBoardingFourImg } from "./image/onBoardingFourImg.svg";
-export { ReactComponent as OnBoardingOneImg } from "./image/onBoardingOneImg.svg";
-export { ReactComponent as OnBoardingThreeImg } from "./image/onBoardingThreeImg.svg";
-export { ReactComponent as OnBoardingTwoImg } from "./image/onBoardingTwoImg.svg";
+// export { ReactComponent as OnBoardingFourImg } from "./image/onBoardingFourImg.svg";
+// export { ReactComponent as OnBoardingOneImg } from "./image/onBoardingOneImg.svg";
+// export { ReactComponent as OnBoardingThreeImg } from "./image/onBoardingThreeImg.svg";
+// export { ReactComponent as OnBoardingTwoImg } from "./image/onBoardingTwoImg.svg";

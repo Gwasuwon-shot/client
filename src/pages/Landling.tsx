@@ -1,3 +1,4 @@
+import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { styled } from "styled-components";
@@ -7,8 +8,12 @@ import { Link, Navigate } from "react-router-dom";
 import { getCookie, setCookie } from "../api/cookie";
 import { KakaoDefaultLoginIc, KakaoUsedLoginIc, NaverDefaultLoginIc, NaverUsedLoginIc } from "../assets";
 import FirstSwiper from "../components/OnBoarding/FirstSwiper";
+import FourthSwiper from "../components/OnBoarding/FourthSwiper";
+import SecondSwiper from "../components/OnBoarding/SecondSwiper";
+import ThirdSwiper from "../components/OnBoarding/ThirdSwiper";
 import { KAKAO_AUTH_URL } from "../core/Login/kakaoPath";
 import { NAVER_CLIENT_ID, NAVER_REDIRECT_URI } from "../core/Login/naverPath";
+import { SLIDER_SETTINGS } from "../core/OnBoarding";
 import { isGuest } from "../utils/common/isLogined";
 
 export default function Landing() {
@@ -49,17 +54,17 @@ export default function Landing() {
   if (!isGuest) {
     return <Navigate to="/home" replace />;
   }
+  const SwiperPages = [<FirstSwiper />, <SecondSwiper />, <ThirdSwiper />, <FourthSwiper />];
 
   return (
     <>
       <OnBoardingWrapper>
         <SliderWrapper>
-          <FirstSwiper />
-          {/* <Slider {...SLIDER_SETTINGS}>
+          <Slider {...SLIDER_SETTINGS}>
             {SwiperPages.map((page, idx) => {
               return <article key={idx}>{page}</article>;
             })}
-          </Slider> */}
+          </Slider>
         </SliderWrapper>
 
         <ButtonWrapper>
@@ -140,7 +145,7 @@ const GoToLoginMessage = styled.p`
 
   margin-top: 2rem;
 
-  ${({ theme }) => theme.fonts.body02};
+  ${({ theme }) => theme.fonts.body07};
 
   color: #7c7e7e;
 
