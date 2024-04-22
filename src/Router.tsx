@@ -11,6 +11,7 @@ import CompleteCheckAttendance from "./pages/CompleteCheckAttendance";
 import EditShcedule from "./pages/EditSchedule";
 import ErrorPage from "./pages/ErrorPage";
 import Home from "./pages/Home";
+import Landing from "./pages/Landling";
 import LessonDetail from "./pages/LessonDetail";
 import LessonInfo from "./pages/LessonInfo";
 import LessonShare from "./pages/LessonShare";
@@ -20,6 +21,7 @@ import LoginLoading from "./pages/LoginLoading";
 import ManageLessonDetail from "./pages/ManageLessonDetail";
 import ManageLessonMain from "./pages/ManageLessonMain";
 import MyPage from "./pages/Mypage";
+import NaverRedirect from "./pages/NaverRedirect";
 import NoAttendanceCheck from "./pages/NoAttendanceCheck";
 import OnBoarding from "./pages/OnBoarding";
 import ParentCalendar from "./pages/ParentCalendar";
@@ -34,7 +36,6 @@ import TimePickerPage from "./pages/TimePickerPage";
 import TuitionPayment from "./pages/TuitionPayment";
 import WelcomeSignup from "./pages/WelcomeSignup";
 import PrivateRoute from "./utils/common/privateRoute";
-import NaverRedirect from "./pages/NaverRedirect";
 
 export default function Router() {
   return (
@@ -42,7 +43,8 @@ export default function Router() {
       <ErrorBoundary FallbackComponent={fallbackRender}>
         <Suspense fallback={<Loading />}>
           <Routes>
-            <Route path="/" element={<OnBoarding />} />
+            <Route path="/" element={<Landing />} />
+            <Route path="/on-boarding" element={<OnBoarding />} />
             <Route path="/welcome" element={<WelcomeSignup />} />
             <Route path="/:lessonId" element={<ConnectParentsAndTeacher />} />
             <Route path="/signup" element={<Signup />} />

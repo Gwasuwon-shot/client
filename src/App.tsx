@@ -10,7 +10,6 @@ export default function App() {
     <RecoilRoot>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-
         <Router />
       </ThemeProvider>
     </RecoilRoot>

@@ -6,57 +6,14 @@ import ThirdSwiper from "../components/OnBoarding/ThirdSwiper";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import { styled } from "styled-components";
+import styled from "styled-components";
+import { BottomButton } from "../components/common";
 import { SLIDER_SETTINGS } from "../core/OnBoarding";
 
-import { Link, Navigate } from "react-router-dom";
-import { getCookie, setCookie } from "../api/cookie";
-import { KakaoDefaultLoginIc, KakaoUsedLoginIc, NaverDefaultLoginIc, NaverUsedLoginIc } from "../assets";
-import { KAKAO_AUTH_URL } from "../core/Login/kakaoPath";
-import { isGuest } from "../utils/common/isLogined";
-import { NAVER_CLIENT_ID, NAVER_REDIRECT_URI } from "../core/Login/naverPath";
-import { useEffect, useRef } from "react";
-
 export default function OnBoarding() {
-  const { naver } = window;
-  const naverRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const naverLogin = new window.naver.LoginWithNaverId({
-      clientId: NAVER_CLIENT_ID,
-      callbackUrl: NAVER_REDIRECT_URI,
-      callbackHandle: true,
-      loginButton: {
-        color: "black",
-        type: 1,
-      },
-    });
-    naverLogin.init();
-  }, []);
-
-  const navigateToKaKao = () => {
-    setCookie("lastLogin", "kakao", {
-      secure: true,
-    });
-
-    window.location.href = KAKAO_AUTH_URL;
-  };
-
-  const navigateToNaver = () => {
-    setCookie("lastLogin", "naver", {
-      secure: true,
-    });
-
-    (naverRef.current?.children[0] as HTMLElement)?.click();
-  };
-
-  const lastLogin = getCookie("lastLogin");
-
   const SwiperPages = [<FirstSwiper />, <SecondSwiper />, <ThirdSwiper />, <FourthSwiper />];
 
-  if (!isGuest) {
-    return <Navigate to="/home" replace />;
-  }
+  const handleClickBtn = () => {};
 
   return (
     <>
@@ -68,28 +25,10 @@ export default function OnBoarding() {
             })}
           </Slider>
         </SliderWrapper>
-
-        <ButtonWrapper>
-          <NaverLoginFeat ref={naverRef} id="naverIdLogin">
-            네이버 테스트
-          </NaverLoginFeat>
-          {lastLogin === "naver" ? (
-            <NaverUsedLogin onClick={navigateToNaver} />
-          ) : (
-            <NaverLogin onClick={navigateToNaver} />
-          )}
-          {lastLogin === "kakao" ? (
-            <KakaoUsedLogin onClick={navigateToKaKao} />
-          ) : (
-            <KakaoLogin onClick={navigateToKaKao} />
-          )}
-        </ButtonWrapper>
-
-        <GoToLoginMessage>
-          계속함으로써&nbsp;<Link to="/">이용약관</Link>&nbsp;및&nbsp;
-          <Link to="/">개인정보처리방침</Link>에 동의합니다
-        </GoToLoginMessage>
       </OnBoardingWrapper>
+      <BottomButton disabled={false} isActive={true} onClick={handleClickBtn}>
+        저장
+      </BottomButton>
     </>
   );
 }
@@ -102,7 +41,8 @@ const SliderWrapper = styled.section`
   margin-bottom: 5.863rem;
 
   & > .slick-slider > .slick-dots {
-    bottom: -2.863rem;
+    top: 0; /* 상단에 위치시키기 */
+    bottom: auto; /* 기본 위치 해제 */
   }
 
   & > .slick-slider > .slick-dots > li {
@@ -128,52 +68,6 @@ const SliderWrapper = styled.section`
   & > .slick-slider > .slick-dots > .slick-active > button::before {
     opacity: 1;
 
-    color: ${({ theme }) => theme.colors.green5};
+    color: ${({ theme }) => theme.colors.sementic_red};
   }
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1rem;
-`;
-
-const GoToLoginMessage = styled.p`
-  display: flex;
-  justify-content: center;
-
-  margin-top: 2rem;
-
-  ${({ theme }) => theme.fonts.body02};
-
-  color: #7c7e7e;
-
-  > a {
-    color: ${({ theme }) => theme.colors.grey900};
-  }
-`;
-
-const NaverLogin = styled(NaverDefaultLoginIc)`
-  width: 100%;
-  height: 100%;
-`;
-
-const NaverUsedLogin = styled(NaverUsedLoginIc)`
-  width: 100%;
-  height: 100%;
-`;
-
-const KakaoLogin = styled(KakaoDefaultLoginIc)`
-  width: 100%;
-  height: 100%;
-`;
-
-const KakaoUsedLogin = styled(KakaoUsedLoginIc)`
-  width: 100%;
-  height: 100%;
-`;
-
-const NaverLoginFeat = styled.div`
-  display: none;
 `;
