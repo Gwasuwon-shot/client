@@ -23,13 +23,11 @@ const CheckButtonWrapper = styled.button<{ $isActive: boolean }>`
   padding: 0.8rem;
   margin-right: 0.8rem;
 
-  border: 1px solid
-    ${({ $isActive, theme }) =>
-      $isActive ? theme.colors.green4 : theme.colors.grey70};
-  background-color: ${({ $isActive, theme }) =>
-    $isActive ? theme.colors.green5 : theme.colors.grey70};
-  color: ${({ $isActive, theme }) =>
-    $isActive ? theme.colors.grey0 : theme.colors.grey300};
+  ${({ theme }) => theme.fonts.body03};
+
+  border: 1px solid ${({ $isActive, theme }) => ($isActive ? theme.colors.green4 : theme.colors.grey70)};
+  background-color: ${({ $isActive, theme }) => ($isActive ? theme.colors.green5 : theme.colors.grey70)};
+  color: ${({ $isActive, theme }) => ($isActive ? theme.colors.grey0 : theme.colors.grey300)};
   border-radius: 0.8rem;
   ${({ theme }) => theme.fonts.body03};
 

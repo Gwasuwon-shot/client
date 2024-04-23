@@ -30,8 +30,8 @@ export default function Role() {
       <Container>
         <SignupTitleLayout>{SIGNUP_TITLE.whichRole}</SignupTitleLayout>
         <RadioWrapper>
-          <RoleBlock type="학부모님" handleIsActive={handleIsActive} />
           <RoleBlock type="선생님" handleIsActive={handleIsActive} />
+          <RoleBlock type="학부모님" handleIsActive={handleIsActive} />
         </RadioWrapper>
       </Container>
       <BottomButton

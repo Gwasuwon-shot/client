@@ -7,10 +7,8 @@ function useFormattedPhoneNumber(): [string, (inputValue: string) => void] {
     const digits = inputValue.replace(/\D/g, "");
     let formatted = "";
 
-    if (digits.length > 6) {
-      formatted = `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(
-        7
-      )}`;
+    if (digits.length > 7) {
+      formatted = `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
     } else if (digits.length > 3) {
       formatted = `${digits.slice(0, 3)}-${digits.slice(3)}`;
     } else {
