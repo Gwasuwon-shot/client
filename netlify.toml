@@ -1,5 +1,5 @@
 [[redirects]]
-  from = "/api/*"
+  from = "/proxy/*"
   to = "https://openapi.naver.com/:splat"
   status = 200
   force = true
