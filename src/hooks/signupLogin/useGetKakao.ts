@@ -1,5 +1,5 @@
 import { useMutation } from "react-query";
-import { setCookie } from "../../api/cookie";
+import { useNavigate } from "react-router-dom";
 import { getLoginAuthToken } from "../../api/kakao/getKakaoAuthToken";
 import { getKakaoUserInfo } from "../../api/kakao/getKakaoUserInfo";
 
@@ -9,12 +9,13 @@ interface useGetLoginTokenProps {
 
 const useGetLoginToken = (props: useGetLoginTokenProps) => {
   const { handleLoginToken } = props;
+  const navigate = useNavigate();
   const mutation = useMutation({
     mutationFn: async () => {
       return await getLoginAuthToken();
     },
-    onError: (error) => {
-      console.log(error);
+    onError: () => {
+      navigate("/");
     },
     onSuccess: async (data) => {
       const UserId = await getKakaoUserInfo(data.access_token);
