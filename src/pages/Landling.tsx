@@ -21,7 +21,7 @@ export default function Landing() {
   const naverRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (window.naver) {
+    if (window.naver && naverRef.current) {
       const naverLogin = new window.naver.LoginWithNaverId({
         clientId: NAVER_CLIENT_ID,
         callbackUrl: NAVER_REDIRECT_URI,

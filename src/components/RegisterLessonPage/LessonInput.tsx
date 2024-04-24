@@ -13,6 +13,17 @@ interface SubjectInputSectionProp {
   $subjectFocused: boolean;
 }
 
+const SUBJECTS = [
+  { name: "국어" },
+  { name: "영어" },
+  { name: "수학" },
+  { name: "사회" },
+  { name: "과학" },
+  { name: "논술" },
+  { name: "미술" },
+  { name: "음악" },
+];
+
 export default function LessonInput() {
   // 1. 학생이름 / 과목이름에 Focus 되었는지 여부 관리
   const [isNameInputFocused, setNameInputFocused] = useState(false);
@@ -56,6 +67,10 @@ export default function LessonInput() {
     setNameInputFocused(false);
   }
 
+  function onClickSubjectChip(e: React.MouseEvent<HTMLDivElement>) {
+    setSubjectName(e.currentTarget.textContent || "");
+  }
+
   return (
     <InputWrapper>
       <NameInputSection $nameFocused={isNameInputFocused}>
@@ -71,20 +86,39 @@ export default function LessonInput() {
         {isNameInputFocused && <RegisterLessonInputIcon onClick={handleNameDelete} />}
       </NameInputSection>
 
-      <SubjectInputSection $subjectFocused={isSubjectInputFocused} $isWarning={isWarning}>
+      <SubjectInputSection>
         <InputName> 과목 </InputName>
-        <SubjectInput
-          type="text"
-          placeholder="수업과목을 입력하세요"
-          value={subjectName}
-          onChange={handleSubjectInputChange}
-          onFocus={handleSubjectInputFocus}
-        />
+        <ChipWrapper>
+          {SUBJECTS.map((subject, index) => {
+            return (
+              <SubjectChip onClick={(e) => onClickSubjectChip(e)} $isClicked={subjectName === subject.name} key={index}>
+                {subject.name}
+              </SubjectChip>
+            );
+          })}
+        </ChipWrapper>
+
         {isSubjectInputFocused && <RegisterLessonInputIcon onClick={handleLessonDelete} />}
       </SubjectInputSection>
     </InputWrapper>
   );
 }
+const ChipWrapper = styled.div`
+  gap: 1rem;
+  display: flex;
+  width: 30rem;
+  flex-wrap: wrap;
+`;
+
+const SubjectChip = styled.div<{ $isClicked: boolean }>`
+  border-radius: 0.4rem;
+
+  ${({ theme }) => theme.fonts.body03};
+  color: ${({ theme, $isClicked }) => ($isClicked ? theme.colors.green1 : theme.colors.grey300)};
+  padding: 0.6rem 1.5rem;
+  background-color: ${({ theme, $isClicked }) => ($isClicked ? theme.colors.green5 : theme.colors.grey50)};
+  width: fit-content;
+`;
 
 const InputWrapper = styled.div`
   display: flex;
@@ -108,7 +142,7 @@ const NameInputSection = styled.section<NameInputSectionProp>`
   border-bottom: 1px solid ${({ theme, $nameFocused }) => ($nameFocused ? theme.colors.green5 : theme.colors.grey70)};
 `;
 
-const SubjectInputSection = styled.section<SubjectInputSectionProp & { $isWarning: boolean }>`
+const SubjectInputSection = styled.section`
   display: flex;
   flex-direction: column;
 
@@ -116,10 +150,7 @@ const SubjectInputSection = styled.section<SubjectInputSectionProp & { $isWarnin
 
   width: 29.2rem;
   height: 5.6rem;
-  margin-top: ${({ $isWarning }) => ($isWarning ? "1.3rem" : "0")};
-
-  border-bottom: 1px solid
-    ${({ theme, $subjectFocused }) => ($subjectFocused ? theme.colors.green5 : theme.colors.grey70)};
+  margin-top: "1.3rem";
 `;
 
 const InputName = styled.h1`
