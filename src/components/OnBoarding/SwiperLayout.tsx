@@ -8,25 +8,22 @@ interface SwiperLayoutProps {
 
 export default function SwiperLayout({ text, img }: SwiperLayoutProps) {
   return (
-    <>
-      <FirstSwiperContainer>
-        <FirstSwiperTitle>
-          {text[0]}
-          <br /> <span>{text[1]}</span>
-        </FirstSwiperTitle>
+    <FirstSwiperContainer>
+      <FirstSwiperTitle>
+        {text[0]}
+        <br /> <span>{text[1]}</span>
+      </FirstSwiperTitle>
 
-        <MockUpImg as={img} />
-      </FirstSwiperContainer>
-    </>
+      <MockUpImg as={img} />
+    </FirstSwiperContainer>
   );
 }
 const FirstSwiperContainer = styled.div`
+  flex-direction: column;
   position: relative;
   height: 100vh;
   align-items: center;
   display: flex;
-
-  flex-direction: column;
 
   width: 100%;
 `;
