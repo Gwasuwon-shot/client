@@ -16,7 +16,7 @@ export default function UserName() {
 
   const { reverseRole } = useReverseRole();
   const setStep = useSetRecoilState(stepNum);
-  const role = newUser.role;
+  const role = newUser.role === "부모님" ? "학부모님" : newUser.role;
 
   function handleMoveToPhone() {
     setNewUser((prev) => ({ ...prev, name: name }));
@@ -39,23 +39,11 @@ export default function UserName() {
           {role}의 <br />
           이름을 알려주세요.
         </SignupTitleLayout>
-        <PlainText>
-          {reverseRole}과의 연결을 위해 실명으로 입력해주세요
-        </PlainText>
+        <PlainText>{reverseRole}과의 연결을 위해 실명으로 입력해주세요</PlainText>
 
-        <InputLayout
-          type="text"
-          labelText="이름"
-          placeholder="실명 입력"
-          onInputChange={handleInputChange}
-        />
+        <InputLayout type="text" labelText="이름" placeholder="실명 입력" onInputChange={handleInputChange} />
 
-        <SubmitButton
-          type="button"
-          disabled={!isActive}
-          $isActive={isActive}
-          onClick={handleMoveToPhone}
-        >
+        <SubmitButton type="button" disabled={!isActive} $isActive={isActive} onClick={handleMoveToPhone}>
           <ButtonText>{BUTTON_TEXT.next}</ButtonText>
         </SubmitButton>
       </Container>
@@ -88,10 +76,8 @@ const SubmitButton = styled.button<{ $isActive: boolean }>`
   height: 6.3rem;
   margin-left: -1.6rem;
 
-  background-color: ${({ theme, $isActive }) =>
-    $isActive ? theme.colors.green5 : theme.colors.grey50};
-  color: ${({ theme, $isActive }) =>
-    $isActive ? theme.colors.grey0 : theme.colors.grey200};
+  background-color: ${({ theme, $isActive }) => ($isActive ? theme.colors.green5 : theme.colors.grey50)};
+  color: ${({ theme, $isActive }) => ($isActive ? theme.colors.grey0 : theme.colors.grey200)};
 
   ${({ theme }) => theme.fonts.body01};
 `;

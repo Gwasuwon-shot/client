@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
 import { RemoveInputIc } from "../../assets";
+import { PHONE_NUMBER_REGEX } from "../../core/signup/regex";
 import useFormattedPhoneNumber from "../../hooks/signupLogin/usePhoneNumberFormat";
 import CheckButton from "./CheckButton";
 import CountdownTimer from "./CountdownTimer";
@@ -20,12 +21,7 @@ interface InputBtnLayoutProps extends InputFieldLayoutProps {
 
 interface InputTimerLayoutProps extends InputFieldLayoutProps {}
 
-export default function InputLayout({
-  labelText,
-  placeholder,
-  onInputChange,
-  type,
-}: InputFieldLayoutProps) {
+export default function InputLayout({ labelText, placeholder, onInputChange, type }: InputFieldLayoutProps) {
   const [isFocused, setIsFocused] = useState(false);
   const [isExist, setIsExist] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -106,22 +102,13 @@ export function InputBtnLayout({
           />
           <RemoveInputIcon $isExist={isExist} onClick={handleClickReset} />
         </InputCover>
-        <CheckButton
-          text={buttonText}
-          isActive={isExist}
-          onClick={onClickButton}
-        />
+        <CheckButton text={buttonText} isActive={PHONE_NUMBER_REGEX.test(phoneNumber)} onClick={onClickButton} />
       </EmailCheckButtonWrapper>
     </InputNameWrapper>
   );
 }
 
-export function InputTimerLayout({
-  labelText,
-  placeholder,
-  onInputChange,
-  type,
-}: InputTimerLayoutProps) {
+export function InputTimerLayout({ labelText, placeholder, onInputChange, type }: InputTimerLayoutProps) {
   const [inputValue, setInputValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [isExist, setIsExist] = useState(false);
@@ -183,10 +170,9 @@ const InputCover = styled.div<{ $isFocused: boolean; $isExist: boolean }>`
   align-items: center;
   justify-content: space-between;
   padding-bottom: 0.9rem;
-  margin-right: 1.8rem;
+  margin-right: 1.5rem;
   border-bottom: 0.1rem solid
-    ${({ theme, $isFocused, $isExist }) =>
-      $isFocused || $isExist ? theme.colors.green5 : theme.colors.grey70};
+    ${({ theme, $isFocused, $isExist }) => ($isFocused || $isExist ? theme.colors.green5 : theme.colors.grey70)};
 `;
 
 const InputField = styled.input`

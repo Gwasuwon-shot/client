@@ -106,7 +106,8 @@ export { ReactComponent as TuticeWithTextCommonIc } from "./icon/tuticeWithTextC
 export { ReactComponent as UpcomingClassLogoTeacherHomeIc } from "./icon/upcomingClassLogoTeacherHomeIc.svg";
 export { ReactComponent as XButtonSnackBarIc } from "./icon/xButtonSnackBarIc.svg";
 export { ReactComponent as CancelButton } from "./icon/x_btn.svg";
-// export { ReactComponent as OnBoardingFourImg } from "./image/onBoardingFourImg.svg";
-// export { ReactComponent as OnBoardingOneImg } from "./image/onBoardingOneImg.svg";
-// export { ReactComponent as OnBoardingThreeImg } from "./image/onBoardingThreeImg.svg";
-// export { ReactComponent as OnBoardingTwoImg } from "./image/onBoardingTwoImg.svg";
+export { ReactComponent as LandingTreesIc } from "./icon/landingTreesIc.svg";
+export { ReactComponent as OnBoardingFourImg } from "./image/onBoardingFourImg.svg";
+export { ReactComponent as OnBoardingOneImg } from "./image/onBoardingOneImg.svg";
+export { ReactComponent as OnBoardingThreeImg } from "./image/onBoardingThreeImg.svg";
+export { ReactComponent as OnBoardingTwoImg } from "./image/onBoardingTwoImg.svg";
