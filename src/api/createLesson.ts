@@ -1,4 +1,4 @@
-import axios from "axios";
+import { client } from "./axios";
 import { getCookie } from "./cookie";
 
 interface scheduleListProps {
@@ -18,7 +18,7 @@ interface createLessonProps {
     regularScheduleList: scheduleListProps[];
   };
   account: {
-    name: string;
+    // name: string;
     bank: string;
     number: string;
   };
@@ -27,10 +27,11 @@ interface createLessonProps {
 export async function createLesson(props: createLessonProps) {
   const { lesson, account } = props;
   const { studentName, subject, payment, amount, count, startDate, regularScheduleList } = lesson;
-  const { name, bank, number } = account;
+  // const { name, bank, number } = account;
+  const { bank, number } = account;
 
-  const data = await axios.post(
-    `${import.meta.env.VITE_APP_BASE_URL}/api/lesson`,
+  const data = await client.post(
+    `/api/lesson`,
     {
       lesson: {
         studentName: studentName,
@@ -42,7 +43,7 @@ export async function createLesson(props: createLessonProps) {
         regularScheduleList: regularScheduleList,
       },
       account: {
-        name: name,
+        // name: name,
         bank: bank,
         number: number,
       },
