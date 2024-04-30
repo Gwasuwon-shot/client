@@ -81,21 +81,15 @@ export default function UserPhone() {
             <>
               <InputTimerLayout
                 labelText="인증번호"
-                placeholder="숫자 8자리 입력"
+                placeholder="숫자 6자리 입력"
                 type="tel"
                 onInputChange={handleChangeValidNum}
               />
-              <InputHint
-                text="인증번호를 정확히 입력해 주세요"
-                color="red"
-                isVisible={isWrong}
-              />
+              <InputHint text="인증번호를 정확히 입력해 주세요" color="red" isVisible={isWrong} />
             </>
           )}
         </InputWrapper>
-        {isCodeSent && isVisible && (
-          <InputHint text="문자로 인증문자를 전송했어요" color="green" />
-        )}
+        {isCodeSent && isVisible && <InputHint text="문자로 인증문자를 전송했어요" color="green" />}
         <InputBtnLayout
           labelText="휴대폰 번호"
           placeholder="번호 ‘-’ 제외하고 입력"
@@ -104,11 +98,7 @@ export default function UserPhone() {
           onInputChange={handleChangePhoneNum}
           onClickButton={handleClickSend}
         />
-        <SubmitButton
-          disabled={!isDone}
-          $isActive={isDone}
-          onClick={handleClickConfirm}
-        >
+        <SubmitButton disabled={!isDone} $isActive={isDone} onClick={handleClickConfirm}>
           인증번호 확인
         </SubmitButton>
       </Container>
@@ -145,9 +135,7 @@ const SubmitButton = styled.button<{ $isActive: boolean }>`
   right: 0;
   height: 6.3rem;
   margin-left: -1.6rem;
-  background-color: ${({ theme, $isActive }) =>
-    $isActive ? theme.colors.green5 : theme.colors.grey50};
-  color: ${({ theme, $isActive }) =>
-    $isActive ? theme.colors.grey0 : theme.colors.grey200};
+  background-color: ${({ theme, $isActive }) => ($isActive ? theme.colors.green5 : theme.colors.grey50)};
+  color: ${({ theme, $isActive }) => ($isActive ? theme.colors.grey0 : theme.colors.grey200)};
   ${({ theme }) => theme.fonts.body01};
 `;

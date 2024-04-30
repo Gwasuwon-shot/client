@@ -1,19 +1,15 @@
 import { ChangeEvent, useState } from "react";
 import {
   RegisterLessonInputIc,
+  RightArrowParentsHomeIc,
   TuitionPaymentRadioButtonCheckedIc,
   TuitionPaymentRadioButtonNotCheckedIc,
 } from "../../assets";
-import {
-  accountNumber,
-  bankName,
-  moneyAmount,
-  payingPersonName,
-  paymentOrder,
-} from "../../atom/tuitionPayment/tuitionPayment";
+import { accountNumber, bankName, moneyAmount, paymentOrder } from "../../atom/tuitionPayment/tuitionPayment";
 
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
+import useModal from "../../hooks/useModal";
 
 interface AccountInputSectionProp {
   $accountFocused: boolean;
@@ -28,28 +24,28 @@ interface MoneyProp {
 }
 
 export default function PaymentInput() {
+  const { showModal } = useModal();
   // 1. 입금자명
-  const [isNameInputFocused, setNameInputFocused] = useState(false);
-  const [personName, setPersonName] = useRecoilState<string>(payingPersonName);
+  // const [isNameInputFocused, setNameInputFocused] = useState(false);
+  // const [personName, setPersonName] = useRecoilState<string>(payingPersonName);
 
-  function handleNameInputFocus() {
-    setNameInputFocused(true);
-    setBankFocused(false);
-    setMoneyFocused(false);
-    setAccountNumInputFocused(false);
-  }
+  // function handleNameInputFocus() {
+  //   setNameInputFocused(true);
 
-  function handleNameInputChange(event: ChangeEvent<HTMLInputElement>) {
-    setPersonName(event.target.value);
-  }
+  //   setMoneyFocused(false);
+  //   setAccountNumInputFocused(false);
+  // }
+
+  // function handleNameInputChange(event: ChangeEvent<HTMLInputElement>) {
+  //   setPersonName(event.target.value);
+  // }
 
   // 2. 계좌번호
   const [isAccountNumInputFocused, setAccountNumInputFocused] = useState(false);
   const [accountNum, setAccountNum] = useRecoilState<string>(accountNumber);
 
   function handleAccountNumInputFocus() {
-    setNameInputFocused(false);
-    setBankFocused(false);
+    // setNameInputFocused(false);
     setMoneyFocused(false);
     setAccountNumInputFocused(true);
   }
@@ -63,20 +59,8 @@ export default function PaymentInput() {
     }
   }
 
-  // 3. 은행명
-  const [isBankFocused, setBankFocused] = useState(false);
-  const [bank, setBank] = useRecoilState<string>(bankName);
-
-  function handleBankFocus() {
-    setNameInputFocused(false);
-    setAccountNumInputFocused(false);
-    setMoneyFocused(false);
-    setBankFocused(true);
-  }
-
-  function handleBankChange(event: ChangeEvent<HTMLInputElement>) {
-    setBank(event.target.value);
-  }
+  //3. 은행명
+  const bank = useRecoilValue(bankName);
 
   // 4. 과외비
 
@@ -84,9 +68,8 @@ export default function PaymentInput() {
   const [money, setMoney] = useRecoilState<number>(moneyAmount);
 
   function handleMoneyFocus() {
-    setNameInputFocused(false);
+    // setNameInputFocused(false);
     setAccountNumInputFocused(false);
-    setBankFocused(false);
     setMoneyFocused(true);
   }
 
@@ -113,16 +96,12 @@ export default function PaymentInput() {
 
   // 삭제
 
-  function handleNameDelete() {
-    setPersonName("");
-  }
+  // function handleNameDelete() {
+  //   setPersonName("");
+  // }
 
   function handleAccountDelete() {
     setAccountNum("");
-  }
-
-  function handleBankDelete() {
-    setBank("");
   }
 
   function handleMoneyDelete() {
@@ -130,89 +109,91 @@ export default function PaymentInput() {
   }
 
   function handleOrder() {
-    setNameInputFocused(false);
+    // setNameInputFocused(false);
     setAccountNumInputFocused(false);
-    setBankFocused(false);
     setMoneyFocused(false);
   }
 
   return (
-    <InputWrapper>
-      <NameInputSection $nameFocused={isNameInputFocused}>
-        <InputName> 입금자명 </InputName>
-        <NameInput
-          type="text"
-          placeholder="실명을 입력해주세요"
-          value={personName}
-          onChange={handleNameInputChange}
-          onFocus={handleNameInputFocus}
-        />
-        {isNameInputFocused && <RegisterLessonInputIcon onClick={handleNameDelete} />}
-      </NameInputSection>
+    <>
+      <InputWrapper>
+        {/* <NameInputSection $nameFocused={isNameInputFocused}>
+          <InputName> 입금자명 </InputName>
+          <NameInput
+            type="text"
+            placeholder="실명을 입력해주세요"
+            value={personName}
+            onChange={handleNameInputChange}
+            onFocus={handleNameInputFocus}
+          />
+          {isNameInputFocused && <RegisterLessonInputIcon onClick={handleNameDelete} />}
+        </NameInputSection> */}
 
-      <AccountInputSection $accountFocused={isAccountNumInputFocused}>
-        <InputName> 계좌번호 </InputName>
-        <AccountInput
-          type="text"
-          placeholder="계좌번호를 입력해주세요"
-          value={accountNum}
-          onChange={handleAccountNumInputChange}
-          onFocus={handleAccountNumInputFocus}
-        />
-        {isAccountNumInputFocused && <RegisterLessonInputIcon onClick={handleAccountDelete} />}
-      </AccountInputSection>
+        <AccountInputSection $accountFocused={isAccountNumInputFocused}>
+          <InputName> 계좌번호 </InputName>
+          <AccountInput
+            type="text"
+            placeholder="계좌번호 입력"
+            value={accountNum}
+            onChange={handleAccountNumInputChange}
+            onFocus={handleAccountNumInputFocus}
+          />
+          {isAccountNumInputFocused && <RegisterLessonInputIcon onClick={handleAccountDelete} />}
+        </AccountInputSection>
 
-      <BankInputSection $bankFocused={isBankFocused}>
-        <InputName> 은행명 </InputName>
-        <BankInput
-          type="text"
-          placeholder="은행명을 입력해주세요"
-          value={bank}
-          onChange={handleBankChange}
-          onFocus={handleBankFocus}
-        />
-        {isBankFocused && <RegisterLessonInputIcon onClick={handleBankDelete} />}
-      </BankInputSection>
+        <BankInputSection>
+          <InputName> 은행명 </InputName>
+          <BankInput value={bank} disabled={true} type="text" placeholder={"은행 선택"} />
+          <RightArrowParentsHomeIcon onClick={showModal} />
+        </BankInputSection>
 
-      <MoneyInputSection $moneyFocused={isMoneyFocused}>
-        <InputName> 회차당 과외비 </InputName>
-        <MoneyInput
-          placeholder="금액을 입력해주세요"
-          value={money === 0 ? "" : money.toLocaleString() + "원"}
-          onChange={handleMoneyChange}
-          onFocus={handleMoneyFocus}
-        />
-        {isMoneyFocused && <RegisterLessonInputIcon onClick={handleMoneyDelete} />}
-      </MoneyInputSection>
+        <MoneyInputSection $moneyFocused={isMoneyFocused}>
+          <InputName> 회차당 과외비 </InputName>
+          <MoneyInput
+            placeholder="금액 입력"
+            value={money === 0 ? "" : money.toLocaleString() + "원"}
+            onChange={handleMoneyChange}
+            onFocus={handleMoneyFocus}
+          />
+          {isMoneyFocused && <RegisterLessonInputIcon onClick={handleMoneyDelete} />}
+        </MoneyInputSection>
 
-      <CheckboxWrapper>
-        <CheckboxHeader> 입금 방식</CheckboxHeader>
-        <CheckboxLabel onClick={handleOrder}>
-          <CheckboxInput type="checkbox" checked={order === "선불"} onChange={handleFirstChange} />
-          {order === "선불" ? (
-            <CheckboxIcon as={TuitionPaymentRadioButtonCheckedIc} />
-          ) : (
-            <CheckboxIcon as={TuitionPaymentRadioButtonNotCheckedIc} />
-          )}
-          <CheckboxP> 선불 </CheckboxP>
-        </CheckboxLabel>
-        <CheckboxLabel onClick={handleOrder}>
-          <CheckboxInput type="checkbox" checked={order === "후불"} onChange={handleLastChange} />
-          {order === "후불" ? (
-            <CheckboxIcon as={TuitionPaymentRadioButtonCheckedIc} />
-          ) : (
-            <CheckboxIcon as={TuitionPaymentRadioButtonNotCheckedIc} />
-          )}
-          <CheckboxP> 후불 </CheckboxP>
-        </CheckboxLabel>
-      </CheckboxWrapper>
-    </InputWrapper>
+        <CheckboxWrapper>
+          <CheckboxHeader> 입금 방식</CheckboxHeader>
+          <CheckboxLabel onClick={handleOrder}>
+            <CheckboxInput type="checkbox" checked={order === "선불"} onChange={handleFirstChange} />
+            {order === "선불" ? (
+              <CheckboxIcon as={TuitionPaymentRadioButtonCheckedIc} />
+            ) : (
+              <CheckboxIcon as={TuitionPaymentRadioButtonNotCheckedIc} />
+            )}
+            <CheckboxP> 선불 </CheckboxP>
+          </CheckboxLabel>
+          <CheckboxLabel onClick={handleOrder}>
+            <CheckboxInput type="checkbox" checked={order === "후불"} onChange={handleLastChange} />
+            {order === "후불" ? (
+              <CheckboxIcon as={TuitionPaymentRadioButtonCheckedIc} />
+            ) : (
+              <CheckboxIcon as={TuitionPaymentRadioButtonNotCheckedIc} />
+            )}
+            <CheckboxP> 후불 </CheckboxP>
+          </CheckboxLabel>
+        </CheckboxWrapper>
+      </InputWrapper>
+    </>
   );
 }
 
 interface NameInputSectionProp {
   $nameFocused: boolean;
 }
+
+const RightArrowParentsHomeIcon = styled(RightArrowParentsHomeIc)`
+  transform: rotate(90deg);
+  position: absolute;
+  bottom: 0.7rem;
+  right: 1.1rem;
+`;
 
 const InputWrapper = styled.div`
   display: flex;
@@ -283,7 +264,7 @@ const AccountInput = styled.input`
   }
 `;
 
-const BankInputSection = styled.section<BankProp>`
+const BankInputSection = styled.section`
   display: flex;
   flex-direction: column;
 
@@ -293,7 +274,7 @@ const BankInputSection = styled.section<BankProp>`
   height: 5.6rem;
   margin-bottom: 1.3rem;
 
-  border-bottom: 1px solid ${({ theme, $bankFocused }) => ($bankFocused ? theme.colors.green5 : theme.colors.grey70)};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.grey70};
 `;
 
 const BankInput = styled.input`

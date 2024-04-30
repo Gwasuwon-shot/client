@@ -11,13 +11,14 @@ import CompleteCheckAttendance from "./pages/CompleteCheckAttendance";
 import EditShcedule from "./pages/EditSchedule";
 import ErrorPage from "./pages/ErrorPage";
 import Home from "./pages/Home";
+import KakaoRedirect from "./pages/KakaoRedirect";
 import Landing from "./pages/Landling";
 import LessonDetail from "./pages/LessonDetail";
 import LessonInfo from "./pages/LessonInfo";
+import LessonRegisterComplete from "./pages/LessonRegisterComplete";
 import LessonShare from "./pages/LessonShare";
 import Loading from "./pages/Loading";
 import Login from "./pages/Login";
-import LoginLoading from "./pages/LoginLoading";
 import ManageLessonDetail from "./pages/ManageLessonDetail";
 import ManageLessonMain from "./pages/ManageLessonMain";
 import MyPage from "./pages/Mypage";
@@ -50,7 +51,7 @@ export default function Router() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/lesson-share" element={<LessonShare />} />
-            <Route path="/login-loading" element={<LoginLoading />} />
+            <Route path="/kakao-redirect" element={<KakaoRedirect />} />
             <Route path="/naver-redirect" element={<NaverRedirect />} />
 
             <Route element={<PrivateRoute authentication={true} />}>
@@ -69,6 +70,8 @@ export default function Router() {
               <Route path="/time-picker" element={<TimePickerPage />} />
               <Route path="/schedule" element={<ChangeSchedule />} />
               <Route path="/tuition-payment" element={<TuitionPayment />} />
+              <Route path="/register-complete" element={<LessonRegisterComplete />} />
+
               <Route path="/myPage" element={<MyPage />} />
               <Route path="/no-attendance-check" element={<NoAttendanceCheck />} />
               <Route path="/lesson-info/:lessonId" element={<LessonInfo />} />

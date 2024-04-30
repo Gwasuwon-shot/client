@@ -37,35 +37,13 @@ export default function SelectedDayAndTime(props: selectedProps) {
         <Time>
           <TimeInfo> 시작 </TimeInfo>
           <DetailTime onClick={handlStartTimePicker}>
-            {Number(focusingDay?.startTime.slice(0, 2)) < 12 ? (
-              <>
-                오전 {Number(focusingDay?.startTime.slice(0, 2))}시 {focusingDay?.startTime.slice(3)}분
-              </>
-            ) : (
-              <>
-                오후{" "}
-                {Number(focusingDay?.startTime.slice(0, 2)) === 12
-                  ? 12
-                  : Number(focusingDay?.startTime.slice(0, 2)) - 12}
-                시 {focusingDay?.startTime.slice(3)}분
-              </>
-            )}
+            {focusingDay?.startTime.slice(0, 2)}시 {focusingDay?.startTime.slice(3)}분
           </DetailTime>
         </Time>
         <Time>
           <TimeInfo> 종료 </TimeInfo>
           <DetailTime onClick={handleFinishTimePicker}>
-            {Number(focusingDay?.endTime.slice(0, 2)) < 12 ? (
-              <>
-                오전 {Number(focusingDay?.endTime.slice(0, 2))}시 {focusingDay?.endTime.slice(3)}분
-              </>
-            ) : (
-              <>
-                오후{" "}
-                {Number(focusingDay?.endTime.slice(0, 2)) === 12 ? 12 : Number(focusingDay?.endTime.slice(0, 2)) - 12}시{" "}
-                {focusingDay?.endTime.slice(3)}분
-              </>
-            )}
+            {focusingDay?.endTime.slice(0, 2)}시 {focusingDay?.endTime.slice(3)}분
           </DetailTime>
         </Time>
       </TimeWrapper>

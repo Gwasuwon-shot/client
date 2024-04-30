@@ -144,8 +144,7 @@ export default function LessonDate() {
       <ModalWrapper>
         <RegularLessonCalenderIcon />
         <ModalButton onClick={() => postTemporary(postInformation)}>
-          {" "}
-          캘린더로 기존 일정 확인하기{" "}
+          캘린더 확인하기
         </ModalButton>
       </ModalWrapper>
     </LessonDateWrapper>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useGetLoginToken from "../hooks/signupLogin/useGetKakao";
 import usePostLoginTempSignup from "../hooks/signupLogin/usePostLoginTempSignup";
 
-export default function LoginLoading() {
+export default function KakaoRedirect() {
   const [auth, setAuth] = useState("");
 
   const handleLoginToken = (token: string) => {

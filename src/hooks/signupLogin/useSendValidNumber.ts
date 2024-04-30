@@ -13,7 +13,8 @@ export default function useSendValidNumber(onSuccess: () => void) {
       onSuccess();
     },
     onError: () => {
-      navigate("/error");
+      // 에러 모달 띄워주는 걸로 수정
+      // navigate("/error");
     },
   });
   return mutation;

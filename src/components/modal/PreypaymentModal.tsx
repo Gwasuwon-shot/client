@@ -17,7 +17,7 @@ export default function PreypaymentModal(props: PreypaymentModalProp) {
 
   function handleMoveToRegisterPayment() {
     setPreypaymentModal(false);
-    navigate(`/register-payment/${codeAndId?.lessonidx}`, {
+    navigate(`/register-payment/${codeAndId?.lessonIdx}`, {
       state: { paymentIdx: codeAndId?.paymentRecordIdx, count: 1 },
     });
   }

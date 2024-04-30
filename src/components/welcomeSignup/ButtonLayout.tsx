@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
 interface ButtonLayoutProps {
@@ -9,7 +8,6 @@ interface ButtonLayoutProps {
 }
 
 export default function ButtonLayout(props: ButtonLayoutProps) {
-  const navigate = useNavigate();
   const { onClickButton, onClickJump, buttonText, passText } = props;
 
   return (
@@ -30,8 +28,6 @@ const ButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  position: fixed;
-  bottom: 0;
 `;
 
 const WelcomeButton = styled.button`
@@ -39,13 +35,13 @@ const WelcomeButton = styled.button`
   justify-content: center;
   align-items: center;
 
-  width: 28rem;
+  padding: 2rem 6rem;
   height: 4.2rem;
 
   background-color: ${({ theme }) => theme.colors.green5};
   color: ${({ theme }) => theme.colors.grey0};
   flex-shrink: 0;
-  ${({ theme }) => theme.fonts.body01};
+  ${({ theme }) => theme.fonts.body03};
 
   border-radius: 0.8rem;
 `;
@@ -54,7 +50,7 @@ const PassButton = styled.button`
   display: flex;
   align-items: center;
 
-  margin-top: 1.9rem;
+  margin-top: 0.8rem;
   margin-bottom: 3.5rem;
 
   ${({ theme }) => theme.fonts.body04};

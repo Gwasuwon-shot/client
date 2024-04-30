@@ -1,5 +1,6 @@
 import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
+import { Day } from "../timePicker/timePicker";
 const { persistAtom } = recoilPersist();
 
 export const payingPersonName = atom<string>({
@@ -28,10 +29,61 @@ export const paymentOrder = atom<string>({
   effects_UNSTABLE: [persistAtom],
 });
 
+interface scheduleListProps {
+  dayOfWeek: string;
+  startTime: string;
+  endTime: string;
+}
+
+export interface lessonInputDataProps {
+  lesson: {
+    studentName: string;
+    subject: string;
+    payment: string;
+    amount: number;
+    count: number;
+    startDate: string;
+    regularScheduleList: Day[];
+  };
+  account: {
+    name: string;
+    bank: string;
+    number: string;
+  };
+}
+
+// 개별 아이템 다 이거로 바꿔끼기
+export const lessonInputData = atom<lessonInputDataProps>({
+  key: "lessonInputData",
+  default: {
+    lesson: {
+      studentName: "",
+      subject: "",
+      payment: "",
+      amount: 0,
+      count: 0,
+      startDate: "",
+      regularScheduleList: [
+        {
+          dayOfWeek: "",
+          startTime: "",
+          endTime: "",
+        },
+      ],
+    },
+    account: {
+      name: "",
+      bank: "",
+      number: "",
+    },
+  },
+  effects_UNSTABLE: [persistAtom],
+});
+
 interface lessonCodeAndPaymentIdProp {
   lessonCode: string;
   paymentRecordIdx: number;
-  lessonidx: number;
+  lessonIdx: number;
 }
 
 export const lessonCodeAndPaymentId = atom<lessonCodeAndPaymentIdProp>({
@@ -39,7 +91,7 @@ export const lessonCodeAndPaymentId = atom<lessonCodeAndPaymentIdProp>({
   default: {
     lessonCode: "",
     paymentRecordIdx: -1,
-    lessonidx: -1,
+    lessonIdx: -1,
   },
   effects_UNSTABLE: [persistAtom],
 });

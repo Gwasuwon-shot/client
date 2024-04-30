@@ -24,8 +24,7 @@ export default function DateInput() {
       <TurnButtonWrapper>
         <TurnButtonName> {activeDateSlide.year}년 </TurnButtonName>
         <TurnButton type="button" onClick={handleDatePicker} $isSelected={isDatePickerOpen}>
-          {" "}
-          {activeDateSlide.month}월 {activeDateSlide.date}일 {lessonDay}요일{" "}
+          {activeDateSlide.month}월 {activeDateSlide.date}일 {lessonDay}요일
         </TurnButton>
       </TurnButtonWrapper>
     </InputWrapper>
@@ -35,7 +34,6 @@ export default function DateInput() {
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 4.1rem;
 `;
 
 const TurnName = styled.h2`

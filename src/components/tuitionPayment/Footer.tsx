@@ -11,7 +11,7 @@ import {
 
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { createLesson } from "../../api/createLesson";
 import useModal from "../../hooks/useModal";
@@ -33,26 +33,28 @@ interface createLessonProps {
     regularScheduleList: scheduleListProps[];
   };
   account: {
-    name: string;
+    // name: string;
     bank: string;
     number: string;
   };
 }
 
 export default function Footer() {
-  const [studentName, setStudentName] = useRecoilState<string>(studentNameState);
-  const [subject, setSubject] = useRecoilState<string>(subjectNameState);
-  const [payment, setPayment] = useRecoilState<string>(paymentOrder);
-  const [amount, setAmount] = useRecoilState<number>(moneyAmount);
-  const [count, setCount] = useRecoilState<number>(cycleNumberState);
-  const [startDate, setStartDate] = useRecoilState(dateState);
-  const [regularScheduleList, setRegularScheduleList] = useRecoilState(dayState);
-  const [name, setName] = useRecoilState(payingPersonName);
-  const [bank, setBank] = useRecoilState(bankName);
-  const [number, setNumber] = useRecoilState(accountNumber);
+  const studentName = useRecoilValue<string>(studentNameState);
+  const subject = useRecoilValue<string>(subjectNameState);
+  const payment = useRecoilValue<string>(paymentOrder);
+  const amount = useRecoilValue<number>(moneyAmount);
+  const count = useRecoilValue<number>(cycleNumberState);
+  const startDate = useRecoilValue(dateState);
+  const regularScheduleList = useRecoilValue(dayState);
+  const name = useRecoilValue(payingPersonName);
+  const bank = useRecoilValue(bankName);
+  const number = useRecoilValue(accountNumber);
   const [codeAndId, setCodeAndId] = useRecoilState(lessonCodeAndPaymentId);
+  // const [lessonData, setLessonData] = useRecoilState(lessonInputData);
 
-  const isFooterGreen = name !== "" && number !== "" && bank !== "" && amount !== 0 && payment !== "";
+  // const isFooterGreen = name !== "" && number !== "" && bank !== "" && amount !== 0 && payment !== "";
+  const isFooterGreen = number !== "" && bank !== "" && amount !== 0 && payment !== "";
 
   const postStartDate =
     String(startDate.year) +
@@ -73,7 +75,7 @@ export default function Footer() {
       regularScheduleList: regularScheduleList,
     },
     account: {
-      name: name,
+      // name: name,
       bank: bank,
       number: number,
     },
@@ -83,11 +85,12 @@ export default function Footer() {
   const { openModal, showModal } = useModal();
 
   function handleMoveToLessonShare() {
-    navigate("/lesson-share", { state: true });
+    navigate("/register-complete", { state: true });
   }
 
   const { mutate: createNewLesson } = useMutation(createLesson, {
     onSuccess: (response) => {
+      // setLessonData(postInformation);
       setCodeAndId(response);
       //setStartDate(response); //-> 지수에 전달한 data recoil 저장
       handleMoveToLessonShare();

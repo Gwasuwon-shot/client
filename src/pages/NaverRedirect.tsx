@@ -10,8 +10,8 @@ export default function NaverRedirect() {
   async function fetchAndSetUserInfo() {
     const token = window.location.href.split("=")[1].split("&")[0];
     try {
-      const socialId = await getNaverUserInfo(token);
-      setAuth(socialId);
+      const data = await getNaverUserInfo(token);
+      setAuth(data.id);
     } catch (error) {
       console.error("Failed to fetch Naver user info:", error);
     }
