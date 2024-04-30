@@ -1,21 +1,18 @@
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
-import { getCookie, setCookie } from "../../api/cookie";
-import { postSocialSignUp } from "../../api/signUp/postSoicalSignUp";
-import { userRoleData } from "../../atom/loginUser/loginUser";
+import { setCookie } from "../../api/cookie";
+import { postSocialSignUp } from "../../api/signUp/postSocialSignUp";
 import { NewSocialUserTypes } from "../../type/SignUp/newUserDataType";
+import { isCookieAuthenticated, isCookieNull, isLogin } from "../../utils/common/isLogined";
 
 export default function usePostSocialSignup(newUser: NewSocialUserTypes) {
   const navigate = useNavigate();
-  const userRole = useSetRecoilState(userRoleData);
 
   const mutation = useMutation({
     mutationFn: async () => {
       return await postSocialSignUp(newUser);
     },
     onSuccess: (data) => {
-      userRole(data.data.user.role);
       setCookie("accessToken", data.data.accessToken, {
         secure: true,
       });
@@ -23,8 +20,10 @@ export default function usePostSocialSignup(newUser: NewSocialUserTypes) {
         secure: true,
       });
 
-      if (getCookie("accessToken") !== "") {
-        navigate("/home");
+      if (isLogin() && !isCookieNull() && !isCookieAuthenticated()) {
+        setTimeout(() => {
+          navigate("/home"); // 3초 후 페이지 이동
+        }, 3000);
       }
     },
     onError: (error) => {
