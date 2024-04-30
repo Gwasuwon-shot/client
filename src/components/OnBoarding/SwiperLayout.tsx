@@ -39,20 +39,12 @@ const FirstSwiperTitle = styled.h1`
   flex-direction: column;
   justify-content: center;
 
-  /* TOTO 수정 필요 */
   color: #293a3a;
   text-align: center;
-  font-family: Pretendard;
-  font-size: 2rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 2.6rem;
+
+  ${({ theme }) => theme.fonts.title04};
   > span {
     color: #293a3a;
-    font-family: Pretendard;
-    font-size: 2rem;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 2.6rem;
+    ${({ theme }) => theme.fonts.title01};
   }
 `;
