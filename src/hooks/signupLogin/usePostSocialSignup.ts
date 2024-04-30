@@ -22,7 +22,7 @@ export default function usePostSocialSignup(newUser: NewSocialUserTypes) {
 
       if (isLogin() && !isCookieNull() && !isCookieAuthenticated()) {
         setTimeout(() => {
-          navigate("/home"); // 3초 후 페이지 이동
+          navigate("/home");
         }, 3000);
       }
     },
