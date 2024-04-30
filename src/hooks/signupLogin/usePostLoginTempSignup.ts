@@ -38,10 +38,10 @@ export default function usePostLoginTempSignup() {
       path: "/",
     });
 
-    // setCookie("refreshToken", data.refreshToken, {
-    //   secure: true,
-    //   path: "/",
-    // });
+    setCookie("refreshToken", data.refreshToken, {
+      secure: true,
+      path: "/",
+    });
   };
 
   const mutation = useMutation({

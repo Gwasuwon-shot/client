@@ -57,7 +57,7 @@ const ModalWrapper = styled.div`
   z-index: 2;
 
   width: 32rem;
-  height: 100%;
+  height: 100dvh;
 
   background-color: rgb(33 37 41 / 60%);
 
@@ -70,7 +70,8 @@ const Modal = styled.aside`
   flex-direction: column;
 
   width: 32rem;
-  padding: 1.6rem 1.4rem 4.5rem;
+  /* padding: 1.6rem 1.4rem 4.5rem; */
+  padding-top: 1.6rem;
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 2rem 2rem 0 0;

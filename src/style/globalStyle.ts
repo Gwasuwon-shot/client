@@ -37,7 +37,7 @@ export const GlobalStyle = createGlobalStyle`
     line-height: 1;
 
     width:32rem;
-    height: 56.8rem;
+    /* height: 56.8rem; */
     /* height: 100vh; */
     /* border:1px solid transparent; */
   }

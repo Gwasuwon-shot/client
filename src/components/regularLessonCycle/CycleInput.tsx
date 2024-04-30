@@ -1,20 +1,20 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { cycleNumberState, openTimePickerState } from "../../atom/timePicker/timePicker";
 
-interface LesssonProp {
-  chosen: boolean;
+interface LessonProp {
+  $chosen: boolean;
   $isSelected: boolean;
 }
 
-export default function CyclceInput() {
+export default function CycleInput() {
   const [isTimePickerOpen, setIsTimePickerOpen] = useRecoilState<boolean>(openTimePickerState);
 
   function handleTimePicker() {
     setIsTimePickerOpen(true);
   }
 
-  const [activeCycleSlide, setActiveCycleSlide] = useRecoilState(cycleNumberState);
+  const activeCycleSlide = useRecoilValue(cycleNumberState);
 
   return (
     <InputWrapper>
@@ -23,9 +23,8 @@ export default function CyclceInput() {
         <TurnButton
           type="button"
           onClick={handleTimePicker}
-          chosen={activeCycleSlide !== 0}
+          $chosen={activeCycleSlide !== 0}
           $isSelected={isTimePickerOpen}>
-          {" "}
           {activeCycleSlide}
         </TurnButton>
         <TurnButtonName> 회차 </TurnButtonName>
@@ -54,16 +53,16 @@ const TurnButtonWrapper = styled.div`
   margin-top: 1.5rem;
 `;
 
-const TurnButton = styled.button<LesssonProp>`
+const TurnButton = styled.button<LessonProp>`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 4.5rem;
   ${({ theme }) => theme.fonts.title01};
-  ${({ $isSelected, chosen, theme }) => !$isSelected && `color: ${theme.colors.grey700}`};
-  ${({ $isSelected, chosen, theme }) => $isSelected && `color: ${theme.colors.grey300}`};
-  ${({ $isSelected, chosen, theme }) => !$isSelected && !chosen && `color: ${theme.colors.grey300}`};
-  border-bottom: 1.5px solid ${({ theme, chosen }) => (chosen ? theme.colors.green5 : theme.colors.grey70)};
+  ${({ $isSelected, theme }) => !$isSelected && `color: ${theme.colors.grey700}`};
+  ${({ $isSelected, theme }) => $isSelected && `color: ${theme.colors.grey300}`};
+  ${({ $isSelected, $chosen, theme }) => !$isSelected && !$chosen && `color: ${theme.colors.grey300}`};
+  border-bottom: 1.5px solid ${({ theme, $chosen }) => ($chosen ? theme.colors.green5 : theme.colors.grey70)};
 `;
 
 const TurnButtonName = styled.h2`

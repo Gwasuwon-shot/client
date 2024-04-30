@@ -14,5 +14,5 @@ export default function RegularLessonCycle() {
 }
 
 const RegularWrapper = styled.main`
-  overflow-y: scroll;
+  /* overflow-y: scroll; 왜 있었는지 모르겠음 */
 `;

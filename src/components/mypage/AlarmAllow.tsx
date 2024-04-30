@@ -37,19 +37,19 @@ export default function AlarmAllow() {
   }
 
   async function handleAllowNotification() {
-    if (confirm("정말로 알림을 켜시겠습니까?")) {
-      if (!isRegistered) {
-        registerServiceWorker();
-      }
+    // if (confirm("정말로 알림을 켜시겠습니까?")) {
+    if (!isRegistered) {
+      registerServiceWorker();
+      // }
       const token = await getToken(messaging, { vapidKey: import.meta.env.VITE_APP_VAPID_KEY });
       updateDeviceToken(token);
     }
   }
 
   async function handleBanNotification() {
-    if (confirm("정말로 알림을 끄시겠습니까?")) {
-      updateDeviceToken(null);
-    }
+    // if (confirm("정말로 알림을 끄시겠습니까?")) {
+    updateDeviceToken(null);
+    // }
   }
 
   return (

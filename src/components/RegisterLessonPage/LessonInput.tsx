@@ -9,10 +9,6 @@ interface NameInputSectionProp {
   $nameFocused: boolean;
 }
 
-interface SubjectInputSectionProp {
-  $subjectFocused: boolean;
-}
-
 const SUBJECTS = [
   { name: "국어" },
   { name: "영어" },
@@ -38,17 +34,8 @@ export default function LessonInput() {
     setNameInputFocused(true);
   };
 
-  const handleSubjectInputFocus = () => {
-    setNameInputFocused(false);
-    setSubjectInputFocused(true);
-  };
-
   const handleNameInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setStudentName(event.target.value);
-  };
-
-  const handleSubjectInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSubjectName(event.target.value);
   };
 
   // 3. 이름 2자 이하 경고메시지 관련 변수
@@ -82,7 +69,7 @@ export default function LessonInput() {
           onChange={handleNameInputChange}
           onFocus={handleNameInputFocus}
         />
-        {isWarning && <WarningMessage> 이름은 최소 2자 이상 입력해주세요 </WarningMessage>}
+        {/* {isWarning && <WarningMessage> 이름은 최소 2자 이상 입력해주세요 </WarningMessage>} */}
         {isNameInputFocused && <RegisterLessonInputIcon onClick={handleNameDelete} />}
       </NameInputSection>
 

@@ -25,12 +25,8 @@ export default function Header() {
     <HeaderWrapper>
       <RegisterLessonHeaderIc onClick={handleMoveToBack} />
       <ProgressBar progress={66.4} />
-      <InputHeader>
-        정기적인 수업 일정을 <br /> 알려주세요!{" "}
-      </InputHeader>
-      <InputNotice>
-        첫 수업일을 기준으로 수업 일정을 <br /> 캘린더에 표시해 드릴게요{" "}
-      </InputNotice>
+      <InputHeader>정기적인 수업 일정을 알려주세요!</InputHeader>
+      <InputNotice>첫 수업일을 기준으로 수업 일정을 캘린더에 표시해 드릴게요</InputNotice>
     </HeaderWrapper>
   );
 }
@@ -39,7 +35,7 @@ const HeaderWrapper = styled.header`
   display: flex;
   flex-direction: column;
 
-  height: 15.8rem;
+  margin-bottom: 4.1rem;
   margin-top: 2rem;
 `;
 
