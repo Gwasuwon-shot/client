@@ -25,8 +25,8 @@ export default function DetailTimePicker() {
   }
 
   // 2) swiper
-  const AMPM = ["오전", "오후"];
-  const slidesAmPm = Array.from({ length: 2 }, (_, index) => <SwiperSlide key={index}>{AMPM[index]}</SwiperSlide>);
+  // const AMPM = ["오전", "오후"];
+  // const slidesAmPm = Array.from({ length: 2 }, (_, index) => <SwiperSlide key={index}>{AMPM[index]}</SwiperSlide>);
 
   // 2. 시간 관리
   // 1) active slide 값 관리
@@ -34,11 +34,11 @@ export default function DetailTimePicker() {
   const [activeHourSlide, setActiveHourSlide] = useState(0);
 
   function handleHourSlideChange(swiper: SwiperCore) {
-    setActiveHourSlide(swiper.realIndex + 1);
+    setActiveHourSlide(swiper.realIndex);
   }
 
   // 2) swiper
-  const slidesHour = Array.from({ length: 12 }, (_, index) => <SwiperSlide key={index}>{index + 1}시</SwiperSlide>);
+  const slidesHour = Array.from({ length: 24 }, (_, index) => <SwiperSlide key={index}>{index}시</SwiperSlide>);
 
   // 3. 분 관리
   // 1) active slide 값 관리
@@ -64,12 +64,7 @@ export default function DetailTimePicker() {
     const formattedHour =
       activeHourSlide === 12 && activeAmPmSlide === 0 ? "00" : String(activeHourSlide).padStart(2, "0");
 
-    const newStartTime =
-      activeAmPmSlide === 0
-        ? `${formattedHour}:${activeMinuteSlide}`
-        : activeHourSlide === 12
-        ? `12:${activeMinuteSlide}`
-        : `${activeHourSlide + 12}:${activeMinuteSlide}`;
+    const newStartTime = `${formattedHour}:${activeMinuteSlide}`;
     setSelectedDays((prevSelectedDays) =>
       prevSelectedDays.map((day) => (day.dayOfWeek === focusDay ? { ...day, startTime: newStartTime } : day)),
     );
@@ -89,12 +84,7 @@ export default function DetailTimePicker() {
   function handleConfirmFinishTimePicker() {
     const formattedHour =
       activeHourSlide === 12 && activeAmPmSlide === 0 ? "00" : String(activeHourSlide).padStart(2, "0");
-    const newEndTime =
-      activeAmPmSlide === 0
-        ? `${formattedHour}:${activeMinuteSlide}`
-        : activeHourSlide === 12
-        ? `12:${activeMinuteSlide}`
-        : `${activeHourSlide + 12}:${activeMinuteSlide}`;
+    const newEndTime = `${formattedHour}:${activeMinuteSlide}`;
     setSelectedDays((prevSelectedDays) =>
       prevSelectedDays.map((day) => (day.dayOfWeek === focusDay ? { ...day, endTime: newEndTime } : day)),
     );
@@ -110,16 +100,16 @@ export default function DetailTimePicker() {
 
   return (
     <TimePickerWrapper>
-      <CancleWrapper>
+      <CancelWrapper>
         {isStartPickerOpen ? (
           <CancelButton onClick={handleCancelStartTimePicker}>취소</CancelButton>
         ) : (
           <CancelButton onClick={handleCancelFinishTimePicker}>취소</CancelButton>
         )}
-      </CancleWrapper>
+      </CancelWrapper>
 
       <SwiperWrapper>
-        <StyledSwiper
+        {/* <StyledSwiper
           direction="vertical"
           slidesPerView={5}
           spaceBetween={20}
@@ -131,7 +121,7 @@ export default function DetailTimePicker() {
           centeredSlides={true}
           onSlideChange={handleAmPmSlideChange}>
           {slidesAmPm}
-        </StyledSwiper>
+        </StyledSwiper> */}
 
         <StyledSwiper
           direction="vertical"
@@ -224,7 +214,7 @@ const StyledSwiper = styled(Swiper)`
   }
 `;
 
-const CancleWrapper = styled.div`
+const CancelWrapper = styled.div`
   display: flex;
 
   position: relative;
