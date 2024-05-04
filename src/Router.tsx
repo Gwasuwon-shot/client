@@ -8,11 +8,11 @@ import AfterSignup from "./components/welcomeSignup/AfterSignup";
 import AllowAlert from "./components/welcomeSignup/AllowAlert";
 import ChangeSchedule from "./pages/ChangeSchedule";
 import CompleteCheckAttendance from "./pages/CompleteCheckAttendance";
-import EditShcedule from "./pages/EditSchedule";
+import EditSchedule from "./pages/EditSchedule";
 import ErrorPage from "./pages/ErrorPage";
 import Home from "./pages/Home";
 import KakaoRedirect from "./pages/KakaoRedirect";
-import Landing from "./pages/Landling";
+import Landing from "./pages/Landing";
 import LessonDetail from "./pages/LessonDetail";
 import LessonInfo from "./pages/LessonInfo";
 import LessonRegisterComplete from "./pages/LessonRegisterComplete";
@@ -75,7 +75,7 @@ export default function Router() {
               <Route path="/myPage" element={<MyPage />} />
               <Route path="/no-attendance-check" element={<NoAttendanceCheck />} />
               <Route path="/lesson-info/:lessonId" element={<LessonInfo />} />
-              <Route path="/edit-lessonschedule" element={<EditShcedule />} />
+              <Route path="/edit-lessonschedule" element={<EditSchedule />} />
               <Route path="/alert" element={<AllowAlert />} />
               <Route path="/tree" element={<AfterSignup />} />
             </Route>

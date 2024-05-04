@@ -53,7 +53,6 @@ export default function usePostLoginTempSignup() {
     },
     onSuccess: (data) => {
       if (data.code === 200) {
-        setUserRole(data.data.user.role);
         setToken(data.data);
         navigate("/home");
       } else {

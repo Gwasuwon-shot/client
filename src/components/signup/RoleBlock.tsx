@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useSetRecoilState } from "recoil";
 import RoleCheckSignupIc from "../../assets/icon/RoleCheckSignupIc.svg";
 import RoleNoneCheckSignupIc from "../../assets/icon/RoleNoneCheckSignupIc.svg";
+import { userRoleData } from "../../atom/loginUser/loginUser";
 import { newSocialUser } from "../../atom/signup/signup";
 import { ROLE_SUB_TEXT } from "../../core/signup/signUpTextLabels";
 
@@ -14,13 +15,16 @@ interface RoleBlockProps {
 export default function RoleBlock(props: RoleBlockProps) {
   const { type, handleIsActive } = props;
   const setNewUser = useSetRecoilState(newSocialUser);
+  const userRole = useSetRecoilState(userRoleData);
 
-  function handleRadioClick(e: React.MouseEvent<HTMLInputElement>) {
+  function handleRadioClick(e: React.ChangeEvent<HTMLInputElement>) {
     const target = e.target as HTMLInputElement;
     if (target.value === "학부모님") {
       setNewUser((prev) => ({ ...prev, role: "부모님" }));
+      userRole("부모님");
     } else {
       setNewUser((prev) => ({ ...prev, role: target.value }));
+      userRole(target.value);
     }
     handleIsActive();
   }
@@ -32,7 +36,7 @@ export default function RoleBlock(props: RoleBlockProps) {
         name="role"
         value={type}
         id={type}
-        onClick={(e: React.MouseEvent<HTMLInputElement>) => handleRadioClick(e)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleRadioClick(e)}
         $RoleNoneCheckSignupIc={RoleNoneCheckSignupIc}
         $RoleCheckSignupIc={RoleCheckSignupIc}
       />

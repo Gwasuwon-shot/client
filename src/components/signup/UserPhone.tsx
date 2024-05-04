@@ -55,10 +55,13 @@ export default function UserPhone() {
 
   const handleClickSend = () => {
     sendValidNumber.mutate(digitNumber);
+    // successToSendCode();
   };
 
+  // const postSocialSignUp = usePostSocialSignup(newUser);
   const handleClickConfirm = () => {
     validatePhone.mutate({ number: digitNumber, validCode: validCode });
+    // postSocialSignUp.mutate();
   };
 
   return (

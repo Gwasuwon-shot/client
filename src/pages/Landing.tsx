@@ -60,40 +60,38 @@ export default function Landing() {
   }
 
   return (
-    <>
-      <OnBoardingWrapper>
-        <ImageWrapper>
-          <TitleWrapper>
-            <FirstSwiperTitle>
-              쉬운 수업 관리로 열리는 <br /> 정확한 나의 결실
-            </FirstSwiperTitle>
-            <UITextLogo />
-          </TitleWrapper>
-          <LandingTreesIcon />
-        </ImageWrapper>
+    <OnBoardingWrapper>
+      <ImageWrapper>
+        <TitleWrapper>
+          <FirstSwiperTitle>
+            쉬운 수업 관리로 열리는 <br /> 정확한 나의 결실
+          </FirstSwiperTitle>
+          <UITextLogo />
+        </TitleWrapper>
+        <LandingTreesIcon />
+      </ImageWrapper>
 
-        <ButtonWrapper>
-          <NaverLoginFeat ref={naverRef} id="naverIdLogin">
-            네이버 테스트
-          </NaverLoginFeat>
-          {lastLogin === "naver" ? (
-            <NaverUsedLogin onClick={navigateToNaver} />
-          ) : (
-            <NaverLogin onClick={navigateToNaver} />
-          )}
-          {lastLogin === "kakao" ? (
-            <KakaoUsedLogin onClick={navigateToKaKao} />
-          ) : (
-            <KakaoLogin onClick={navigateToKaKao} />
-          )}
-        </ButtonWrapper>
+      <ButtonWrapper>
+        <NaverLoginFeat ref={naverRef} id="naverIdLogin">
+          네이버 테스트
+        </NaverLoginFeat>
+        {lastLogin === "naver" ? (
+          <NaverUsedLogin onClick={navigateToNaver} />
+        ) : (
+          <NaverLogin onClick={navigateToNaver} />
+        )}
+        {lastLogin === "kakao" ? (
+          <KakaoUsedLogin onClick={navigateToKaKao} />
+        ) : (
+          <KakaoLogin onClick={navigateToKaKao} />
+        )}
+      </ButtonWrapper>
 
-        <GoToLoginMessage>
-          계속함으로써&nbsp;<Link to="/">이용약관</Link>&nbsp;및&nbsp;
-          <Link to="/">개인정보처리방침</Link>에 동의합니다
-        </GoToLoginMessage>
-      </OnBoardingWrapper>
-    </>
+      <GoToLoginMessage>
+        계속함으로써&nbsp;<Link to="/">이용약관</Link>&nbsp;및&nbsp;
+        <Link to="/">개인정보처리방침</Link>에 동의합니다
+      </GoToLoginMessage>
+    </OnBoardingWrapper>
   );
 }
 

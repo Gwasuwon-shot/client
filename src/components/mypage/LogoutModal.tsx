@@ -1,11 +1,11 @@
 import React from "react";
-import styled from "styled-components";
-import BasicDoubleModal from "../common/BasicDoubleModal";
 import { useMutation } from "react-query";
-import { patchLogout } from "../../api/patchLogout";
 import { useNavigate } from "react-router-dom";
-import { getCookie, removeCookie } from "../../api/cookie";
+import styled from "styled-components";
+import { removeCookie } from "../../api/cookie";
+import { patchLogout } from "../../api/patchLogout";
 import { isLogin } from "../../utils/common/isLogined";
+import BasicDoubleModal from "../common/BasicDoubleModal";
 
 interface LogoutModalProps {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,6 +23,7 @@ export default function LogoutModal(props: LogoutModalProps) {
   const { mutate: patchingLogout } = useMutation(patchLogout, {
     onSuccess: (res) => {
       removeCookie("accessToken", {});
+      removeCookie("refreshToken", {});
       if (!isLogin()) {
         navigate("/");
       }
