@@ -61,8 +61,8 @@ export default function DetailTimePicker() {
 
   // 1) 시작 타임피커 완료시
   function handleConfirmStartTimePicker() {
-    const formattedHour =
-      activeHourSlide === 12 && activeAmPmSlide === 0 ? "00" : String(activeHourSlide).padStart(2, "0");
+    const formattedHour = String(activeHourSlide).padStart(2, "0");
+    // activeHourSlide === 12 && activeAmPmSlide === 0 ? "00" : String(activeHourSlide).padStart(2, "0");
 
     const newStartTime = `${formattedHour}:${activeMinuteSlide}`;
     setSelectedDays((prevSelectedDays) =>
@@ -82,8 +82,8 @@ export default function DetailTimePicker() {
 
   // 1) 종료 타임피커 완료시
   function handleConfirmFinishTimePicker() {
-    const formattedHour =
-      activeHourSlide === 12 && activeAmPmSlide === 0 ? "00" : String(activeHourSlide).padStart(2, "0");
+    const formattedHour = String(activeHourSlide).padStart(2, "0");
+    // activeHourSlide === 12 && activeAmPmSlide === 0 ? "00" : String(activeHourSlide).padStart(2, "0");
     const newEndTime = `${formattedHour}:${activeMinuteSlide}`;
     setSelectedDays((prevSelectedDays) =>
       prevSelectedDays.map((day) => (day.dayOfWeek === focusDay ? { ...day, endTime: newEndTime } : day)),
