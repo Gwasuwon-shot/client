@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { TosCheckedSignupIc } from "../assets";
@@ -6,6 +7,7 @@ import ButtonLayout from "../components/welcomeSignup/ButtonLayout";
 import { STUDENT_COLOR } from "../core/common/studentColor";
 
 export default function LessonRegisterComplete() {
+  const navigate = useNavigate();
   const lessonData = useRecoilValue(lessonInputData);
   const codeAndId = useRecoilValue(lessonCodeAndPaymentId);
   function handleMoveToIntegration() {}
@@ -27,8 +29,9 @@ export default function LessonRegisterComplete() {
       <ButtonLayout
         buttonText="학부모님과 함께 관리하기"
         passText="건너뛰고 혼자 관리하기"
-        onClickJump={() => true}
-        onClickButton={() => true}
+        // TODO 학부모님과 함께 관리하기 버튼 클릭 시 학부모님과 함께 관리하기 페이지로 이동
+        onClickJump={() => navigate("/home")}
+        onClickButton={() => navigate("/home")}
       />
     </ConfirmWrapper>
   );
