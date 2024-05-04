@@ -21,65 +21,35 @@
 <br/>
 <table align="center">
     <tr align="center">
-        <td style="min-width: 150px; height: 150px">
+        <td>
               <b>은빈</b>
               <br/>
             <a href="https://github.com/eunbeann">
               <img style="height: 150px;" src="https://github.com/Gwasuwon-shot/Tutice_Client/assets/100409061/fca3c55e-103b-4174-bb83-8da2df34080b" width="200">
             </a>
         </td>
-        <td style="min-width: 150px; height: 150px" background-color="white">
+        <td>
               <b>혠찌</b>
               <br/>
             <a href="https://github.com/hae2ni">
               <img style="height: 150px;" src="https://i.pinimg.com/236x/c7/fa/c8/c7fac8a40e58093ba9388f329ad6b08f.jpg" height='150' width="200">
             </a> 
         </td>
-        <td style="min-width: 150px;">
-              <b>성경</b>
-               <br />
-            <a href="https://github.com/pinktopaz">
-              <img style="height: 150px;" src="https://github.com/Gwasuwon-shot/Tutice_Client/assets/100409061/9112d132-1095-40bd-9bbb-4e164ae07f81" width="200" >    
-            </a>
-        </td>
-        <td style="min-width: 150px;" background-color="white">
-              <b>희정</b>
-               <br />
-            <a href="https://github.com/parkheeddong">
-              <img style="height: 150px;" src="https://github.com/Gwasuwon-shot/Tutice_Client/assets/100409061/e10c6506-d8b0-417e-ad88-e9d08b936cac" width="200" >
-            </a> 
-        </td>
-        <td style="min-width: 150px; " background-color="white">
-              <b>지수</b>
-               <br />
-            <a href="https://github.com/seojisoosoo">
-              <img style="height: 150px;" src="https://github.com/Gwasuwon-shot/Tutice_Client/assets/100409061/54d3fcc8-b177-4dcf-aa7d-9edd6de2fb52" width="200">
-            </a> 
-        </td>
     </tr>
     <tr align="center">
         <td>
             권은빈 <br/>
-           🍅 Web FE 🍅
+           Web FE 🍅
       </td>
         <td>
             권혜인 <br />
-           🍌 Web FE 🍌
-        </td>
-        <td>
-            류성경 <br />
-           🍒 Web FE 🍒
-        </td>
-        <td>
-            박희정 <br />
-           🥝 Web FE 🥝
-        </td>
-        <td>
-            서지수 <br />
-           🍑 Web FE 🍑
+           Web FE 🍌
         </td>
     </tr>
 </table>
+<br/>
+
+original Members [류성경🍒](https://github.com/pinktopaz), [박희정🥝](https://github.com/parkheeddong), [서지수🍑](https://github.com/seojisoosoo)
 </aside>
 
 ## ⚒️ 기술 스택
