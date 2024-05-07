@@ -29,7 +29,7 @@ export default function AttendanceCheckModal(props: AttendanceCheckModalProp) {
     return attendanceData?.status === status;
   }
 
-  function handleCheckAttlendanceStatus(status: string) {
+  function handleCheckAttendanceStatus(status: string) {
     !checkSameSelectedStatus(status) && setIsCheckingModalOpen(true);
 
     setAttendanceData({ idx: scheduleIdx, status: status });
@@ -52,18 +52,18 @@ export default function AttendanceCheckModal(props: AttendanceCheckModalProp) {
       </TextWrapper>
       <AttendanceStatusButton
         status={ATTENDANCE_STATUS.attend}
-        onClick={() => handleCheckAttlendanceStatus(ATTENDANCE_STATUS.attend)}
+        onClick={() => handleCheckAttendanceStatus(ATTENDANCE_STATUS.attend)}
         selectedStatus={attendanceData?.status}
       />
       <AttdenceStatusButtonWrapper>
         <AttendanceStatusButton
           status={ATTENDANCE_STATUS.cancel}
-          onClick={() => handleCheckAttlendanceStatus(ATTENDANCE_STATUS.cancel)}
+          onClick={() => handleCheckAttendanceStatus(ATTENDANCE_STATUS.cancel)}
           selectedStatus={attendanceData?.status}
         />
         <AttendanceStatusButton
           status={ATTENDANCE_STATUS.absent}
-          onClick={() => handleCheckAttlendanceStatus(ATTENDANCE_STATUS.absent)}
+          onClick={() => handleCheckAttendanceStatus(ATTENDANCE_STATUS.absent)}
           selectedStatus={attendanceData?.status}
         />
       </AttdenceStatusButtonWrapper>

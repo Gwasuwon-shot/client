@@ -5,7 +5,6 @@ import {
   bankName,
   lessonCodeAndPaymentId,
   moneyAmount,
-  payingPersonName,
   paymentOrder,
 } from "../../atom/tuitionPayment/tuitionPayment";
 
@@ -33,7 +32,6 @@ interface createLessonProps {
     regularScheduleList: scheduleListProps[];
   };
   account: {
-    // name: string;
     bank: string;
     number: string;
   };
@@ -47,13 +45,10 @@ export default function Footer() {
   const count = useRecoilValue<number>(cycleNumberState);
   const startDate = useRecoilValue(dateState);
   const regularScheduleList = useRecoilValue(dayState);
-  const name = useRecoilValue(payingPersonName);
   const bank = useRecoilValue(bankName);
   const number = useRecoilValue(accountNumber);
   const [codeAndId, setCodeAndId] = useRecoilState(lessonCodeAndPaymentId);
-  // const [lessonData, setLessonData] = useRecoilState(lessonInputData);
 
-  // const isFooterGreen = name !== "" && number !== "" && bank !== "" && amount !== 0 && payment !== "";
   const isFooterGreen = number !== "" && bank !== "" && amount !== 0 && payment !== "";
 
   const postStartDate =
@@ -75,7 +70,6 @@ export default function Footer() {
       regularScheduleList: regularScheduleList,
     },
     account: {
-      // name: name,
       bank: bank,
       number: number,
     },
@@ -108,25 +102,17 @@ export default function Footer() {
   }
 
   return (
-    <>
-      <FooterWrapper>
-        <FooterButtonWrapper $isFooterGreen={isFooterGreen} onClick={() => PostLessonInformation(postInformation)}>
-          <FooterButton $isFooterGreen={isFooterGreen}> 다음 </FooterButton>
-        </FooterButtonWrapper>
-      </FooterWrapper>
-    </>
+    <FooterWrapper>
+      <FooterButtonWrapper $isFooterGreen={isFooterGreen} onClick={() => PostLessonInformation(postInformation)}>
+        <FooterButton $isFooterGreen={isFooterGreen}> 다음 </FooterButton>
+      </FooterButtonWrapper>
+    </FooterWrapper>
   );
 }
 
 interface isFooterGreenProps {
   $isFooterGreen: boolean;
 }
-
-const ModalWrapper = styled.div`
-  position: fixed;
-  z-index: 2;
-  top: 0;
-`;
 
 const FooterWrapper = styled.div`
   height: 9rem;

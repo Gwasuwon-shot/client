@@ -82,7 +82,7 @@ const TextWrapper = styled.div`
   flex-wrap: wrap;
   gap: 1.2rem;
   height: 36rem;
-  overflow: scroll;
+  overflow-y: scroll;
 `;
 
 const BankButtonBg = styled.div`

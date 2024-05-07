@@ -25,27 +25,12 @@ interface MoneyProp {
 
 export default function PaymentInput() {
   const { showModal } = useModal();
-  // 1. 입금자명
-  // const [isNameInputFocused, setNameInputFocused] = useState(false);
-  // const [personName, setPersonName] = useRecoilState<string>(payingPersonName);
-
-  // function handleNameInputFocus() {
-  //   setNameInputFocused(true);
-
-  //   setMoneyFocused(false);
-  //   setAccountNumInputFocused(false);
-  // }
-
-  // function handleNameInputChange(event: ChangeEvent<HTMLInputElement>) {
-  //   setPersonName(event.target.value);
-  // }
 
   // 2. 계좌번호
   const [isAccountNumInputFocused, setAccountNumInputFocused] = useState(false);
   const [accountNum, setAccountNum] = useRecoilState<string>(accountNumber);
 
   function handleAccountNumInputFocus() {
-    // setNameInputFocused(false);
     setMoneyFocused(false);
     setAccountNumInputFocused(true);
   }
@@ -68,7 +53,6 @@ export default function PaymentInput() {
   const [money, setMoney] = useRecoilState<number>(moneyAmount);
 
   function handleMoneyFocus() {
-    // setNameInputFocused(false);
     setAccountNumInputFocused(false);
     setMoneyFocused(true);
   }
@@ -96,10 +80,6 @@ export default function PaymentInput() {
 
   // 삭제
 
-  // function handleNameDelete() {
-  //   setPersonName("");
-  // }
-
   function handleAccountDelete() {
     setAccountNum("");
   }
@@ -109,78 +89,63 @@ export default function PaymentInput() {
   }
 
   function handleOrder() {
-    // setNameInputFocused(false);
     setAccountNumInputFocused(false);
     setMoneyFocused(false);
   }
 
   return (
-    <>
-      <InputWrapper>
-        {/* <NameInputSection $nameFocused={isNameInputFocused}>
-          <InputName> 입금자명 </InputName>
-          <NameInput
-            type="text"
-            placeholder="실명을 입력해주세요"
-            value={personName}
-            onChange={handleNameInputChange}
-            onFocus={handleNameInputFocus}
-          />
-          {isNameInputFocused && <RegisterLessonInputIcon onClick={handleNameDelete} />}
-        </NameInputSection> */}
+    <InputWrapper>
+      <AccountInputSection $accountFocused={isAccountNumInputFocused}>
+        <InputName> 계좌번호 </InputName>
+        <AccountInput
+          type="text"
+          placeholder="계좌번호 입력"
+          value={accountNum}
+          onChange={handleAccountNumInputChange}
+          onFocus={handleAccountNumInputFocus}
+        />
+        {isAccountNumInputFocused && <RegisterLessonInputIcon onClick={handleAccountDelete} />}
+      </AccountInputSection>
 
-        <AccountInputSection $accountFocused={isAccountNumInputFocused}>
-          <InputName> 계좌번호 </InputName>
-          <AccountInput
-            type="text"
-            placeholder="계좌번호 입력"
-            value={accountNum}
-            onChange={handleAccountNumInputChange}
-            onFocus={handleAccountNumInputFocus}
-          />
-          {isAccountNumInputFocused && <RegisterLessonInputIcon onClick={handleAccountDelete} />}
-        </AccountInputSection>
+      <BankInputSection>
+        <InputName> 은행명 </InputName>
+        <BankInput value={bank} disabled={true} type="text" placeholder={"은행 선택"} />
+        <RightArrowParentsHomeIcon onClick={showModal} />
+      </BankInputSection>
 
-        <BankInputSection>
-          <InputName> 은행명 </InputName>
-          <BankInput value={bank} disabled={true} type="text" placeholder={"은행 선택"} />
-          <RightArrowParentsHomeIcon onClick={showModal} />
-        </BankInputSection>
+      <MoneyInputSection $moneyFocused={isMoneyFocused}>
+        <InputName> 회차당 과외비 </InputName>
+        <MoneyInput
+          placeholder="금액 입력"
+          value={money === 0 ? "" : money.toLocaleString() + "원"}
+          onChange={handleMoneyChange}
+          onFocus={handleMoneyFocus}
+        />
+        {isMoneyFocused && <RegisterLessonInputIcon onClick={handleMoneyDelete} />}
+      </MoneyInputSection>
 
-        <MoneyInputSection $moneyFocused={isMoneyFocused}>
-          <InputName> 회차당 과외비 </InputName>
-          <MoneyInput
-            placeholder="금액 입력"
-            value={money === 0 ? "" : money.toLocaleString() + "원"}
-            onChange={handleMoneyChange}
-            onFocus={handleMoneyFocus}
-          />
-          {isMoneyFocused && <RegisterLessonInputIcon onClick={handleMoneyDelete} />}
-        </MoneyInputSection>
-
-        <CheckboxWrapper>
-          <CheckboxHeader> 입금 방식</CheckboxHeader>
-          <CheckboxLabel onClick={handleOrder}>
-            <CheckboxInput type="checkbox" checked={order === "선불"} onChange={handleFirstChange} />
-            {order === "선불" ? (
-              <CheckboxIcon as={TuitionPaymentRadioButtonCheckedIc} />
-            ) : (
-              <CheckboxIcon as={TuitionPaymentRadioButtonNotCheckedIc} />
-            )}
-            <CheckboxP> 선불 </CheckboxP>
-          </CheckboxLabel>
-          <CheckboxLabel onClick={handleOrder}>
-            <CheckboxInput type="checkbox" checked={order === "후불"} onChange={handleLastChange} />
-            {order === "후불" ? (
-              <CheckboxIcon as={TuitionPaymentRadioButtonCheckedIc} />
-            ) : (
-              <CheckboxIcon as={TuitionPaymentRadioButtonNotCheckedIc} />
-            )}
-            <CheckboxP> 후불 </CheckboxP>
-          </CheckboxLabel>
-        </CheckboxWrapper>
-      </InputWrapper>
-    </>
+      <CheckboxWrapper>
+        <CheckboxHeader> 입금 방식</CheckboxHeader>
+        <CheckboxLabel onClick={handleOrder}>
+          <CheckboxInput type="checkbox" checked={order === "선불"} onChange={handleFirstChange} />
+          {order === "선불" ? (
+            <CheckboxIcon as={TuitionPaymentRadioButtonCheckedIc} />
+          ) : (
+            <CheckboxIcon as={TuitionPaymentRadioButtonNotCheckedIc} />
+          )}
+          <CheckboxP> 선불 </CheckboxP>
+        </CheckboxLabel>
+        <CheckboxLabel onClick={handleOrder}>
+          <CheckboxInput type="checkbox" checked={order === "후불"} onChange={handleLastChange} />
+          {order === "후불" ? (
+            <CheckboxIcon as={TuitionPaymentRadioButtonCheckedIc} />
+          ) : (
+            <CheckboxIcon as={TuitionPaymentRadioButtonNotCheckedIc} />
+          )}
+          <CheckboxP> 후불 </CheckboxP>
+        </CheckboxLabel>
+      </CheckboxWrapper>
+    </InputWrapper>
   );
 }
 

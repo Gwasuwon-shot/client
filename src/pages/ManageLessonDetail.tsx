@@ -19,7 +19,7 @@ import useTeacherFooter from "../hooks/useTeacherFooter";
 export default function ManageLessonDetail() {
   const status = useRecoilValue(managingStatus);
   const [attendanceData, setAttendanceData] = useRecoilState(attendanceStatus);
-  const [selectedLesson, setSelectedLesson] = useRecoilState(attendanceLesson);
+  const selectedLesson = useRecoilValue(attendanceLesson);
   const [snackBarOpen, setSnackBarOpen] = useRecoilState(isSnackBarOpen);
 
   const { handleChangeActive } = useTeacherFooter();
