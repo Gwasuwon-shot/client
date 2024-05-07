@@ -8,13 +8,13 @@ export default function Terms() {
           <TitleText>약관</TitleText>
         </TitleWrapper>
         <ContentWrapper>
-          <a href="https://ubiquitous-verbena-6ff.notion.site/2d87a1ddb7f34d70a20e4267437b2900?pvs=4">
+          <a href="https://class-cha.notion.site/0bf7635dc1514ae090c87e0af61c3ad9?pvs=4">
             <ContentText>서비스 이용</ContentText>
           </a>
-          <a href="https://ubiquitous-verbena-6ff.notion.site/f03ea35957c041c1bb86199c6dd19a8e?pvs=4">
+          <a href="https://class-cha.notion.site/ef1aa2a085854b26b616a96562cabaf5?pvs=4">
             <ContentText>개인정보 수집 및 이용</ContentText>
           </a>
-          <a href="https://ubiquitous-verbena-6ff.notion.site/2410975952d74a198590af4d60b2e664?pvs=4">
+          <a href="https://class-cha.notion.site/2182c6752810457c9be4195c61f0dda6?pvs=4">
             <ContentText>개인정보 마케팅 활용</ContentText>
           </a>
         </ContentWrapper>

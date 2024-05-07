@@ -3,7 +3,7 @@ import "slick-carousel/slick/slick.css";
 import { styled } from "styled-components";
 
 import { useEffect, useRef } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { getCookie, setCookie } from "../api/cookie";
 import {
   KakaoDefaultLoginIc,
@@ -88,8 +88,9 @@ export default function Landing() {
       </ButtonWrapper>
 
       <GoToLoginMessage>
-        계속함으로써&nbsp;<Link to="/">이용약관</Link>&nbsp;및&nbsp;
-        <Link to="/">개인정보처리방침</Link>에 동의합니다
+        계속함으로써&nbsp;<a href="https://class-cha.notion.site/0bf7635dc1514ae090c87e0af61c3ad9?pvs=4">이용약관</a>
+        &nbsp;및&nbsp;
+        <a href="https://class-cha.notion.site/ef1aa2a085854b26b616a96562cabaf5?pvs=4">개인정보처리방침</a>에 동의합니다
       </GoToLoginMessage>
     </OnBoardingWrapper>
   );
