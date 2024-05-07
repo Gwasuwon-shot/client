@@ -8,13 +8,13 @@ export default function NoCheckPageAttendanceButton(props: NoCheckPageAttendance
   const { onClick } = props;
 
   return (
-    <AttendaceCheckButtonBox type="button" onClick={onClick}>
+    <AttendanceCheckButtonBox type="button" onClick={onClick}>
       <h1>출결 체크</h1>
-    </AttendaceCheckButtonBox>
+    </AttendanceCheckButtonBox>
   );
 }
 
-const AttendaceCheckButtonBox = styled.button`
+const AttendanceCheckButtonBox = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
