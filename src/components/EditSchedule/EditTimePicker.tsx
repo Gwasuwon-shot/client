@@ -26,8 +26,8 @@ export default function EditDetailTimePicker(props: EditDetailTimePickerPropType
   }
 
   // 2) swiper
-  const AMPM = ["오전", "오후"];
-  const slidesAmPm = Array.from({ length: 2 }, (_, index) => <SwiperSlide key={index}>{AMPM[index]}</SwiperSlide>);
+  // const AMPM = ["오전", "오후"];
+  // const slidesAmPm = Array.from({ length: 2 }, (_, index) => <SwiperSlide key={index}>{AMPM[index]}</SwiperSlide>);
 
   // 2. 시간 관리
   // 1) active slide 값 관리
@@ -61,15 +61,15 @@ export default function EditDetailTimePicker(props: EditDetailTimePickerPropType
   // 1) 시작 타임피커 완료시
   // problem: 현재 로직에서는, 시작시간을 한번 선택한 이후 다른 시간으로 선택하고자 할때 변경 불가
   function handleConfirmStartTimePicker() {
-    const formattedHour =
-      activeHourSlide === 12 && activeAmPmSlide === 0 ? "00" : String(activeHourSlide).padStart(2, "0");
+    const formattedHour = String(activeHourSlide).padStart(2, "0");
+    // activeHourSlide === 12 && activeAmPmSlide === 0 ? "00" : String(activeHourSlide).padStart(2, "0");
     // 0: 오전 1:오후
-    const startTime =
-      activeAmPmSlide === 0
-        ? `${formattedHour}:${activeMinuteSlide}`
-        : activeHourSlide === 12
-        ? `12:${activeMinuteSlide}` // PM 12시인 경우 12를 그대로 사용
-        : `${activeHourSlide + 12}:${activeMinuteSlide}`; // 그 외 PM 시간은 12를 더함
+    const startTime = `${formattedHour}:${activeMinuteSlide}`;
+    // activeAmPmSlide === 0
+    //   ? `${formattedHour}:${activeMinuteSlide}`
+    //   : activeHourSlide === 12
+    //   ? `12:${activeMinuteSlide}` // PM 12시인 경우 12를 그대로 사용
+    //   : `${activeHourSlide + 12}:${activeMinuteSlide}`; // 그 외 PM 시간은 12를 더함
 
     setSelectedDays({ ...selectedDays, startTime });
     setIsStartPickerOpen(false);
@@ -85,15 +85,15 @@ export default function EditDetailTimePicker(props: EditDetailTimePickerPropType
 
   // 1) 종료 타임피커 완료시
   function handleConfirmFinishTimePicker() {
-    const formattedHour =
-      activeHourSlide === 12 && activeAmPmSlide === 0 ? "00" : String(activeHourSlide).padStart(2, "0");
+    const formattedHour = String(activeHourSlide).padStart(2, "0");
+    // activeHourSlide === 12 && activeAmPmSlide === 0 ? "00" : String(activeHourSlide).padStart(2, "0");
     // 0: 오전 1:오후
-    const endTime =
-      activeAmPmSlide === 0
-        ? `${formattedHour}:${activeMinuteSlide}`
-        : activeHourSlide === 12
-        ? `12:${activeMinuteSlide}`
-        : `${activeHourSlide + 12}:${activeMinuteSlide}`;
+    const endTime = `${formattedHour}:${activeMinuteSlide}`;
+    // activeAmPmSlide === 0
+    //   ? `${formattedHour}:${activeMinuteSlide}`
+    //   : activeHourSlide === 12
+    //   ? `12:${activeMinuteSlide}`
+    //   : `${activeHourSlide + 12}:${activeMinuteSlide}`;
     setSelectedDays({ ...selectedDays, endTime });
     setIsFinishPickerOpen(false);
     setIsActive(true);
@@ -106,16 +106,16 @@ export default function EditDetailTimePicker(props: EditDetailTimePickerPropType
 
   return (
     <TimePickerWrapper>
-      <CancleWrapper>
+      <CancelWrapper>
         {isStartPickerOpen ? (
           <CancelButton onClick={handleCancelStartTimePicker}>취소</CancelButton>
         ) : (
           <CancelButton onClick={handleCancelFinishTimePicker}>취소</CancelButton>
         )}
-      </CancleWrapper>
+      </CancelWrapper>
 
       <SwiperWrapper>
-        <StyledSwiper
+        {/* <StyledSwiper
           direction="vertical"
           slidesPerView={5}
           spaceBetween={20}
@@ -127,7 +127,7 @@ export default function EditDetailTimePicker(props: EditDetailTimePickerPropType
           centeredSlides={true}
           onSlideChange={handleAmPmSlideChange}>
           {slidesAmPm}
-        </StyledSwiper>
+        </StyledSwiper> */}
 
         <StyledSwiper
           direction="vertical"
@@ -220,7 +220,7 @@ const StyledSwiper = styled(Swiper)`
   }
 `;
 
-const CancleWrapper = styled.div`
+const CancelWrapper = styled.div`
   display: flex;
 
   position: relative;

@@ -14,5 +14,5 @@ export default function RegularLesson() {
 }
 
 const RegularWrapper = styled.main`
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 `;

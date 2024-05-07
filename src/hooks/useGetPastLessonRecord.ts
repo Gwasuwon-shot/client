@@ -6,7 +6,7 @@ export default function useGetPastLessonRecord(lessonId: number) {
   const { data: pastLessonRecord } = useQuery(["getPastLessonRecord"], () => getPastLessonRecord(lessonId), {});
 
   const scheduleList = pastLessonRecord?.scheduleList?.filter(
-    (item: PastLessonRecordType) => item.status !== "상태없음",
+    (item: PastLessonRecordType) => item.status !== "수업예정",
   );
   const lesson = pastLessonRecord?.lesson;
 

@@ -1,8 +1,5 @@
 import { RegularLessonCalenderIc } from "../../assets";
-import {
-  studentNameState,
-  subjectNameState,
-} from "../../atom/common/datePicker";
+import { studentNameState, subjectNameState } from "../../atom/common/datePicker";
 import {
   cycleNumberState,
   dateState,
@@ -48,16 +45,11 @@ export default function LessonDate() {
 
   function handleDayButton(day: string) {
     setSelectedDays((prevSelectedDays) => {
-      const existingDayIndex = prevSelectedDays.findIndex(
-        (selectedDay) => selectedDay.dayOfWeek === day
-      );
+      const existingDayIndex = prevSelectedDays.findIndex((selectedDay) => selectedDay.dayOfWeek === day);
 
       if (day == firstLesson) {
         if (existingDayIndex === -1) {
-          return [
-            ...prevSelectedDays,
-            { dayOfWeek: day, startTime: "12:00", endTime: "12:00" },
-          ];
+          return [...prevSelectedDays, { dayOfWeek: day, startTime: "12:00", endTime: "12:00" }];
         } else {
           return [...prevSelectedDays];
         }
@@ -67,10 +59,7 @@ export default function LessonDate() {
           newSelectedDays.splice(existingDayIndex, 1);
           return newSelectedDays;
         } else {
-          return [
-            ...prevSelectedDays,
-            { dayOfWeek: day, startTime: "12:00", endTime: "12:00" },
-          ];
+          return [...prevSelectedDays, { dayOfWeek: day, startTime: "12:00", endTime: "12:00" }];
         }
       }
     });
@@ -82,10 +71,9 @@ export default function LessonDate() {
   const [subject, setSubject] = useRecoilState(subjectNameState);
   const [count, setCount] = useRecoilState(cycleNumberState);
   const [scheduleDate, setscheduleDate] = useRecoilState(dateState);
-  const startDate = `${scheduleDate.year}-${String(scheduleDate.month).padStart(
-    2,
-    "0"
-  )}-${String(scheduleDate.date).padStart(2, "0")}`;
+  const startDate = `${scheduleDate.year}-${String(scheduleDate.month).padStart(2, "0")}-${String(
+    scheduleDate.date,
+  ).padStart(2, "0")}`;
   const [tempSchedule, setTempSchedule] = useRecoilState(temporarySchedule);
 
   const postInformation: temporaryProp = {
@@ -96,17 +84,14 @@ export default function LessonDate() {
     regularScheduleList: selectedDays,
   };
 
-  const { mutate: getNewTemporarySchedule } = useMutation(
-    getTemporarySchedule,
-    {
-      onSuccess: (response) => {
-        setTempSchedule(response);
-        navigate("/register-calendar");
-      },
+  const { mutate: getNewTemporarySchedule } = useMutation(getTemporarySchedule, {
+    onSuccess: (response) => {
+      setTempSchedule(response);
+      navigate("/register-calendar");
+    },
 
-      onError: (error) => console.debug(error),
-    }
-  );
+    onError: (error) => console.debug(error),
+  });
 
   function postTemporary(info: temporaryProp) {
     getNewTemporarySchedule(postInformation);
@@ -123,29 +108,19 @@ export default function LessonDate() {
           <Day
             key={index}
             onClick={() => handleDayButton(day)}
-            $isSelected={selectedDays.some(
-              (selectedDay) => selectedDay.dayOfWeek === day
-            )}
-          >
+            $isSelected={selectedDays.some((selectedDay) => selectedDay.dayOfWeek === day)}>
             {day}
           </Day>
         ))}
       </DayWrapper>
 
       {selectedDays.map((day, index) => (
-        <SelectedDayAndTime
-          key={index}
-          dayofweek={day.dayOfWeek}
-          startTime={day.startTime}
-          endTime={day.endTime}
-        />
+        <SelectedDayAndTime key={index} dayofweek={day.dayOfWeek} startTime={day.startTime} endTime={day.endTime} />
       ))}
 
       <ModalWrapper>
         <RegularLessonCalenderIcon />
-        <ModalButton onClick={() => postTemporary(postInformation)}>
-          캘린더 확인하기
-        </ModalButton>
+        <ModalButton onClick={() => postTemporary(postInformation)}>캘린더 확인하기</ModalButton>
       </ModalWrapper>
     </LessonDateWrapper>
   );
@@ -185,8 +160,7 @@ const Day = styled.button<DayProp>`
   ${({ theme }) => theme.fonts.body02};
   color: ${({ theme }) => theme.colors.grey300};
   background-color: ${({ theme }) => theme.colors.grey50};
-  ${({ $isSelected, theme }) =>
-    $isSelected && `background-color: ${theme.colors.green4}`};
+  ${({ $isSelected, theme }) => $isSelected && `background-color: ${theme.colors.green4}`};
   ${({ $isSelected, theme }) => $isSelected && `color: ${theme.colors.white}`};
 `;
 

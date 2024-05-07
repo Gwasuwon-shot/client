@@ -1,7 +1,7 @@
 import Lottie from "lottie-react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { attendanceLesson } from "../atom/attendanceCheck/attendanceLesson";
 import { attendanceStatus } from "../atom/attendanceCheck/attendanceStatus";
@@ -34,7 +34,7 @@ export default function CompleteCheckAttendance() {
   const navigate = useNavigate();
   const { modalRef, closeModal, unShowModal, showModal } = useModal();
   const [openModal, setOpenModal] = useRecoilState<boolean>(isModalOpen);
-  const [selectedLesson, setSelectedLesson] = useRecoilState(attendanceLesson);
+  const selectedLesson = useRecoilValue(attendanceLesson);
   const { lessonIdx, studentName, count, subject, scheduleIdx } = selectedLesson;
   const { handleMoveToPage } = useTeacherFooter();
   const [snackBarOpen, setSnackBarOpen] = useRecoilState(isSnackBarOpen);

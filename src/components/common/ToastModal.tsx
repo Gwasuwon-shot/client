@@ -70,7 +70,8 @@ const Modal = styled.aside`
   flex-direction: column;
 
   width: 32rem;
-  /* padding: 1.6rem 1.4rem 4.5rem; */
+  /* TODO 이 패딩이 버튼 세개인 모달에 맞는 패딩 */
+  padding: 1.6rem 1.4rem 4.5rem;
   padding-top: 1.6rem;
 
   background-color: ${({ theme }) => theme.colors.white};

@@ -1,34 +1,70 @@
-import { useRecoilValue } from "recoil";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { TosCheckedSignupIc } from "../assets";
-import { lessonCodeAndPaymentId, lessonInputData } from "../atom/tuitionPayment/tuitionPayment";
+import { studentNameState, subjectNameState } from "../atom/common/datePicker";
+import { cycleNumberState, dateState, dayState } from "../atom/timePicker/timePicker";
+import {
+  accountNumber,
+  bankName,
+  lessonCodeAndPaymentId,
+  moneyAmount,
+  paymentOrder,
+} from "../atom/tuitionPayment/tuitionPayment";
 import ButtonLayout from "../components/welcomeSignup/ButtonLayout";
 import { STUDENT_COLOR } from "../core/common/studentColor";
 
 export default function LessonRegisterComplete() {
-  const lessonData = useRecoilValue(lessonInputData);
-  const codeAndId = useRecoilValue(lessonCodeAndPaymentId);
-  function handleMoveToIntegration() {}
+  const navigate = useNavigate();
+
+  const [studentName, setStudentName] = useRecoilState<string>(studentNameState);
+  const [subject, setSubject] = useRecoilState<string>(subjectNameState);
+  const [startDate, setStartDate] = useRecoilState(dateState);
+  const [regularScheduleList, setRegularScheduleList] = useRecoilState(dayState);
+
+  const [amount, setAmount] = useRecoilState<number>(moneyAmount);
+  const [count, setCount] = useRecoilState<number>(cycleNumberState);
+  const [payment, setPayment] = useRecoilState<string>(paymentOrder);
+  const [bank, setBank] = useRecoilState(bankName);
+  const [number, setNumber] = useRecoilState(accountNumber);
+  const [codeAndId, setCodeAndId] = useRecoilState(lessonCodeAndPaymentId);
+
+  function resetAllStates() {
+    setStudentName("");
+    setSubject("");
+    setPayment("");
+    setAmount(0);
+    setCount(0);
+    setStartDate({ year: new Date().getFullYear(), month: new Date().getMonth() + 1, date: new Date().getDate() });
+    setRegularScheduleList([]);
+    setBank("");
+    setNumber("");
+  }
+
   return (
     <ConfirmWrapper>
       <CenterWrapper>
-        <TosCheckedSignupIc style={{ width: "8.7rem", height: "8.7rem", textAlign: "center" }} />
+        <TosCheckedSignupIcon />
         <CompleteText>수업 등록 완료!</CompleteText>
       </CenterWrapper>
       <CenterWrapper>
-        <ModalTime>2023년 7월 3일 (월)</ModalTime>
+        <ModalTime>
+          {startDate.year}년 {startDate.month}월 {startDate.date}일 {regularScheduleList[0].dayOfWeek}
+        </ModalTime>
         <ScheduleContainer>
           <ModalName>
-            <span>박송현</span> 학생
+            <span>{studentName}</span> 학생
           </ModalName>
-          <ModalSubject $backgroundcolor={STUDENT_COLOR[12 % 10]}>수학</ModalSubject>
+          {/* TODO 맞는 컬러칩 넣기 */}
+          <ModalSubject $backgroundcolor={STUDENT_COLOR[2354 % 10]}>{subject}</ModalSubject>
         </ScheduleContainer>
       </CenterWrapper>
       <ButtonLayout
         buttonText="학부모님과 함께 관리하기"
         passText="건너뛰고 혼자 관리하기"
-        onClickJump={() => true}
-        onClickButton={() => true}
+        // TODO 학부모님과 함께 관리하기 버튼 클릭 시 학부모님과 함께 관리하기 페이지로 이동
+        onClickJump={() => navigate("/home")}
+        onClickButton={() => navigate("/home")}
       />
     </ConfirmWrapper>
   );
@@ -85,10 +121,9 @@ const CompleteText = styled.h1`
   color: ${({ theme }) => theme.colors.green5};
   ${({ theme }) => theme.fonts.title01};
 `;
-const DateText = styled.p`
-  color: ${({ theme }) => theme.colors.green5};
-`;
 
-const NameText = styled.h3`
-  color: ${({ theme }) => theme.colors.green5};
+const TosCheckedSignupIcon = styled(TosCheckedSignupIc)`
+  width: 8.7rem;
+  height: 8.7rem;
+  text-align: center;
 `;

@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { attendanceLesson } from "../../atom/attendanceCheck/attendanceLesson";
 import { isModalOpen } from "../../atom/common/isModalOpen";
+import useGetCanceledScheduleByLesson from "../../hooks/manageLessons/useGetCanceledScheduleByLesson";
 import useGetLessonDetail from "../../hooks/useGetLessonDetail";
 import useGetLessonSchedule from "../../hooks/useGetLessonSchedule";
 import { ScheduleListType } from "../../type/manageLesson/scheduleListType";
@@ -12,15 +13,31 @@ import AttendanceDoubleCheckingModal from "../common/AttendanceDoubleCheckingMod
 import CancelImpossibleModal from "../modal/CanceImpossibleModal";
 import AttendanceInform from "./AttendanceInform";
 
+interface scheduleListType {
+  idx: number;
+  date: string;
+  status: string;
+  startTime: string;
+  endTime: string;
+}
+
 export default function AttendanceInforms() {
   const { manageLessonId } = useParams();
+
   const [isCheckingModalOpen, setIsCheckingModalOpen] = useState(false);
+  const [isCancelImpossibleModalOpen, setIsCancelImpossibleModalOpen] = useState(false);
+  const [isUpdateOpen, setIsUpdateOpen] = useState(false);
+
   const [selectedLesson, setSelectedLesson] = useRecoilState(attendanceLesson);
   const [openModal, setOpenModal] = useRecoilState<boolean>(isModalOpen);
-  const [isCancelImpossibleModalOpen, setIsCancelImpossibleModalOpen] = useState(false);
   const { studentName, subject } = useGetLessonDetail(Number(manageLessonId));
+
   const { scheduleList } = useGetLessonSchedule(Number(manageLessonId));
-  const [isUpdateOpen, setIsUpdateOpen] = useState(false);
+  const { cancelScheduleList } = useGetCanceledScheduleByLesson(Number(manageLessonId));
+
+  const combinedClasses = cancelScheduleList
+    .concat(scheduleList)
+    .sort((a: scheduleListType, b: scheduleListType) => b.idx - a.idx);
 
   useEffect(() => {
     studentName && subject && setSelectedLesson({ ...selectedLesson, studentName: studentName, subject: subject });
@@ -61,7 +78,7 @@ export default function AttendanceInforms() {
       <UpdateToggle onClick={handleUpdateChange}>{!isUpdateOpen ? "수정" : "취소"}</UpdateToggle>
       {checkScheduleListExist() ? (
         <ScheduleWrapper>
-          {scheduleList?.map(({ idx, date, status, startTime, endTime }: ScheduleListType, index: number) => (
+          {combinedClasses?.map(({ idx, date, status, startTime, endTime }: ScheduleListType, index: number) => (
             <AttendanceInform
               key={idx}
               date={date}
@@ -100,7 +117,7 @@ const GreyBox = styled.div`
 `;
 
 const ScheduleWrapper = styled.section`
-  overflow: scroll;
+  /* overflow: scroll; */
 
   padding-bottom: 15rem;
 `;

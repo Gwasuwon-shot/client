@@ -20,7 +20,7 @@ import { lessonListType } from "../type/manageLesson/lessonListType";
 
 export default function ManageLessonMain() {
   const [snackBarOpen, setSanckBarOpen] = useRecoilState(isSnackBarOpen);
-  const [isSucces, setIsSuccess] = useState(true);
+  const [isSuccess, setIsSuccess] = useState(true);
   const navigate = useNavigate();
   const [attendanceData, setAttendanceData] = useRecoilState(attendanceStatus);
   const [isClickedEdit, setIsClickedEdit] = useState(false);
@@ -31,6 +31,7 @@ export default function ManageLessonMain() {
 
   const { lessonList } = useGetAllLessons();
   const { missingMaintenanceLessonList } = useGetMissingMaintenanceLesson();
+  
   useEffect(() => {
     setAttendanceData({ idx: 0, status: "" });
   }, []);
@@ -84,8 +85,8 @@ export default function ManageLessonMain() {
           setIsSuccess={setIsSuccess}
         />
       )}
-      {snackBarOpen && isSucces && <SuccessLessonMaintenanceSanckBar />}
-      {snackBarOpen && !isSucces && <CancelLessonMaintenanceSnackBar />}
+      {snackBarOpen && isSuccess && <SuccessLessonMaintenanceSanckBar />}
+      {snackBarOpen && !isSuccess && <CancelLessonMaintenanceSnackBar />}
       <MainLessonsWrapper>
         <MainLessonsHeader>수업관리</MainLessonsHeader>
         <TitleWrapper>

@@ -20,5 +20,5 @@ export default function TuitionPayment() {
 }
 
 const PaymentWrapper = styled.main`
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 `;

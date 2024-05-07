@@ -1,14 +1,14 @@
 import { useMutation, useQueryClient } from "react-query";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { styled } from "styled-components";
 import { createLessonMaintenance } from "../../api/createLessonMaintenance";
 import { attendanceLesson } from "../../atom/attendanceCheck/attendanceLesson";
 import { isSnackBarOpen } from "../../atom/common/isSnackBarOpen";
+import { STUDENT_COLOR } from "../../core/common/studentColor";
 import useModal from "../../hooks/useModal";
 import RoundBottomMiniButton from "../common/RoundBottomMiniButton";
 import StudentNameLabel from "../common/StudentNameLabel";
 import ToastModal from "../common/ToastModal";
-import { STUDENT_COLOR } from "../../core/common/studentColor";
 
 interface ExtensionLessonModalProps {
   setIsClickedMainteance: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,8 +23,8 @@ interface createLessonMaintenanceProps {
 export default function ExtensionLessonModal(props: ExtensionLessonModalProps) {
   const { unShowModal } = useModal();
   const { setIsSuccess, setIsClickedMainteance } = props;
-  const [snackBarOpen, setSanckBarOpen] = useRecoilState(isSnackBarOpen);
-  const [selectedLesson, setSelectedLesson] = useRecoilState(attendanceLesson);
+  const [snackBarOpen, setSnackBarOpen] = useRecoilState(isSnackBarOpen);
+  const selectedLesson = useRecoilValue(attendanceLesson);
   const { studentName, subject, lessonIdx } = selectedLesson;
 
   const postInformationTrue = {
@@ -51,7 +51,7 @@ export default function ExtensionLessonModal(props: ExtensionLessonModalProps) {
     createNewLessonMaintenance(info);
     setIsClickedMainteance(false);
     unShowModal();
-    setSanckBarOpen(true);
+    setSnackBarOpen(true);
     setIsSuccess(true);
   }
 
@@ -60,7 +60,7 @@ export default function ExtensionLessonModal(props: ExtensionLessonModalProps) {
     setIsClickedMainteance(false);
 
     unShowModal();
-    setSanckBarOpen(true);
+    setSnackBarOpen(true);
     setIsSuccess(false);
   }
 
