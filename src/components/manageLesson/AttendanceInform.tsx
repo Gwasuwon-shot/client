@@ -142,8 +142,7 @@ const LessonCount = styled.h1<{ $isCancel: boolean }>`
   ${({ theme }) => theme.fonts.body02};
 
   > span {
-    /* TODO 컬러값 확인해서 정확하게 */
-    color: ${({ theme }) => theme.colors.grey300};
+    color: ${({ theme }) => theme.colors.grey400};
   }
 `;
 
@@ -162,5 +161,6 @@ const StatusLabel = styled.label<{ $status: string }>`
       : $status === ATTENDANCE_STATUS.absent
       ? theme.colors.red6
       : theme.colors.grey900};
+
   ${({ theme }) => theme.fonts.body01};
 `;

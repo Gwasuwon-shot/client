@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CopylessonShareIc, ShareOthersLessonShareIc } from "../assets";
+import { CopyLessonShareIc, ShareViaEtc, ShareViaKakao, ShareViaMessage } from "../assets";
 import { studentNameState, subjectNameState } from "../atom/common/datePicker";
 import { cycleNumberState, dateState, dayState, firstLessonDay, focusDayState } from "../atom/timePicker/timePicker";
 import {
@@ -10,14 +10,12 @@ import {
   paymentOrder,
 } from "../atom/tuitionPayment/tuitionPayment";
 
-import { useLocation, useNavigate } from "react-router-dom";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { styled } from "styled-components";
-import { lessonCode } from "../atom/share/share";
 import { lessonCodeAndPaymentId } from "../atom/tuitionPayment/tuitionPayment";
 import { CommonBackButton, ProgressBar } from "../components/common";
 import BottomButton from "../components/common/BottomButton";
-import { KakaoShare } from "../components/lessonShare/KakaoShare";
 import useGetLessonByUser from "../hooks/useGetLessonByUser";
 
 interface dayProps {
@@ -33,37 +31,41 @@ interface Day {
 }
 
 export default function LessonShare() {
-  const { state } = useLocation();
-  const [cycleNumber, setcycleNumberState] = useRecoilState(cycleNumberState);
-  const [date, setdateState] = useRecoilState(dateState);
-  const [day, setdayState] = useRecoilState(dayState);
-  const [firstLesson, setfirstLessonDay] = useRecoilState(firstLessonDay);
-  const [focusDay, setfocusDayState] = useRecoilState(focusDayState);
-  const [studentName, setStudentName] = useRecoilState<string>(studentNameState);
-  const [subjectName, setsubjectNameState] = useRecoilState(subjectNameState);
-  const [accountNum, setaccountNumber] = useRecoilState(accountNumber);
-  const [bank, setbankName] = useRecoilState(bankName);
-  const [money, setmoneyAmount] = useRecoilState(moneyAmount);
-  const [payingPerson, setpayingPersonName] = useRecoilState(payingPersonName);
-  const [payment, setpaymentOrder] = useRecoilState(paymentOrder);
+  //이 앞 Tuition에서 넘어왔는지 확인하는 값
+  // https://github.com/Gwasuwon-shot/Tutice_Client/blob/release1.1/src/components/tuitionPayment/Footer.tsx
+  // const { state } = useLocation();
+  const [state, _] = useState(true);
   const { userName } = useGetLessonByUser();
 
+  const [cycleNumber, setCycleNumberState] = useRecoilState(cycleNumberState);
+  const [date, setdateState] = useRecoilState(dateState);
+  const [day, setDayState] = useRecoilState(dayState);
+  const [firstLesson, setFirstLessonDay] = useRecoilState(firstLessonDay);
+  const [focusDay, setFocusDayState] = useRecoilState(focusDayState);
+  const [studentName, setStudentName] = useRecoilState<string>(studentNameState);
+  const [subjectName, setSubjectNameState] = useRecoilState(subjectNameState);
+  const [accountNum, setAccountNumber] = useRecoilState(accountNumber);
+  const [bank, setBankName] = useRecoilState(bankName);
+  const [money, setMoneyAmount] = useRecoilState(moneyAmount);
+  const [payingPerson, setPayingPersonName] = useRecoilState(payingPersonName);
+  const [payment, setPaymentOrder] = useRecoilState(paymentOrder);
+
   function setAllSet() {
-    setcycleNumberState(-1);
+    setCycleNumberState(-1);
     setdateState({ year: new Date().getFullYear(), month: new Date().getMonth() + 1, date: new Date().getDate() });
-    setdayState([]);
-    setfirstLessonDay({ 1: "월", 2: "화", 3: "수", 4: "목", 5: "금", 6: "토", 0: "일" }[new Date().getDay()]);
+    setDayState([]);
+    setFirstLessonDay({ 1: "월", 2: "화", 3: "수", 4: "목", 5: "금", 6: "토", 0: "일" }[new Date().getDay()]);
 
     setStudentName("");
-    setsubjectNameState("");
-    setaccountNumber("");
-    setbankName("");
-    setmoneyAmount(0);
-    setpayingPersonName("");
+    setSubjectNameState("");
+    setAccountNumber("");
+    setBankName("");
+    setMoneyAmount(0);
+    setPayingPersonName("");
   }
 
   const navigate = useNavigate();
-  const [codeAndId, setCodeAndId] = useRecoilState(lessonCodeAndPaymentId);
+  const codeAndId = useRecoilValue(lessonCodeAndPaymentId);
   const [URL, setURL] = useState(`https://tutice.com/${codeAndId?.lessonCode}`);
 
   useEffect(() => {
@@ -102,7 +104,7 @@ export default function LessonShare() {
   return (
     <>
       {state ? (
-        <LessonTreeSuccess>수업등록 완료</LessonTreeSuccess>
+        <LessonTreeSuccess>수업 관리 연동</LessonTreeSuccess>
       ) : (
         <OnlyLessonShareHeader>
           <BackButtonWrapper>
@@ -114,29 +116,31 @@ export default function LessonShare() {
 
       {state && <ProgressBar progress={100} />}
       <LessonShareWrapper>
-        {state && <End>수업 추가 완료!</End>}
-        <ShareTitle>
-          수업링크를 <br />
-          학부모님께 공유해보세요
-        </ShareTitle>
-        <SharSub>
-          학부모님에게 수업비와 출결에 관한 <br />
-          알림을 드릴 수 있어요
-        </SharSub>
+        <ShareTitle>튜티스 초대 링크를 공유해주세요</ShareTitle>
+        <ShareSub>
+          학부모님과의 수업 연동을 통해 <br /> 입금 및 수업 관리를 한 번에 할 수 있어요.
+        </ShareSub>
 
-        <TreeTitle>수업링크</TreeTitle>
         <LinkBox>
-          <CopylessonShareIc onClick={handleCopyLink} />
+          <CopyLessonShareIc onClick={handleCopyLink} />
           <p>{URL}</p>
         </LinkBox>
-        <ButtonWrapper>
-          <ShareOthersLessonShareIcon onClick={handleShareOtherWays} />
-          <KakaoShare url={URL} />
-        </ButtonWrapper>
+
+        <ShareContainer>
+          {SHARE_ICON.map(({ icon }) => (
+            <ShareIcon as={icon} />
+          ))}
+        </ShareContainer>
+
+        <ButtonTextWrapper>
+          <ButtonText>나중에 할게요</ButtonText>
+          <ButtonText>초대장 미리보기</ButtonText>
+        </ButtonTextWrapper>
+
         {state && (
           <BottomButtonWrapper>
             <BottomButton isActive={true} onClick={handleMoveToHome} disabled={false} type="button">
-              다음
+              공유햇어요
             </BottomButton>
           </BottomButtonWrapper>
         )}
@@ -145,11 +149,11 @@ export default function LessonShare() {
   );
 }
 
-const End = styled.p`
-  color: ${({ theme }) => theme.colors.green5};
-  ${({ theme }) => theme.fonts.body01};
-  margin-bottom: 1.85rem;
-`;
+const SHARE_ICON = [
+  { icon: ShareViaKakao, text: "카카오톡" },
+  { icon: ShareViaMessage, text: "메시지" },
+  { icon: ShareViaEtc, text: "기타" },
+];
 
 const BackButtonWrapper = styled.div`
   position: absolute;
@@ -164,11 +168,11 @@ const BottomButtonWrapper = styled.section`
 `;
 
 const LessonTreeSuccess = styled.p<{ onlyLessonShare?: boolean }>`
-  padding: ${({ onlyLessonShare }) => (onlyLessonShare ? "1.2rem 12.1rem 1.2rem 8.6rem" : "1.2rem 12.1rem")};
+  /* padding: ${({ onlyLessonShare }) => (onlyLessonShare ? "1.2rem 12.1rem 1.2rem 8.6rem" : "1.2rem 12.1rem")}; */
+  padding: 1.2rem 0;
 
   text-align: center;
 
-  /* color: ${({ theme }) => theme.colors.green5}; */
   ${({ theme }) => theme.fonts.body01};
 `;
 
@@ -183,28 +187,22 @@ const ShareTitle = styled.h1`
   ${({ theme }) => theme.fonts.title01};
 `;
 
-const SharSub = styled.p`
+const ShareSub = styled.p`
   margin-top: 1rem;
   color: ${({ theme }) => theme.colors.grey500};
   ${({ theme }) => theme.fonts.body06};
 `;
 
-const TreeTitle = styled.p`
-  margin-top: 2.5rem;
-  margin-bottom: 0.4rem;
-
-  color: ${({ theme }) => theme.colors.green4};
-  ${({ theme }) => theme.fonts.body06};
-`;
-
 const LinkBox = styled.label`
+  margin-top: 2.5rem;
   display: flex;
-  width: 29.2rem;
+  width: 100%;
   height: 4.6rem;
   padding: 0.8rem 1.5rem;
   justify-content: flex-start;
   align-items: center;
   gap: 0.8rem;
+  margin-top: 6rem;
 
   border-radius: 0.8rem;
 
@@ -214,14 +212,31 @@ const LinkBox = styled.label`
   ${({ theme }) => theme.fonts.body02};
 `;
 
-const ButtonWrapper = styled.section`
-  display: flex;
-
-  justify-content: space-between;
-  margin-top: 6.6rem;
+const ShareIcon = styled.div`
+  width: 9.2rem;
+  height: 6.4rem;
 `;
 
-const ShareOthersLessonShareIcon = styled(ShareOthersLessonShareIc)`
-  width: 14.2rem;
-  height: 6.4rem;
+const ShareContainer = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  margin-top: 3rem;
+  gap: 0.8rem;
+`;
+
+const ButtonTextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const ButtonText = styled.button`
+  width: fit-content;
+  margin-top: 1.6rem;
+  ${({ theme }) => theme.fonts.body04};
+
+  color: ${({ theme }) => theme.colors.grey500};
+
+  border-bottom: solid 0.05rem ${({ theme }) => theme.colors.grey500};
 `;
