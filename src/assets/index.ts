@@ -1,4 +1,3 @@
-export { ReactComponent as CopyLessonShareIc } from "./icon/CopyLessonShareIc.svg";
 export { ReactComponent as EditPencilIc } from "./icon/EditPencilIc.svg";
 export { ReactComponent as FourthSwiperFirstTree } from "./icon/FourthSwiperFirstTreeOnBoardingIc.svg";
 export { ReactComponent as FourthSwiperSecondTree } from "./icon/FourthSwiperSecondTreeOnBoardingIc.svg";
@@ -78,6 +77,7 @@ export { ReactComponent as CheckButtonSnackBarIc } from "./icon/checkButtonSnack
 export { ReactComponent as ClassManagingActiveTeacherFooterIc } from "./icon/classManagingActiveTeacherFooterIc.svg";
 export { ReactComponent as ClassManagingTeacherFooterIc } from "./icon/classManagingTeacherFooterIc.svg";
 export { ReactComponent as copyAccountNumberLessonInfoIc } from "./icon/copyAccountNumberLessonInfoIc.svg";
+export { ReactComponent as CopyLessonShareIc } from "./icon/copyLessonShareIc.svg";
 export { ReactComponent as DoneAttendanceIc } from "./icon/doneAttendanceIc.svg";
 export { ReactComponent as EditPaymentIc } from "./icon/editPaymentIc.svg";
 export { ReactComponent as EmptyDepositParentsLessonRecordIc } from "./icon/emptyDepositParentsLessonRecordIc.svg";
