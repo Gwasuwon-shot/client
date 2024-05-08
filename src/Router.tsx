@@ -13,6 +13,7 @@ import ErrorPage from "./pages/ErrorPage";
 import Home from "./pages/Home";
 import KakaoRedirect from "./pages/KakaoRedirect";
 import Landing from "./pages/Landing";
+import LessonConnect from "./pages/LessonConnect";
 import LessonDetail from "./pages/LessonDetail";
 import LessonInfo from "./pages/LessonInfo";
 import LessonRegisterComplete from "./pages/LessonRegisterComplete";
@@ -71,6 +72,7 @@ export default function Router() {
               <Route path="/schedule" element={<ChangeSchedule />} />
               <Route path="/tuition-payment" element={<TuitionPayment />} />
               <Route path="/register-complete" element={<LessonRegisterComplete />} />
+              <Route path="/lesson-connect" element={<LessonConnect />} />
 
               <Route path="/myPage" element={<MyPage />} />
               <Route path="/no-attendance-check" element={<NoAttendanceCheck />} />

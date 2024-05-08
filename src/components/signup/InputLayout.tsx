@@ -25,16 +25,21 @@ export default function InputLayout({ labelText, placeholder, onInputChange, typ
   const [isFocused, setIsFocused] = useState(false);
   const [isExist, setIsExist] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [phoneNumber, setPhoneNumber] = useFormattedPhoneNumber();
+
+  const isPhone = type === "tel";
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { value } = e.target;
     onInputChange(value);
     setInputValue(value);
     setIsExist(true);
+    isPhone && setPhoneNumber(value);
   }
 
   function handleClickReset() {
     onInputChange("");
+    setPhoneNumber("");
     setInputValue("");
     setIsExist(false);
   }
@@ -45,12 +50,13 @@ export default function InputLayout({ labelText, placeholder, onInputChange, typ
         <TextLabel>{labelText}</TextLabel>
         <InputCover $isExist={isExist} $isFocused={isFocused}>
           <InputField
-            value={inputValue}
+            value={isPhone ? phoneNumber : inputValue}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             onChange={handleInputChange}
             type={type}
             placeholder={placeholder}
+            maxLength={isPhone ? 13 : 50}
           />
           <RemoveInputIcon $isExist={isExist} onClick={handleClickReset} />
         </InputCover>

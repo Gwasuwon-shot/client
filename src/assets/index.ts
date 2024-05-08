@@ -1,3 +1,4 @@
+export { ReactComponent as CopyLessonShareIc } from "./icon/CopyLessonShareIc.svg";
 export { ReactComponent as EditPencilIc } from "./icon/EditPencilIc.svg";
 export { ReactComponent as FourthSwiperFirstTree } from "./icon/FourthSwiperFirstTreeOnBoardingIc.svg";
 export { ReactComponent as FourthSwiperSecondTree } from "./icon/FourthSwiperSecondTreeOnBoardingIc.svg";
@@ -77,7 +78,6 @@ export { ReactComponent as CheckButtonSnackBarIc } from "./icon/checkButtonSnack
 export { ReactComponent as ClassManagingActiveTeacherFooterIc } from "./icon/classManagingActiveTeacherFooterIc.svg";
 export { ReactComponent as ClassManagingTeacherFooterIc } from "./icon/classManagingTeacherFooterIc.svg";
 export { ReactComponent as copyAccountNumberLessonInfoIc } from "./icon/copyAccountNumberLessonInfoIc.svg";
-export { ReactComponent as CopylessonShareIc } from "./icon/copylessonShareIc.svg";
 export { ReactComponent as DoneAttendanceIc } from "./icon/doneAttendanceIc.svg";
 export { ReactComponent as EditPaymentIc } from "./icon/editPaymentIc.svg";
 export { ReactComponent as EmptyDepositParentsLessonRecordIc } from "./icon/emptyDepositParentsLessonRecordIc.svg";
@@ -87,6 +87,7 @@ export { ReactComponent as FirstTreeParentsHomeIc } from "./icon/firstTreeParent
 export { ReactComponent as FourthTreeParentsHomeIc } from "./icon/fourthTreeParentsHomeIc.svg";
 export { ReactComponent as FruitPaymentIc } from "./icon/fruitPaymentIc.svg";
 export { ReactComponent as GotoHomeButton } from "./icon/gotoHomeButton.svg";
+export { ReactComponent as GreenPasteIc } from "./icon/greenPasteIc.svg";
 export { ReactComponent as GreyFruitPaymentIc } from "./icon/greyFruitPaymentIc.svg";
 export { ReactComponent as HomeActiveTeacherFooterIc } from "./icon/homeActiveTeacherFooterIc.svg";
 export { ReactComponent as HomeSelectedParentsHomeIc } from "./icon/homeSelectedParentsHomeIc.svg";
@@ -131,6 +132,9 @@ export { ReactComponent as RightArrowTeacherHomeIc } from "./icon/rightArrowTeac
 export { ReactComponent as SecondTreeParentsHomeIc } from "./icon/secondTreeParentsHomeIc.svg";
 export { ReactComponent as SendPaymentAlarmManageLessonIc } from "./icon/sendPaymentAlarmManageLessonIc.svg";
 export { ReactComponent as ShareOthersLessonShareIc } from "./icon/shareOthersLessonShareIc.svg";
+export { ReactComponent as ShareViaEtc } from "./icon/shareViaEtc.svg";
+export { ReactComponent as ShareViaKakao } from "./icon/shareViaKakao.svg";
+export { ReactComponent as ShareViaMessage } from "./icon/shareViaMessage.svg";
 export { ReactComponent as SmallAttendanceCheckButtonIc } from "./icon/smallAttendanceCheckButtonIc.svg";
 export { ReactComponent as ThirdTreeParentsHomeIc } from "./icon/thirdTreeParentsHomeIc.svg";
 export { ReactComponent as TuitionPaymentRadioButtonCheckedIc } from "./icon/tuitionPaymentRadioButtonCheckedIc.svg";

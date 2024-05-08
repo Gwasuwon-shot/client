@@ -63,8 +63,8 @@ export default function LessonRegisterComplete() {
         buttonText="학부모님과 함께 관리하기"
         passText="건너뛰고 혼자 관리하기"
         // TODO 학부모님과 함께 관리하기 버튼 클릭 시 학부모님과 함께 관리하기 페이지로 이동
+        onClickButton={() => navigate("/lesson-connect")}
         onClickJump={() => navigate("/home")}
-        onClickButton={() => navigate("/home")}
       />
     </ConfirmWrapper>
   );
