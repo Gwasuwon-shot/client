@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
+import { parentsPhoneState } from "../../atom/registerLesson/registerLesson";
 import { BUTTON_TEXT } from "../../core/signup/signUpTextLabels";
 import useFormattedPhoneNumber from "../../hooks/signupLogin/usePhoneNumberFormat";
 import { BackButton, BottomButton, ProgressBar } from "../common";
@@ -13,6 +15,7 @@ interface LessonConnectNumberProps {
 export default function LessonConnectNumber({ handlePassStep }: LessonConnectNumberProps) {
   const [isActive, setIsActive] = useState(false);
   const [phoneNumber, setPhoneNumber] = useFormattedPhoneNumber();
+  const setParentPhone = useSetRecoilState(parentsPhoneState);
 
   function handleDoneClick() {
     handlePassStep();
@@ -22,6 +25,7 @@ export default function LessonConnectNumber({ handlePassStep }: LessonConnectNum
   function handleChangeNumber(value: string) {
     setPhoneNumber(value);
     setIsActive(true);
+    setParentPhone(phoneNumber.replace(/\D+/g, ""));
   }
 
   return (
