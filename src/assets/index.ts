@@ -74,6 +74,7 @@ export { ReactComponent as canViewingLoginIc } from "./icon/canViewingLoginIc.sv
 export { ReactComponent as CancelAttendanceModalIc } from "./icon/cancelAttendanceModalIc.svg";
 export { ReactComponent as CancelDisabledAttendanceIc } from "./icon/cancelDisabledAttendanceIc.svg";
 export { ReactComponent as CheckButtonSnackBarIc } from "./icon/checkButtonSnackBarIc.svg";
+export { ReactComponent as CheckLargeIcon } from "./icon/checkLargeIc.svg";
 export { ReactComponent as ClassManagingActiveTeacherFooterIc } from "./icon/classManagingActiveTeacherFooterIc.svg";
 export { ReactComponent as ClassManagingTeacherFooterIc } from "./icon/classManagingTeacherFooterIc.svg";
 export { ReactComponent as copyAccountNumberLessonInfoIc } from "./icon/copyAccountNumberLessonInfoIc.svg";
@@ -147,3 +148,4 @@ export { ReactComponent as OnBoardingFourImg } from "./image/onBoardingFourImg.s
 export { ReactComponent as OnBoardingOneImg } from "./image/onBoardingOneImg.svg";
 export { ReactComponent as OnBoardingThreeImg } from "./image/onBoardingThreeImg.svg";
 export { ReactComponent as OnBoardingTwoImg } from "./image/onBoardingTwoImg.svg";
+export { ReactComponent as SharePreviewImg } from "./image/sharePreviewImg.svg";
