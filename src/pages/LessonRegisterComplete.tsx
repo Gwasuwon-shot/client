@@ -1,16 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { TosCheckedSignupIc } from "../assets";
 import { studentNameState, subjectNameState } from "../atom/common/datePicker";
-import { cycleNumberState, dateState, dayState } from "../atom/timePicker/timePicker";
-import {
-  accountNumber,
-  bankName,
-  lessonCodeAndPaymentId,
-  moneyAmount,
-  paymentOrder,
-} from "../atom/tuitionPayment/tuitionPayment";
+import { dateState, dayState } from "../atom/timePicker/timePicker";
 import ButtonLayout from "../components/welcomeSignup/ButtonLayout";
 import { STUDENT_COLOR } from "../core/common/studentColor";
 
@@ -22,28 +15,9 @@ export default function LessonRegisterComplete() {
   const [startDate, setStartDate] = useRecoilState(dateState);
   const [regularScheduleList, setRegularScheduleList] = useRecoilState(dayState);
 
-  const setAmount = useSetRecoilState<number>(moneyAmount);
-  const setCount = useSetRecoilState<number>(cycleNumberState);
-  const setPayment = useSetRecoilState<string>(paymentOrder);
-  const setBank = useSetRecoilState(bankName);
-  const setNumber = useSetRecoilState(accountNumber);
-  const setCodeAndId = useSetRecoilState(lessonCodeAndPaymentId);
-
-  function resetAllStates() {
-    setStudentName("");
-    setSubject("");
-    setPayment("");
-    setAmount(0);
-    setCount(0);
-    setStartDate({ year: new Date().getFullYear(), month: new Date().getMonth() + 1, date: new Date().getDate() });
-    setRegularScheduleList([]);
-    setBank("");
-    setNumber("");
-  }
-
   function onHandleNavigate(path: string) {
     navigate(path);
-    resetAllStates();
+    // resetAllStates();
   }
 
   return (
@@ -67,7 +41,7 @@ export default function LessonRegisterComplete() {
       <ButtonLayout
         buttonText="학부모님과 함께 관리하기"
         passText="건너뛰고 혼자 관리하기"
-        onClickButton={() => onHandleNavigate("/lesson-connect")}
+        onClickButton={() => onHandleNavigate("/lesson-share")}
         onClickJump={() => onHandleNavigate("/home")}
       />
     </ConfirmWrapper>
