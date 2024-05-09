@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { attendanceLesson } from "../../atom/attendanceCheck/attendanceLesson";
 import { isModalOpen } from "../../atom/common/isModalOpen";
+import useOrderedSchedules from "../../hooks/attandanceInforms/useOrderedSchedules";
 import useGetCanceledScheduleByLesson from "../../hooks/manageLessons/useGetCanceledScheduleByLesson";
 import useGetLessonSchedule from "../../hooks/useGetLessonSchedule";
 import { ScheduleListType } from "../../type/manageLesson/scheduleListType";
@@ -26,35 +27,13 @@ export default function AttendanceInforms() {
   const [isCheckingModalOpen, setIsCheckingModalOpen] = useState(false);
   const [isCancelImpossibleModalOpen, setIsCancelImpossibleModalOpen] = useState(false);
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
-  const [combinedClasses, setCombinedClasses] = useState([]);
-  const [orderedSchedules, setOrderedSchedules] = useState<number[]>([]);
 
   const openModal = useRecoilValue<boolean>(isModalOpen);
   const selectedLesson = useRecoilValue(attendanceLesson);
 
   const { scheduleList } = useGetLessonSchedule(Number(manageLessonId));
   const { cancelScheduleList } = useGetCanceledScheduleByLesson(Number(manageLessonId));
-
-  function orderProceedLessons(schedules: scheduleListType[]) {
-    const totalNonCanceled = schedules.reduce((acc, schedule) => {
-      return acc + (schedule.status !== "취소" ? 1 : 0);
-    }, 0);
-
-    let currentOrder = totalNonCanceled;
-    return schedules.map((schedule) => {
-      if (schedule.status !== "취소") {
-        return currentOrder--;
-      }
-      return 0;
-    });
-  }
-  useEffect(() => {
-    const combined = cancelScheduleList
-      .concat(scheduleList)
-      .sort((a: scheduleListType, b: scheduleListType) => b.idx - a.idx);
-    setCombinedClasses(combined);
-    setOrderedSchedules(orderProceedLessons(combined));
-  }, [cancelScheduleList, scheduleList]);
+  const { orderedSchedules, combinedClasses } = useOrderedSchedules(cancelScheduleList, scheduleList);
 
   function handleCloseCancelImpossibleModal() {
     setIsCancelImpossibleModalOpen(false);
@@ -130,8 +109,6 @@ const GreyBox = styled.div`
 `;
 
 const ScheduleWrapper = styled.section`
-  /* overflow: scroll; */
-
   padding-bottom: 15rem;
 `;
 
