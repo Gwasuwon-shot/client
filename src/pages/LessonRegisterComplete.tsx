@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { TosCheckedSignupIc } from "../assets";
 import { studentNameState, subjectNameState } from "../atom/common/datePicker";
@@ -22,12 +22,12 @@ export default function LessonRegisterComplete() {
   const [startDate, setStartDate] = useRecoilState(dateState);
   const [regularScheduleList, setRegularScheduleList] = useRecoilState(dayState);
 
-  const [amount, setAmount] = useRecoilState<number>(moneyAmount);
-  const [count, setCount] = useRecoilState<number>(cycleNumberState);
-  const [payment, setPayment] = useRecoilState<string>(paymentOrder);
-  const [bank, setBank] = useRecoilState(bankName);
-  const [number, setNumber] = useRecoilState(accountNumber);
-  const [codeAndId, setCodeAndId] = useRecoilState(lessonCodeAndPaymentId);
+  const setAmount = useSetRecoilState<number>(moneyAmount);
+  const setCount = useSetRecoilState<number>(cycleNumberState);
+  const setPayment = useSetRecoilState<string>(paymentOrder);
+  const setBank = useSetRecoilState(bankName);
+  const setNumber = useSetRecoilState(accountNumber);
+  const setCodeAndId = useSetRecoilState(lessonCodeAndPaymentId);
 
   function resetAllStates() {
     setStudentName("");
@@ -39,6 +39,11 @@ export default function LessonRegisterComplete() {
     setRegularScheduleList([]);
     setBank("");
     setNumber("");
+  }
+
+  function onHandleNavigate(path: string) {
+    navigate(path);
+    resetAllStates();
   }
 
   return (
@@ -62,9 +67,8 @@ export default function LessonRegisterComplete() {
       <ButtonLayout
         buttonText="학부모님과 함께 관리하기"
         passText="건너뛰고 혼자 관리하기"
-        // TODO 학부모님과 함께 관리하기 버튼 클릭 시 학부모님과 함께 관리하기 페이지로 이동
-        onClickButton={() => navigate("/lesson-connect")}
-        onClickJump={() => navigate("/home")}
+        onClickButton={() => onHandleNavigate("/lesson-connect")}
+        onClickJump={() => onHandleNavigate("/home")}
       />
     </ConfirmWrapper>
   );
