@@ -1,12 +1,5 @@
-import { useState } from "react";
-import LessonConnectNumber from "../components/LessonConnect.tsx/LessonConnectNumber";
-import LessonShare from "./LessonShare";
+import LessonConnectNumber from "../components/LessonConnect/LessonConnectNumber";
 
 export default function LessonConnect() {
-  const [isDone, setIsDone] = useState(true);
-
-  function handlePassStep() {
-    setIsDone(!isDone);
-  }
-  return <div>{isDone ? <LessonConnectNumber handlePassStep={handlePassStep} /> : <LessonShare />}</div>;
+  return <LessonConnectNumber />;
 }

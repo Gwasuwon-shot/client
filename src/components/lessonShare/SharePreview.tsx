@@ -1,10 +1,7 @@
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { CancelButton, SharePreviewImg } from "../../assets";
 
 export default function SharePreview({ handleMoveToPage }: { handleMoveToPage: (page: string) => void }) {
-  const navigate = useNavigate();
-
   return (
     <>
       <QuiteWrapper onClick={() => handleMoveToPage("M")}>
@@ -48,4 +45,5 @@ const QuiteButton = styled(CancelButton)`
   width: 2.6rem;
   height: 2.6rem;
   padding: 0.3rem;
+  margin: 0.3rem;
 `;

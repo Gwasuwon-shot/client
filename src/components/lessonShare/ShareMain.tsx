@@ -52,7 +52,6 @@ export default function ShareMain({ handleMoveToPage }: handleMoveToPageProps) {
     setdateState({ year: new Date().getFullYear(), month: new Date().getMonth() + 1, date: new Date().getDate() });
     setDayState([]);
     setFirstLessonDay({ 1: "월", 2: "화", 3: "수", 4: "목", 5: "금", 6: "토", 0: "일" }[new Date().getDay()]);
-
     setStudentName("");
     setSubjectNameState("");
     setAccountNumber("");
@@ -79,12 +78,11 @@ export default function ShareMain({ handleMoveToPage }: handleMoveToPageProps) {
 
   useEffect(() => {
     setURL(`https://tutice.com/${codeAndId?.lessonCode}`);
+    setAllSet();
   }, [codeAndId]);
 
   function handleMoveToHome() {
-    setAllSet();
     navigate("/home");
-    // recoil 값 모두 초기값으로 변경
   }
 
   function handleShareOtherWays() {
@@ -131,11 +129,11 @@ export default function ShareMain({ handleMoveToPage }: handleMoveToPageProps) {
             <ShareIcon as={icon} onClick={onClick} />
           ))}
         </ShareContainer>
-        <ButtonTextWrapper onClick={() => handleMoveToPage("C")}>
+        <ButtonTextWrapper onClick={() => handleMoveToHome()}>
           <ButtonText>나중에 할게요</ButtonText>
         </ButtonTextWrapper>
         <BottomButtonWrapper>
-          <BottomButton isActive={true} onClick={handleMoveToHome} disabled={false} type="button">
+          <BottomButton isActive={true} onClick={() => handleMoveToPage("C")} disabled={false} type="button">
             공유 완료했어요
           </BottomButton>
         </BottomButtonWrapper>

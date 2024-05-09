@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
 import { createLesson } from "../../api/createLesson";
-import { BackButtonSignupIc } from "../../assets";
 import { studentNameState, subjectNameState } from "../../atom/common/datePicker";
 import { parentsPhoneState } from "../../atom/registerLesson/registerLesson";
 import { cycleNumberState, dateState, dayState } from "../../atom/timePicker/timePicker";
@@ -21,10 +20,6 @@ import useModal from "../../hooks/useModal";
 import { BasicDoubleModal, BottomButton, CommonBackButton, ProgressBar } from "../common";
 import InputLayout from "../signup/InputLayout";
 import SignupTitleLayout from "../signup/SignupTitleLayout";
-
-// interface LessonConnectNumberProps {
-//   handlePassStep: () => void;
-// }
 
 interface scheduleListProps {
   dayOfWeek: string;
@@ -142,9 +137,7 @@ export default function LessonConnectNumber() {
           {phoneNumber} <br /> 이 번호가 맞나요?
         </BasicDoubleModal>
       )}
-      <BackButtonWrapper>
-        <CommonBackButton />
-      </BackButtonWrapper>
+      <CommonBackButton />
       <ProgressBar progress={50} />
       <Container>
         <SignupTitleLayout>
@@ -176,10 +169,6 @@ const Container = styled.section`
   margin-top: 2.8rem;
 `;
 
-const BackButtonWrapper = styled.div`
-  margin-left: 2rem;
-`;
-
 const InputNotice = styled.h2`
   display: flex;
 
@@ -187,10 +176,4 @@ const InputNotice = styled.h2`
 
   ${({ theme }) => theme.fonts.body05};
   color: ${({ theme }) => theme.colors.grey600};
-`;
-
-const BackButtonSignupIcon = styled(BackButtonSignupIc)`
-  width: 4rem;
-  height: 4rem;
-  margin-left: -1.4rem;
 `;
