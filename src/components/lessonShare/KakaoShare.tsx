@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
-import { KakaoLessonShareIc } from "../../assets";
+import { ShareViaKakao } from "../../assets";
 import { studentNameState } from "../../atom/common/datePicker";
 import useGetLessonByUser from "../../hooks/useGetLessonByUser";
 
@@ -69,7 +69,7 @@ export function KakaoShare(props: KakaoShareProp) {
   );
 }
 
-const KakaoLessonShareIcon = styled(KakaoLessonShareIc)`
-  width: 14.2rem;
+const KakaoLessonShareIcon = styled(ShareViaKakao)`
+  width: 9.2rem;
   height: 6.4rem;
 `;

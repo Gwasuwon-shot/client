@@ -73,7 +73,7 @@ export default function Landing() {
 
       <ButtonWrapper>
         <NaverLoginFeat ref={naverRef} id="naverIdLogin">
-          네이버 테스트
+          네이버로 시작하기
         </NaverLoginFeat>
         {lastLogin === "naver" ? (
           <NaverUsedLogin onClick={navigateToNaver} />

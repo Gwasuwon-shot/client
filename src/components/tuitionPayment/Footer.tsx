@@ -1,19 +1,8 @@
-import { studentNameState, subjectNameState } from "../../atom/common/datePicker";
-import { cycleNumberState, dateState, dayState } from "../../atom/timePicker/timePicker";
-import {
-  accountNumber,
-  bankName,
-  lessonCodeAndPaymentId,
-  moneyAmount,
-  paymentOrder,
-} from "../../atom/tuitionPayment/tuitionPayment";
-
-import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { accountNumber, bankName, moneyAmount, paymentOrder } from "../../atom/tuitionPayment/tuitionPayment";
+
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { createLesson } from "../../api/createLesson";
-import useModal from "../../hooks/useModal";
 
 interface scheduleListProps {
   dayOfWeek: string;
@@ -21,89 +10,18 @@ interface scheduleListProps {
   endTime: string;
 }
 
-interface createLessonProps {
-  lesson: {
-    studentName: string;
-    subject: string;
-    payment: string;
-    amount: number;
-    count: number;
-    startDate: string;
-    regularScheduleList: scheduleListProps[];
-  };
-  account: {
-    bank: string;
-    number: string;
-  };
-}
-
 export default function Footer() {
-  const studentName = useRecoilValue<string>(studentNameState);
-  const subject = useRecoilValue<string>(subjectNameState);
+  const navigate = useNavigate();
   const payment = useRecoilValue<string>(paymentOrder);
   const amount = useRecoilValue<number>(moneyAmount);
-  const count = useRecoilValue<number>(cycleNumberState);
-  const startDate = useRecoilValue(dateState);
-  const regularScheduleList = useRecoilValue(dayState);
   const bank = useRecoilValue(bankName);
   const number = useRecoilValue(accountNumber);
-  const [codeAndId, setCodeAndId] = useRecoilState(lessonCodeAndPaymentId);
 
   const isFooterGreen = number !== "" && bank !== "" && amount !== 0 && payment !== "";
 
-  const postStartDate =
-    String(startDate.year) +
-    "-" +
-    String(startDate.month).padStart(2, "0") +
-    "-" +
-    String(startDate.date).padStart(2, "0");
-
-  // post 할 데이터 구조로 만들기
-  const postInformation = {
-    lesson: {
-      studentName: studentName,
-      subject: subject,
-      payment: payment,
-      amount: Number(amount),
-      count: count,
-      startDate: postStartDate,
-      regularScheduleList: regularScheduleList,
-    },
-    account: {
-      bank: bank,
-      number: number,
-    },
-  };
-
-  const navigate = useNavigate();
-  const { openModal, showModal } = useModal();
-
-  function handleMoveToLessonShare() {
-    navigate("/register-complete", { state: true });
-  }
-
-  const { mutate: createNewLesson } = useMutation(createLesson, {
-    onSuccess: (response) => {
-      // setLessonData(postInformation);
-      setCodeAndId(response);
-      //setStartDate(response); //-> 지수에 전달한 data recoil 저장
-      handleMoveToLessonShare();
-    },
-    onError: (error: any) => {
-      if (error.response.data.message === "은행 값이 유효하지 않습니다.") {
-        alert("유효하지 않은 은행 값입니다. 관리자에게 문의 바랍니다.");
-      }
-    },
-    useErrorBoundary: false,
-  });
-
-  function PostLessonInformation(info: createLessonProps) {
-    createNewLesson(info);
-  }
-
   return (
     <FooterWrapper>
-      <FooterButtonWrapper $isFooterGreen={isFooterGreen} onClick={() => PostLessonInformation(postInformation)}>
+      <FooterButtonWrapper $isFooterGreen={isFooterGreen} onClick={() => navigate("/lesson-connect")}>
         <FooterButton $isFooterGreen={isFooterGreen}> 다음 </FooterButton>
       </FooterButtonWrapper>
     </FooterWrapper>
