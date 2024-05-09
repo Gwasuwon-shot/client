@@ -13,12 +13,9 @@ export default function BackButton() {
     // navigate(-1);
   }
 
-  return (
-    <>
-      <BackButtonSignupIcon onClick={handleMoveToBack} />
-    </>
-  );
+  return <BackButtonSignupIcon onClick={handleMoveToBack} />;
 }
+
 const BackButtonSignupIcon = styled(BackButtonSignupIc)`
   width: 4rem;
   height: 4rem;

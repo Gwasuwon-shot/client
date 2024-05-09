@@ -53,6 +53,8 @@ const ModalContents = styled.div`
   align-items: center;
   flex-direction: column;
 
+  ${({ theme }) => theme.fonts.body02};
+
   width: 100%;
   height: 11.8rem;
 `;

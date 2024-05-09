@@ -96,7 +96,6 @@ export { ReactComponent as HomeTeacherFooterIc } from "./icon/homeTeacherFooterI
 export { ReactComponent as HomeUnselectedParentsHomeIc } from "./icon/homeUnselectedParentsHomeIc.svg";
 export { ReactComponent as ErrorShowingIc } from "./icon/ic_exclamation-mark.svg";
 export { ReactComponent as KakaoDefaultLoginIc } from "./icon/kakaoDefaultLoginIc.svg";
-export { ReactComponent as KakaoLessonShareIc } from "./icon/kakaoLessonShareIc.svg";
 export { ReactComponent as KakaoUsedLoginIc } from "./icon/kakaoUsedLoginIc.svg";
 export { ReactComponent as LandingTreesIc } from "./icon/landingTreesIc.svg";
 export { ReactComponent as LoadingIc } from "./icon/loadingIc.svg";
