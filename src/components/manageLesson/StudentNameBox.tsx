@@ -1,3 +1,4 @@
+import debounce from 'lodash/debounce';
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { styled } from "styled-components";
@@ -5,6 +6,7 @@ import { LessonInfoLessonRecordIc } from "../../assets";
 import { STUDENT_COLOR } from "../../core/common/studentColor";
 import useGetLessonDetail from "../../hooks/useGetLessonDetail";
 import { CommonBackButton } from "../common";
+
 import StudentNameLabel from "../common/StudentNameLabel";
 
 export default function StudentNameBox() {
@@ -12,28 +14,42 @@ export default function StudentNameBox() {
   const { idx, studentName, subject, lessonCode } = useGetLessonDetail(Number(manageLessonId));
   const navigate = useNavigate();
   const [pageY, setPageY] = useState<number>(0);
+  const [isHighest, setIsHighest] = useState(true);
   const documentRef = useRef(document);
 
   useEffect(() => {
-    documentRef.current.addEventListener("scroll", handleScroll);
-    return () => documentRef.current.removeEventListener("scroll", handleScroll);
+    const handleScroll = debounce(() => {
+      setPageY(window.scrollY);
+    }, 100);
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      handleScroll.cancel(); 
+    };
+  }, []);
+
+  useEffect(() => {
+    const checkFlexDirection = () => {
+      if (pageY < 35 && isHighest !== true) {
+        setIsHighest(true);
+      } else if (pageY >= 30 && isHighest !== false) {
+        setIsHighest(false);
+      }
+    };
+  
+    checkFlexDirection();
   }, [pageY]);
 
-  function handleScroll() {
-    const { pageYOffset } = window;
-    setPageY(pageYOffset);
-  }
 
   function handleGotoLessonInfoList() {
-    //TODO: https://tutice.slack.com/archives/C06SNBM3L3E/p1712238264456269
     navigate(`/lesson-info/${manageLessonId}`, { state: true });
   }
 
   return (
-    <StudentNameWrapper pageY={pageY} color={STUDENT_COLOR[idx % 10]}>
+    <StudentNameWrapper isHighest={isHighest} color={STUDENT_COLOR[idx % 10]}>
       <CommonBackButton />
 
-      <StudentNameBoxWrapper pageY={pageY}>
+      <StudentNameBoxWrapper isHighest={isHighest}>
         <LabelWrapper>
           <StudentNameLabel
             studentName={studentName}
@@ -53,15 +69,11 @@ export default function StudentNameBox() {
 const LessonManageIcon = styled(LessonInfoLessonRecordIc)`
   width: 2rem;
   height: 2rem;
-
-  /* position: absolute; */
-  /* top: 5.3rem; */
-  /* right: 1.493rem; */
 `;
 
-const StudentNameWrapper = styled.div<{ pageY: number; color: string }>`
+const StudentNameWrapper = styled.div<{ isHighest: boolean; color: string }>`
   display: flex;
-  flex-direction: ${({ pageY }) => (pageY > 30 ? "row" : "column")};
+  flex-direction: ${({ isHighest }) => isHighest?'column':'row'};
   background-color: ${({ color }) => color};
 
   width: 100%;
@@ -70,14 +82,14 @@ const StudentNameWrapper = styled.div<{ pageY: number; color: string }>`
   top: 0;
 `;
 
-const StudentNameBoxWrapper = styled.header<{ pageY: number }>`
+const StudentNameBoxWrapper = styled.header<{ isHighest: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: ${({ pageY }) => pageY <= 30 && "0 1.4rem 1.4rem"};
+  padding: ${({ isHighest }) => isHighest && "0 1.4rem 1.4rem"}; 
 
-  margin-left: ${({ pageY }) => pageY > 30 && -1}rem;
-  width: ${({ pageY }) => (pageY > 30 ? 87 : 100)}%;
+  margin-left: ${({ isHighest }) => isHighest && -1}rem;
+  width: ${({ isHighest }) => (!isHighest ? 87 : 100)}
 `;
 
 const LabelWrapper = styled.header`
