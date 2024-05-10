@@ -7,7 +7,7 @@ import { theme } from "./style/theme";
 import REACTGA from "react-ga4";
 
 export default function App() {
-  REACTGA.initialize(import.meta.env.REACT_APP_GOOGLE_ANALYTICS);
+  REACTGA.initialize(import.meta.env.VITE_APP_GOOGLE_ANALYTICS);
 
   return (
     <RecoilRoot>
