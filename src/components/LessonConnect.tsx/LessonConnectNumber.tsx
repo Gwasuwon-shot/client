@@ -7,6 +7,7 @@ import useFormattedPhoneNumber from "../../hooks/signupLogin/usePhoneNumberForma
 import { BackButton, BottomButton, ProgressBar } from "../common";
 import InputLayout from "../signup/InputLayout";
 import SignupTitleLayout from "../signup/SignupTitleLayout";
+import REACTGA from "react-ga4";
 
 interface LessonConnectNumberProps {
   handlePassStep: () => void;
@@ -19,6 +20,10 @@ export default function LessonConnectNumber({ handlePassStep }: LessonConnectNum
 
   function handleDoneClick() {
     handlePassStep();
+    REACTGA.event({
+      category: "Users",
+      action: "Click",
+    });
     // alert("준비 중인 기능입니다.");
   }
 
