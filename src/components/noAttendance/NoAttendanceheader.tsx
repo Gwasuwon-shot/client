@@ -3,10 +3,12 @@ import CommonBackButton from "../common/CommonBackButton";
 
 export default function NoAttendanceheader() {
   return (
-    <HeaderWrapper>
+    <>
       <CommonBackButton />
-      <HeaderName>놓친 출결</HeaderName>
-    </HeaderWrapper>
+      <HeaderWrapper>
+        <HeaderName>놓친 출결</HeaderName>
+      </HeaderWrapper>
+    </>
   );
 }
 

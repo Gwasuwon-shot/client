@@ -1,15 +1,13 @@
+import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
+import { ManageLessonEditIc } from "../../assets";
+import { attendanceLesson } from "../../atom/attendanceCheck/attendanceLesson";
 import { STUDENT_COLOR } from "../../core/common/studentColor";
 import useMoveToLessonDetail from "../../hooks/useMoveToLessonDetail";
-import SubjectLabel from "../common/SubjectLabel";
-import ManageStudentColorBox from "./ManageStudentColorBox";
-import { ManageLessonEditIc } from "../../assets";
-import { deleteLessonStatus } from "../../atom/mangeLesson/deleteLessonStatus";
-import { useRecoilState } from "recoil";
 import { latestRegularScheduleType } from "../../type/manageLesson/lessonListType";
-import { ProgressBar } from "../common";
+import SubjectLabel from "../common/SubjectLabel";
 import MainLessonsProgressBar from "./MainLessonsProgressBar";
-import { attendanceLesson } from "../../atom/attendanceCheck/attendanceLesson";
+import ManageStudentColorBox from "./ManageStudentColorBox";
 
 interface MainLessonProps {
   idx: number;

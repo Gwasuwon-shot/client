@@ -42,6 +42,7 @@ export default function ParentsHome() {
 
 const HeaderWrapper = styled.header`
   margin-left: 1.8rem;
+  margin-top: 4rem;
 `;
 
 const WelComeTitle = styled.h1`

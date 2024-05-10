@@ -6,24 +6,24 @@ import RoundBottomMiniButton from "../common/RoundBottomMiniButton";
 import ToastModal from "../common/ToastModal";
 
 interface PreypaymentModalProp {
-  setPreypaymentModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setPreyPaymentModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function PreypaymentModal(props: PreypaymentModalProp) {
-  const { setPreypaymentModal } = props;
+  const { setPreyPaymentModal } = props;
   // const [openModal, setOpenModal] = useRecoilState<boolean>(isModalOpen);
   const navigate = useNavigate();
   const [codeAndId, setCodeAndId] = useRecoilState(lessonCodeAndPaymentId);
 
   function handleMoveToRegisterPayment() {
-    setPreypaymentModal(false);
+    setPreyPaymentModal(false);
     navigate(`/register-payment/${codeAndId?.lessonIdx}`, {
       state: { paymentIdx: codeAndId?.paymentRecordIdx, count: 1 },
     });
   }
 
   function handleCloseModal() {
-    setPreypaymentModal(false);
+    setPreyPaymentModal(false);
   }
 
   return (
