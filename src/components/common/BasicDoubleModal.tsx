@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import styled from "styled-components";
 import useModal from "../../hooks/useModal";
 
@@ -12,7 +12,19 @@ interface BasicDoubleModalProps {
 
 export default function BasicDoubleModal(props: BasicDoubleModalProps) {
   const { children, leftButtonName, rightButtonName, handleClickLeftButton, handleClickRightButton } = props;
-  const { modalRef } = useModal();
+  const { modalRef, openModal } = useModal();
+
+  useEffect(() => {
+    const body = document.body;
+    if (openModal) {
+      body.style.overflow = "hidden";
+    } else {
+      body.style.overflow = "auto";
+    }
+    return () => {
+      body.style.overflow = "auto";
+    };
+  }, [openModal]);
 
   return (
     <ModalWrapper ref={modalRef}>
@@ -36,11 +48,13 @@ const ModalWrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  position: absolute;
+  position: fixed;
   z-index: 3;
 
-  width: 32rem;
+  margin-top: -4rem;
+  width: 100vw;
   height: 100vh;
+  overflow: hidden;
 
   background-color: rgb(33 37 41 / 60%);
 
