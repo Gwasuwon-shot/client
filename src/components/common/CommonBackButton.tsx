@@ -12,7 +12,6 @@ export default function CommonBackButton({ moveTo }: { moveTo?: string }) {
   return <BackButtonSignupIcon onClick={handleMoveToBack} />;
 }
 const BackButtonSignupIcon = styled(BackButtonSignupIc)`
-  position: absolute;
   width: 4rem;
   height: 4rem;
   margin-left: -0.4rem;

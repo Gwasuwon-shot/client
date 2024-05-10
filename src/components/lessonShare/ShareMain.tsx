@@ -31,7 +31,6 @@ interface Day {
 }
 
 export default function ShareMain({ handleMoveToPage }: handleMoveToPageProps) {
-  const [state, setState] = useState("complete");
   const { userName } = useGetLessonByUser();
 
   const [cycleNumber, setCycleNumberState] = useRecoilState(cycleNumberState);
@@ -65,7 +64,6 @@ export default function ShareMain({ handleMoveToPage }: handleMoveToPageProps) {
   const [URL, setURL] = useState(`https://tutice.com/${codeAndId?.lessonCode}`);
 
   const SHARE_ICON = [
-    // { icon: ShareViaKakao, text: "카카오톡", onClick: () => {} },
     { icon: ShareViaMessage, text: "메시지", onClick: () => {} },
     {
       icon: ShareViaEtc,
