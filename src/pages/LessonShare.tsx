@@ -14,9 +14,6 @@ export default function LessonShare() {
   }
 
   switch (shareState) {
-    // case 0:
-    //   navigate(-1);
-    //   break;
     case "M":
       return <ShareMain handleMoveToPage={handleMoveToPage} />; //0
     case "C":
