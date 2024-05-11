@@ -44,7 +44,8 @@ export default function Router() {
       <ErrorBoundary FallbackComponent={fallbackRender}>
         <Suspense fallback={<Loading />}>
           <Routes>
-            <Route path="/" element={<Landing />} />
+            <Route path="/" element={<OnBoarding />} />
+            <Route path="/landing" element={<Landing />} />
             <Route path="/on-boarding" element={<OnBoarding />} />
             <Route path="/welcome" element={<WelcomeSignup />} />
             <Route path="/:lessonId" element={<ConnectParentsAndTeacher />} />
