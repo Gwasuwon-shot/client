@@ -23,10 +23,10 @@ export default function WelcomeTeacher() {
   );
 }
 
-const WelcomeText = styled.h1`
-  ${({ theme }) => theme.fonts.title01};
-`;
-
 const WelcomeTeacherWrapper = styled.header`
   margin: 2rem 0 1.2rem 0.4rem;
+`;
+
+const WelcomeText = styled.h1`
+  ${({ theme }) => theme.fonts.title01};
 `;

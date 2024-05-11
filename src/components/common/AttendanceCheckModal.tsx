@@ -55,7 +55,7 @@ export default function AttendanceCheckModal(props: AttendanceCheckModalProp) {
         onClick={() => handleCheckAttendanceStatus(ATTENDANCE_STATUS.attend)}
         selectedStatus={attendanceData?.status}
       />
-      <AttdenceStatusButtonWrapper>
+      <AttendanceStatusButtonWrapper>
         <AttendanceStatusButton
           status={ATTENDANCE_STATUS.cancel}
           onClick={() => handleCheckAttendanceStatus(ATTENDANCE_STATUS.cancel)}
@@ -66,7 +66,7 @@ export default function AttendanceCheckModal(props: AttendanceCheckModalProp) {
           onClick={() => handleCheckAttendanceStatus(ATTENDANCE_STATUS.absent)}
           selectedStatus={attendanceData?.status}
         />
-      </AttdenceStatusButtonWrapper>
+      </AttendanceStatusButtonWrapper>
     </ToastModal>
   );
 }
@@ -109,7 +109,7 @@ const Sub = styled.p<{ $isTitle: boolean }>`
   ${({ theme, $isTitle }) => ($isTitle ? theme.fonts.title03 : theme.fonts.body02)}
 `;
 
-const AttdenceStatusButtonWrapper = styled.section`
+const AttendanceStatusButtonWrapper = styled.section`
   display: flex;
   justify-content: space-between;
 

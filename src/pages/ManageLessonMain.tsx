@@ -13,7 +13,7 @@ import ExtensionLessonModal from "../components/manageLesson/ExtensionLessonModa
 import FinishedLessons from "../components/manageLesson/FinishedLessons";
 import MainLessons from "../components/manageLesson/MainLessons";
 import MissingMainteanceLessons from "../components/manageLesson/MissingMainteanceLessons";
-import SuccessLessonMaintenanceSanckBar from "../components/modal/SuccessLessonMaintenanceSanckBar";
+import SuccessLessonMaintenanceSnackBar from "../components/modal/SuccessLessonMaintenanceSanckBar";
 import useGetAllLessons from "../hooks/useGetAllLessons";
 import useGetMissingMaintenanceLesson from "../hooks/useGetMissingMaintenanceLesson";
 import { lessonListType } from "../type/manageLesson/lessonListType";
@@ -31,7 +31,7 @@ export default function ManageLessonMain() {
 
   const { lessonList } = useGetAllLessons();
   const { missingMaintenanceLessonList } = useGetMissingMaintenanceLesson();
-  
+
   useEffect(() => {
     setAttendanceData({ idx: 0, status: "" });
   }, []);
@@ -74,26 +74,18 @@ export default function ManageLessonMain() {
   return (
     <>
       {openModal && isClickedDeleteButton && (
-        <DeleteLessonModal
-          setIsClickedDeleteButton={setIsClickedDeleteButton}
-          setOpenModal={setOpenModal}
-        />
+        <DeleteLessonModal setIsClickedDeleteButton={setIsClickedDeleteButton} setOpenModal={setOpenModal} />
       )}
       {openModal && isClickedMainteance && (
-        <ExtensionLessonModal
-          setIsClickedMainteance={setIsClickedMainteance}
-          setIsSuccess={setIsSuccess}
-        />
+        <ExtensionLessonModal setIsClickedMainteance={setIsClickedMainteance} setIsSuccess={setIsSuccess} />
       )}
-      {snackBarOpen && isSuccess && <SuccessLessonMaintenanceSanckBar />}
+      {snackBarOpen && isSuccess && <SuccessLessonMaintenanceSnackBar />}
       {snackBarOpen && !isSuccess && <CancelLessonMaintenanceSnackBar />}
       <MainLessonsWrapper>
         <MainLessonsHeader>수업관리</MainLessonsHeader>
         <TitleWrapper>
           <Title>나의 수업</Title>
-          <EditButton onClick={EditPageClick}>
-            {isClickedEdit ? "완료" : "편집"}
-          </EditButton>
+          <EditButton onClick={EditPageClick}>{isClickedEdit ? "완료" : "편집"}</EditButton>
         </TitleWrapper>
         {missingMaintenanceLessonList && (
           <MissingMainteanceLessons
@@ -103,34 +95,37 @@ export default function ManageLessonMain() {
           />
         )}
         {teacherLessonList && (
-          <MainLessons
-            handleConfirmDeleteLesson={handleConfirmDeleteLesson}
-            isClickedEdit={isClickedEdit}
-          />
+          <MainLessons handleConfirmDeleteLesson={handleConfirmDeleteLesson} isClickedEdit={isClickedEdit} />
         )}
         {finishedLessonList && (
-          <FinishedLessons
-            handleConfirmDeleteLesson={handleConfirmDeleteLesson}
-            isClickedEdit={isClickedEdit}
-          />
+          <FinishedLessons handleConfirmDeleteLesson={handleConfirmDeleteLesson} isClickedEdit={isClickedEdit} />
         )}
-        <AddTreeCodeButtonManageIcon onClick={handleMakeTreeCode} />
       </MainLessonsWrapper>
+      <AddLessonIconWrapper>
+        <AddLessonIcon onClick={handleMakeTreeCode} />
+      </AddLessonIconWrapper>
 
       <TeacherFooter />
     </>
   );
 }
 
-const AddTreeCodeButtonManageIcon = styled(AddTreeCodeButtonManageIc)`
-  width: 11.2rem;
+const AddLessonIconWrapper = styled.div`
+  /* background-color: red; */
+  padding-top: 1.8rem;
+  width: 100vw;
+  height: 15rem;
+  text-align: center;
+  margin-left: -1.4rem;
+`;
+
+const AddLessonIcon = styled(AddTreeCodeButtonManageIc)`
+  width: 10rem;
   height: 3.6rem;
-  margin-top: 1.8rem;
-  margin-left: 9rem;
 `;
 
 const MainLessonsWrapper = styled.section`
-  padding: 0 1.4rem 13rem 1.4rem;
+  padding: 0 1.4rem 0rem 1.4rem;
 `;
 
 const MainLessonsHeader = styled.header`

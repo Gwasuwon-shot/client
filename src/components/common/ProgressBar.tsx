@@ -1,5 +1,4 @@
-import React from "react";
-import {styled} from 'styled-components';
+import { styled } from 'styled-components';
 
 interface ProgressBarProps {    
     progress : number;
@@ -9,19 +8,17 @@ export default function ProgressBar({ progress }: ProgressBarProps) {
 
     return (
         <ProgressBarWrapper>
-            <Progress width = {`${progress}%`}/>
+            <Progress width = {progress}/>
         </ProgressBarWrapper>
     )
 }
 
 const ProgressBarWrapper = styled.div`
-    width: 100%;
     height: 0.4rem;
-    
     background-color: ${({ theme }) => theme.colors.grey20};
 `
 
-const Progress = styled.div<{width: string;}>`
+const Progress = styled.div<{width: number}>`
     width: ${(props) => props.width};
     height: 100%;
     

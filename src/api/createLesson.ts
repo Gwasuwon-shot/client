@@ -27,7 +27,6 @@ interface createLessonProps {
 export async function createLesson(props: createLessonProps) {
   const { lesson, account } = props;
   const { studentName, subject, payment, amount, count, startDate, regularScheduleList } = lesson;
-  // const { name, bank, number } = account;
   const { bank, number } = account;
 
   const data = await client.post(

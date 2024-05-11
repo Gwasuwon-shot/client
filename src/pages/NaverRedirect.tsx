@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getNaverUserInfo } from "../api/naver/getNaverUserInfo";
 import usePostLoginTempSignup from "../hooks/signupLogin/usePostLoginTempSignup";
+import Loading from "./Loading";
 
 export default function NaverRedirect() {
   const [auth, setAuth] = useState("");
@@ -21,5 +22,5 @@ export default function NaverRedirect() {
     auth === "" ? fetchAndSetUserInfo() : postTempSignup.mutate({ socialToken: auth, provider: "네이버" });
   }, [auth]);
 
-  return <></>;
+  return <Loading/>;
 }

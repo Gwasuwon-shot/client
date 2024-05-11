@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useGetLoginToken from "../hooks/signupLogin/useGetKakao";
 import usePostLoginTempSignup from "../hooks/signupLogin/usePostLoginTempSignup";
+import Loading from "./Loading";
 
 export default function KakaoRedirect() {
   const [auth, setAuth] = useState("");
@@ -18,5 +19,5 @@ export default function KakaoRedirect() {
       : postTempSignup.mutate({ socialToken: auth, provider: "카카오" });
   }, [auth]);
 
-  return <></>;
+  return <Loading/>;
 }

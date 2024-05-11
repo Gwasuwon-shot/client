@@ -2,18 +2,14 @@ import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { BackButtonSignupIc } from "../../assets";
 
-export default function CommonBackButton() {
+export default function CommonBackButton({ moveTo }: { moveTo?: string }) {
   const navigate = useNavigate();
 
   function handleMoveToBack() {
-    navigate(-1);
+    moveTo ? navigate(`/${moveTo}`) : navigate(-1);
   }
 
-  return (
-    <>
-      <BackButtonSignupIcon onClick={handleMoveToBack} />
-    </>
-  );
+  return <BackButtonSignupIcon onClick={handleMoveToBack} />;
 }
 const BackButtonSignupIcon = styled(BackButtonSignupIc)`
   width: 4rem;

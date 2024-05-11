@@ -13,19 +13,22 @@ export default function AlarmAllow() {
   const updateDeviceToken = useUpdateDeviceToken();
 
   async function handleAlarm() {
-    if (!allowNotification) {
-      checkNotificationPermission();
-    } else {
-      handleBanNotification();
-    }
+    // 1. 서비스 워커 등록 확인
+    // 2. 서비스 워커 등록 안되어 있으면 등록 / 등록 되어 있으면 알람 허용 여부 확인
+    // 3. 알람 허용 상태 없으면 허용할 건지 묻기 / 허용이면 비허용으로 변경 / 비허용이면 허용으로 변경
+
+    allowNotification ? handleBanNotification() : checkNotificationPermission();
   }
 
   async function checkNotificationPermission() {
     const permission = Notification.permission;
+    console.log("permission", permission);
     if (permission === "granted") {
+      console.log("here");
       handleAllowNotification();
     } else if (permission === "default") {
       const response = await Notification.requestPermission();
+      console.log(response);
       if (response === "granted") {
         handleAllowNotification();
       } else {
@@ -37,10 +40,8 @@ export default function AlarmAllow() {
   }
 
   async function handleAllowNotification() {
-    // if (confirm("정말로 알림을 켜시겠습니까?")) {
-    if (!isRegistered) {
+    if (isRegistered) {
       registerServiceWorker();
-      // }
       const token = await getToken(messaging, { vapidKey: import.meta.env.VITE_APP_VAPID_KEY });
       updateDeviceToken(token);
     }
@@ -57,9 +58,9 @@ export default function AlarmAllow() {
       <TitleWrapper>
         <TitleText>푸시 알림</TitleText>
       </TitleWrapper>
-      <ContentWrapper onClick={handleAlarm}>
+      <ContentWrapper>
         <ContentText>알림 허용</ContentText>
-        {allowNotification ? <AlarmGrantedIcon /> : <AlarmDeniedIcon />}
+        {allowNotification ? <AlarmGrantedIcon onClick={handleAlarm} /> : <AlarmDeniedIcon onClick={handleAlarm} />}
       </ContentWrapper>
     </>
   );
