@@ -108,6 +108,7 @@ const WelcomeImage = styled(WelcomeBgImg)`
 
   position: absolute;
   height: 100%;
+  width: 32rem;
 `;
 
 const ButtonWrapper = styled.div`
