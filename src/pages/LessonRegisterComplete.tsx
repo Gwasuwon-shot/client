@@ -16,12 +16,9 @@ export default function LessonRegisterComplete() {
   const [startDate, setStartDate] = useRecoilState(dateState);
   const [regularScheduleList, setRegularScheduleList] = useRecoilState(dayState);
 
-  console.log(regularScheduleList);
-
   function onHandleNavigate(path: string) {
     navigate(path);
   }
-
   return (
     <>
       <ConfirmWrapper>
