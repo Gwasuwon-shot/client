@@ -8,7 +8,7 @@ export const stepNum = atom<number>({
 
 export const newUserData = atom<NewUserDataTypes>({
   key: "newUserData",
-  default: { role: "", email: "", password: "", name: "콩빈쓰", isMarketing: false },
+  default: { role: "", email: "", password: "", name: "", isMarketing: false },
 });
 
 export const newSocialUser = atom<NewSocialUserTypes>({
