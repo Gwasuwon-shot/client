@@ -37,9 +37,8 @@ export const GlobalStyle = createGlobalStyle`
     line-height: 1;
 
     width:32rem;
-    /* height: 56.8rem; */
+    height: 56.8rem;
     /* height: 100vh; */
-    /* border:1px solid transparent; */
   }
   menu, ol, ul {
     list-style: none;
@@ -105,9 +104,9 @@ export const GlobalStyle = createGlobalStyle`
     }
     @media (min-width: 600px) and (max-width:749px){ 
       font-size: 100%;
-      /* @media (min-height: 740px) and (max-height: 999px){
+      @media (min-height: 740px) and (max-height: 999px){
             height: 80%!important;
-      } */
+      }
     }
     @media (min-width: 471px) and (max-width:580px){ 
       font-size: 93%;

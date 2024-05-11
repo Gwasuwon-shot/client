@@ -1,14 +1,5 @@
-import { styled } from "styled-components";
 import WelcomeLayout from "../components/welcomeSignup/WelcomeLayout";
 
 export default function WelcomeSignup() {
-  return (
-    <Container>
-      <WelcomeLayout />
-    </Container>
-  );
+  return <WelcomeLayout />;
 }
-
-const Container = styled.div`
-  margin-left: 1.4rem;
-`;

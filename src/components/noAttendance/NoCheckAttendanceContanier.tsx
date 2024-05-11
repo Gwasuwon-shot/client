@@ -59,7 +59,7 @@ export default function NoCheckAttendanceContanier(props: NoCheckAttendanceConta
     <>
       <ContentContainer>
         <StudentColorBox backgroundColor={STUDENT_COLOR[idx % 10]} />
-        <InforContainer>
+        <InformContainer>
           <TimeWrapper>
             <Time>
               {startTime} ~ {endTime}
@@ -73,7 +73,7 @@ export default function NoCheckAttendanceContanier(props: NoCheckAttendanceConta
               <SubjectLabel subject={subject} color="#757A80" backgroundColor={STUDENT_COLOR[idx % 10]}></SubjectLabel>
             </Subject>
           </NameSubjectWrapper>
-        </InforContainer>
+        </InformContainer>
         <ButtonWrapper onClick={() => handleAttendanceCheck()}>
           <NoCheckPageAttendanceButton />
         </ButtonWrapper>
@@ -88,7 +88,7 @@ const ContentContainer = styled.div`
   margin: 1rem 0;
 `;
 
-const InforContainer = styled.div`
+const InformContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.4rem;

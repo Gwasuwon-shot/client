@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
 import { setCookie } from "../../api/cookie";
 import { postLocalLogin } from "../../api/localLogin";
@@ -22,7 +22,7 @@ export default function LoginInput() {
   const [password, setPassword] = useState("");
   const [pwFocus, setPwFocus] = useState(false);
   const [pwViewing, setPwViewing] = useState("password");
-  const [userRole, setUserRole] = useRecoilState(userRoleData);
+  const setUserRole = useSetRecoilState(userRoleData);
   const [isError, setIsError] = useState(false);
   const codeInfo = useRecoilValue(lessonCodeAndPaymentId);
   const navigate = useNavigate();
@@ -88,9 +88,7 @@ export default function LoginInput() {
         <Inputfield
           onFocus={() => setEmailFocus(true)}
           onBlur={() => setEmailFocus(false)}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            handelEmailChange(e)
-          }
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handelEmailChange(e)}
           type="text"
           placeholder="이메일을 입력하세요."
         />
@@ -102,25 +100,15 @@ export default function LoginInput() {
             onFocus={() => setPwFocus(true)}
             onBlur={() => setPwFocus(false)}
             autoComplete="off"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              handlePasswordChange(e)
-            }
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handlePasswordChange(e)}
             type={pwViewing}
             placeholder="비밀번호를 입력하세요"
           />
           {viewingIcon()}
         </PasswordIconWrapper>
       </InputPasswordWrapper>
-      <LoginButton
-        onClick={handleLoginClick}
-        isActive={isActive}
-        disabled={!isActive}
-      />
-      <ErrorMessage>
-        {isError && (
-          <InputHint text="로그인 실패 다시 시도하십시오" color="red" />
-        )}
-      </ErrorMessage>
+      <LoginButton onClick={handleLoginClick} isActive={isActive} disabled={!isActive} />
+      <ErrorMessage>{isError && <InputHint text="로그인 실패 다시 시도하십시오" color="red" />}</ErrorMessage>
     </form>
   );
 }
@@ -134,8 +122,7 @@ const InputEmailWrapper = styled.div<{ $emailFocus: boolean; $email: string }>`
   margin-bottom: 2rem;
 
   border-bottom: 0.1rem solid
-    ${({ theme, $emailFocus, $email }) =>
-      $emailFocus || $email ? theme.colors.green5 : theme.colors.grey70};
+    ${({ theme, $emailFocus, $email }) => ($emailFocus || $email ? theme.colors.green5 : theme.colors.grey70)};
 `;
 
 const InputPasswordWrapper = styled.div<{
@@ -150,8 +137,7 @@ const InputPasswordWrapper = styled.div<{
   margin-bottom: 2rem;
 
   border-bottom: 0.1rem solid
-    ${({ theme, $pwFocus, $password }) =>
-      $pwFocus || $password ? theme.colors.green5 : theme.colors.grey70};
+    ${({ theme, $pwFocus, $password }) => ($pwFocus || $password ? theme.colors.green5 : theme.colors.grey70)};
 `;
 
 const Inputfield = styled.input`

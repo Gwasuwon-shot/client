@@ -11,16 +11,14 @@ export default function ButtonLayout(props: ButtonLayoutProps) {
   const { onClickButton, onClickJump, buttonText, passText } = props;
 
   return (
-    <>
-      <ButtonWrapper>
-        <WelcomeButton type="button" onClick={onClickButton}>
-          {buttonText}
-        </WelcomeButton>
-        <PassButton type="button" onClick={onClickJump}>
-          {passText}
-        </PassButton>
-      </ButtonWrapper>
-    </>
+    <ButtonWrapper>
+      <WelcomeButton type="button" onClick={onClickButton}>
+        {buttonText}
+      </WelcomeButton>
+      <PassButton type="button" onClick={onClickJump}>
+        {passText}
+      </PassButton>
+    </ButtonWrapper>
   );
 }
 
@@ -37,6 +35,7 @@ const WelcomeButton = styled.button`
 
   padding: 2rem 6rem;
   height: 4.2rem;
+  width: 85%;
 
   background-color: ${({ theme }) => theme.colors.green5};
   color: ${({ theme }) => theme.colors.grey0};

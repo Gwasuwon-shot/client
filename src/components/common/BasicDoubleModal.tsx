@@ -6,12 +6,13 @@ interface BasicDoubleModalProps {
   children: ReactNode;
   leftButtonName: string;
   rightButtonName: string;
+  position?: string;
   handleClickLeftButton: (e: React.MouseEvent<HTMLElement>) => void;
   handleClickRightButton: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
 export default function BasicDoubleModal(props: BasicDoubleModalProps) {
-  const { children, leftButtonName, rightButtonName, handleClickLeftButton, handleClickRightButton } = props;
+  const { children, leftButtonName, rightButtonName, handleClickLeftButton, handleClickRightButton, position } = props;
   const { modalRef, openModal } = useModal();
 
   useEffect(() => {
@@ -27,7 +28,7 @@ export default function BasicDoubleModal(props: BasicDoubleModalProps) {
   }, [openModal]);
 
   return (
-    <ModalWrapper ref={modalRef}>
+    <ModalWrapper ref={modalRef} $position={position}>
       <Modal>
         <ModalContents>{children}</ModalContents>
         <ButtonWrapper>
@@ -43,16 +44,15 @@ export default function BasicDoubleModal(props: BasicDoubleModalProps) {
   );
 }
 
-const ModalWrapper = styled.div`
+const ModalWrapper = styled.div<{ $position: string | undefined }>`
+  position: ${({ $position }) => ($position ? $position : "absolute")};
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  position: fixed;
+  left: 0;
   z-index: 3;
 
-  margin-top: -4rem;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   overflow: hidden;
 

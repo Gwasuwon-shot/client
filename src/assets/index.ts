@@ -148,3 +148,4 @@ export { ReactComponent as OnBoardingOneImg } from "./image/onBoardingOneImg.svg
 export { ReactComponent as OnBoardingThreeImg } from "./image/onBoardingThreeImg.svg";
 export { ReactComponent as OnBoardingTwoImg } from "./image/onBoardingTwoImg.svg";
 export { ReactComponent as SharePreviewImg } from "./image/sharePreviewImg.svg";
+export { ReactComponent as WelcomeBgImg } from "./image/welcomeBgImg.svg";
