@@ -41,8 +41,6 @@ export default function WelcomeLayout() {
     const data = await getLessonByTeacher();
   }
 
-  console.log(userData);
-
   useEffect(() => {
     if (userRole) checkIfLessonExists();
     else checkAlarmAlert();

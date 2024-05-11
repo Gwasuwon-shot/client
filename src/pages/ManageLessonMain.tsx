@@ -111,12 +111,11 @@ export default function ManageLessonMain() {
 }
 
 const AddLessonIconWrapper = styled.div`
-  /* background-color: red; */
   padding-top: 1.8rem;
   width: 100vw;
   height: 15rem;
   text-align: center;
-  margin-left: -1.4rem;
+  margin-left: -0.8rem;
 `;
 
 const AddLessonIcon = styled(AddTreeCodeButtonManageIc)`

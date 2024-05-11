@@ -39,7 +39,7 @@ export default function OnBoarding() {
   };
 
   const handleClickBtn = () => {
-    isLastSwiper ? navigate("/home") : sliderRef?.current?.slickNext();
+    isLastSwiper ? navigate("/landing") : sliderRef?.current?.slickNext();
   };
 
   return (
