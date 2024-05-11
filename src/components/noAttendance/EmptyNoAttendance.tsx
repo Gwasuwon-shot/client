@@ -1,7 +1,6 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { DoneAttendanceIc, GotoHomeButton } from "../../assets";
-import { useNavigate } from "react-router-dom";
 export default function EmptyNoAttendance() {
   const navigate = useNavigate();
   function handleGotoHome() {
@@ -20,7 +19,6 @@ const Wrapper = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 29.2rem;
   height: 24.1rem;
   margin-top: 8.4rem;
   gap: 4.7rem;
