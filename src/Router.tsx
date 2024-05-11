@@ -1,8 +1,7 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { removeCookie } from "./api/cookie";
 import ConnectParentsAndTeacher from "./components/RegularLesson/ConnectParentsAndTeacher";
 import AfterSignup from "./components/welcomeSignup/AfterSignup";
 import AllowAlert from "./components/welcomeSignup/AllowAlert";
@@ -89,13 +88,13 @@ export default function Router() {
 }
 
 function fallbackRender({ error, resetErrorBoundary }: any) {
-  if (error.response) {
-    if (error.response.data.code === 401) {
-      resetErrorBoundary();
-      removeCookie("accessToken");
-      return <Navigate to="/" />;
-    }
-  } else {
-    return <ErrorPage resetErrorBoundary={resetErrorBoundary} />;
-  }
+  // if (error.response) {
+  //   if (error.response.data.code === 401) {
+  //     resetErrorBoundary();
+  //     removeCookie("accessToken");
+  //     return <Navigate to="/" />;
+  //   }
+  // } else {
+  return <ErrorPage resetErrorBoundary={resetErrorBoundary} />;
+  // }
 }

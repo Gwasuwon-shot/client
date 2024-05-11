@@ -4,6 +4,7 @@ import { useRecoilValue } from "recoil";
 import { styled } from "styled-components";
 import { getLessonByTeacher } from "../../api/getLessonByTeacher";
 import { WelcomeBgImg } from "../../assets";
+import { userRoleData } from "../../atom/loginUser/loginUser";
 import { newUserData } from "../../atom/signup/signup";
 import ButtonLayout from "./ButtonLayout";
 
@@ -30,20 +31,20 @@ const WELCOME_TEXT = {
 
 export default function WelcomeLayout() {
   const navigate = useNavigate();
-  // const userRole = useRecoilValue(userRoleData);
-  const userName = useRecoilValue(newUserData).name;
+  const userRole = useRecoilValue(userRoleData);
+  const userData = useRecoilValue(newUserData);
   const [lessonInfo, setLessonInfo] = useState<lessonListType[]>();
 
-  const userRole = "부모님";
-
-  console.log();
+  const userName = userData?.name;
 
   async function checkIfLessonExists() {
     const data = await getLessonByTeacher();
   }
 
+  console.log(userData);
+
   useEffect(() => {
-    if (isTeacher) checkIfLessonExists();
+    if (userRole) checkIfLessonExists();
     else checkAlarmAlert();
   }, []);
 
@@ -67,8 +68,10 @@ export default function WelcomeLayout() {
     <>
       <WelcomeImage />
       <Container>
-        <SubText>{WELCOME_TEXT[userRole].WELCOME}</SubText>
-        <MainText>{WELCOME_TEXT[userRole].INTRO}</MainText>
+        <SubText>
+          {userName} {WELCOME_TEXT[userRole as keyof typeof WELCOME_TEXT].WELCOME}
+        </SubText>
+        <MainText>{WELCOME_TEXT[userRole as keyof typeof WELCOME_TEXT].INTRO}</MainText>
       </Container>
       <ButtonWrapper>
         <ButtonLayout
