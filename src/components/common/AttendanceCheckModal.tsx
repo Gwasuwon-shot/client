@@ -1,10 +1,10 @@
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { attendanceLesson } from "../../atom/attendanceCheck/attendanceLesson";
 import { attendanceStatus } from "../../atom/attendanceCheck/attendanceStatus";
+import { isModalOpen } from "../../atom/common/isModalOpen";
 import { ATTENDANCE_STATUS } from "../../core/common/attendanceStatus";
 import { STUDENT_COLOR } from "../../core/common/studentColor";
-import useModal from "../../hooks/useModal";
 import AttendanceStatusButton from "./AttendanceStatusButton";
 import SubjectLabel from "./SubjectLabel";
 import ToastModal from "./ToastModal";
@@ -16,13 +16,14 @@ interface AttendanceCheckModalProp {
 
 export default function AttendanceCheckModal(props: AttendanceCheckModalProp) {
   const { setIsCheckingModalOpen, isUpdateOpen } = props;
-  const { unShowModal } = useModal();
+  const [openModal, setOpenModal] = useRecoilState<boolean>(isModalOpen);
   const [attendanceData, setAttendanceData] = useRecoilState(attendanceStatus);
-  const selectedLesson = useRecoilValue(attendanceLesson);
+  const [selectedLesson, setSelectedLesson] = useRecoilState(attendanceLesson);
   const { lessonIdx, studentName, count, subject, scheduleIdx } = selectedLesson;
 
   function handleCancelAttendanceCheck() {
-    unShowModal();
+    setAttendanceData({ idx: scheduleIdx, status: "" });
+    setOpenModal(false);
   }
 
   function checkSameSelectedStatus(status: string) {
