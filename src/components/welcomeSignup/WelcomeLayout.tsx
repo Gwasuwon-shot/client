@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { styled } from "styled-components";
-import { userRoleData } from "../../atom/loginUser/loginUser";
-import { useNavigate } from "react-router-dom";
-import useGetAllLessons from "../../hooks/useGetAllLessons";
 import { getLessonByTeacher } from "../../api/getLessonByTeacher";
+import { WelcomeBgImg } from "../../assets";
+import { newUserData } from "../../atom/signup/signup";
+import ButtonLayout from "./ButtonLayout";
 
 interface lessonListType {
   idx: number;
@@ -16,18 +17,33 @@ interface lessonListType {
   percent: number;
 }
 
+const WELCOME_TEXT = {
+  선생님: {
+    WELCOME: "선생님 환영해요!",
+    INTRO: "수업을 등록하고\n쉬운 과외 관리를 시작하세요",
+  },
+  부모님: {
+    WELCOME: "학부모님 환영해요!",
+    INTRO: "튜티스를 통해 선생님과\n쉬운 과외 관리를 시작하세요.",
+  },
+};
+
 export default function WelcomeLayout() {
   const navigate = useNavigate();
-  const userRole = useRecoilValue(userRoleData);
+  // const userRole = useRecoilValue(userRoleData);
+  const userName = useRecoilValue(newUserData).name;
   const [lessonInfo, setLessonInfo] = useState<lessonListType[]>();
+
+  const userRole = "부모님";
+
+  console.log();
 
   async function checkIfLessonExists() {
     const data = await getLessonByTeacher();
-    setLessonInfo(data);
   }
 
   useEffect(() => {
-    if (userRole == "선생님") checkIfLessonExists();
+    if (isTeacher) checkIfLessonExists();
     else checkAlarmAlert();
   }, []);
 
@@ -38,24 +54,65 @@ export default function WelcomeLayout() {
   async function checkAlarmAlert() {
     const permission = Notification.permission;
 
-    if (permission == "granted" || permission == "denied") {
-      if (userRole == "선생님") {
-        lessonInfo && lessonInfo.length > 0 ? navigate("/home") : navigate("/tree");
-      } else navigate("/home");
-    } else {
-      navigate("/alert");
-    }
+    //   if (permission == "granted" || permission == "denied") {
+    //     if (userRole == "선생님") {
+    //       lessonInfo && lessonInfo.length > 0 ? navigate("/home") : navigate("/tree");
+    //     } else navigate("/home");
+    //   } else {
+    //     navigate("/alert");
+    //   }
   }
 
   return (
     <>
-      <Container></Container>
+      <WelcomeImage />
+      <Container>
+        <SubText>{WELCOME_TEXT[userRole].WELCOME}</SubText>
+        <MainText>{WELCOME_TEXT[userRole].INTRO}</MainText>
+      </Container>
+      <ButtonWrapper>
+        <ButtonLayout
+          onClickButton={() => navigate("/register-lesson")}
+          onClickJump={() => navigate("/home")}
+          buttonText="시작하기"
+          passText="나중에 등록하기"
+        />
+      </ButtonWrapper>
     </>
   );
 }
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
+  margin-left: 1.4rem;
+`;
 
-  white-space: pre-line;
+const SubText = styled.p`
+  margin-top: 3.4rem;
+  color: ${({ theme }) => theme.colors.grey900};
+  ${({ theme }) => theme.fonts.body04};
+`;
+
+const MainText = styled.p`
+  margin-top: 1rem;
+  color: ${({ theme }) => theme.colors.grey900};
+  ${({ theme }) => theme.fonts.title01};
+
+  white-space: break-spaces;
+`;
+
+const WelcomeImage = styled(WelcomeBgImg)`
+  display: flex;
+
+  position: absolute;
+  width: 100vw;
+  height: 100%;
+  /* height: 57rem; */
+`;
+
+const ButtonWrapper = styled.div`
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 `;
