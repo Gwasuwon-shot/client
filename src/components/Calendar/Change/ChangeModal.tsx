@@ -74,7 +74,6 @@ export default function ChangeModal(props: modalType) {
           </BasicDoubleModal>
         </ConfirmModalWrapper>
       )}
-
       <ToastModal>
         <ModalContentWrapper>
           <ModalHeaderWrapper>
@@ -162,6 +161,7 @@ const ModalContentWrapper = styled.article`
   flex-direction: column;
 
   width: 29.2rem;
+  margin-bottom: 2rem;
   height: auto;
   gap: 1.4rem;
 `;
