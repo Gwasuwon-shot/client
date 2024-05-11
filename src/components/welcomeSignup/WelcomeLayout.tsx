@@ -107,13 +107,11 @@ const WelcomeImage = styled(WelcomeBgImg)`
   display: flex;
 
   position: absolute;
-  width: 100vw;
   height: 100%;
-  /* height: 57rem; */
 `;
 
 const ButtonWrapper = styled.div`
   position: absolute;
   bottom: 0;
-  width: 100%;
+  width: 32rem;
 `;
