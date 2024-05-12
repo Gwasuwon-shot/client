@@ -18,6 +18,8 @@ import { handleMoveToPageProps } from "../../pages/LessonShare";
 import { BottomButton, ProgressBar } from "../common";
 import { KakaoShare } from "./KakaoShare";
 
+import REACTGA from "react-ga4";
+
 interface dayProps {
   year: number;
   month: number;
@@ -70,6 +72,10 @@ export default function ShareMain({ handleMoveToPage }: handleMoveToPageProps) {
       text: "기타",
       onClick: () => {
         handleShareOtherWays();
+        REACTGA.event({
+          category: "문자메세지로 공유",
+          action: "share",
+        });
       },
     },
   ];
@@ -81,6 +87,10 @@ export default function ShareMain({ handleMoveToPage }: handleMoveToPageProps) {
 
   function handleMoveToHome() {
     navigate("/home");
+    REACTGA.event({
+      category: "나중에 공유",
+      action: "Not Share",
+    });
   }
 
   function handleShareOtherWays() {
