@@ -41,7 +41,7 @@ export default function OnBoarding() {
 
   const handleClickBtn = () => {
     if (isLastSwiper) {
-      navigate("/home");
+      navigate("/landing");
       REACTGA.event({
         category: "시작하기버튼",
         action: "click",
