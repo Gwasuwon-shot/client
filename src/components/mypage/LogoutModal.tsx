@@ -15,7 +15,7 @@ interface LogoutModalProps {
 export default function LogoutModal(props: LogoutModalProps) {
   const { setOpenModal, setIsCheckingLogout } = props;
   const navigate = useNavigate();
-  function handleBacktoMypage() {
+  function handleBackToMyPage() {
     setOpenModal(false);
     setIsCheckingLogout(false);
   }
@@ -42,7 +42,7 @@ export default function LogoutModal(props: LogoutModalProps) {
       <BasicDoubleModal
         leftButtonName="취소"
         rightButtonName="확인"
-        handleClickLeftButton={handleBacktoMypage}
+        handleClickLeftButton={handleBackToMyPage}
         handleClickRightButton={handleLogout}>
         <AskingSureToLogout>로그아웃하시겠어요?</AskingSureToLogout>
       </BasicDoubleModal>

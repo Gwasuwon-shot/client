@@ -1,4 +1,3 @@
-import debounce from 'lodash/debounce';
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { styled } from "styled-components";
@@ -18,13 +17,12 @@ export default function StudentNameBox() {
   const documentRef = useRef(document);
 
   useEffect(() => {
-    const handleScroll = debounce(() => {
+    const handleScroll = () => {
       setPageY(window.scrollY);
-    }, 100);
-    window.addEventListener('scroll', handleScroll);
+    };
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      handleScroll.cancel(); 
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -36,20 +34,19 @@ export default function StudentNameBox() {
         setIsHighest(false);
       }
     };
-  
+
     checkFlexDirection();
   }, [pageY]);
-
 
   function handleGotoLessonInfoList() {
     navigate(`/lesson-info/${manageLessonId}`, { state: true });
   }
 
   return (
-    <StudentNameWrapper isHighest={isHighest} color={STUDENT_COLOR[idx % 10]}>
+    <StudentNameWrapper $isHighest={isHighest} color={STUDENT_COLOR[idx % 10]}>
       <CommonBackButton />
 
-      <StudentNameBoxWrapper isHighest={isHighest}>
+      <StudentNameBoxWrapper $isHighest={isHighest}>
         <LabelWrapper>
           <StudentNameLabel
             studentName={studentName}
@@ -71,9 +68,9 @@ const LessonManageIcon = styled(LessonInfoLessonRecordIc)`
   height: 2rem;
 `;
 
-const StudentNameWrapper = styled.div<{ isHighest: boolean; color: string }>`
+const StudentNameWrapper = styled.div<{ $isHighest: boolean; color: string }>`
   display: flex;
-  flex-direction: ${({ isHighest }) => isHighest?'column':'row'};
+  flex-direction: ${({ $isHighest }) => ($isHighest ? "column" : "row")};
   background-color: ${({ color }) => color};
 
   width: 100%;
@@ -82,14 +79,14 @@ const StudentNameWrapper = styled.div<{ isHighest: boolean; color: string }>`
   top: 0;
 `;
 
-const StudentNameBoxWrapper = styled.header<{ isHighest: boolean }>`
+const StudentNameBoxWrapper = styled.header<{ $isHighest: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: ${({ isHighest }) => isHighest && "0 1.4rem 1.4rem"}; 
+  padding: ${({ $isHighest }) => $isHighest && "0 1.4rem 1.4rem"};
 
-  margin-left: ${({ isHighest }) => isHighest && -1}rem;
-  width: ${({ isHighest }) => (!isHighest ? 87 : 100)}
+  margin-left: ${({ $isHighest }) => $isHighest && -1}rem;
+  width: ${({ $isHighest }) => (!$isHighest ? 87 : 100)};
 `;
 
 const LabelWrapper = styled.header`

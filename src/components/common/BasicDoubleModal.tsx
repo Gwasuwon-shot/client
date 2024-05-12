@@ -49,12 +49,11 @@ const ModalWrapper = styled.div<{ $position: string | undefined }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  left: 0;
+  flex-direction: column;
   z-index: 3;
 
-  width: 100%;
+  width: 32rem;
   height: 100vh;
-  overflow: hidden;
 
   background-color: rgb(33 37 41 / 60%);
 

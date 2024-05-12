@@ -1,5 +1,6 @@
 import EmptyNoAttendance from "../components/noAttendance/EmptyNoAttendance";
 import NoAttendanceheader from "../components/noAttendance/NoAttendanceheader";
+import NoCheckLesson from "../components/noAttendance/NoCheckLesson";
 import useGetMissingAttendanceSchedule from "../hooks/useGetMissingAttendanceSchedule";
 
 export default function NoAttendanceCheck() {
@@ -8,8 +9,7 @@ export default function NoAttendanceCheck() {
   return (
     <>
       <NoAttendanceheader />
-      {/* {missingAttendanceSchedule ? <NoCheckLesson /> : <EmptyNoAttendance />} */}
-      {<EmptyNoAttendance />}
+      {missingAttendanceSchedule ? <NoCheckLesson /> : <EmptyNoAttendance />}
     </>
   );
 }

@@ -41,8 +41,6 @@ export default function WelcomeLayout() {
     const data = await getLessonByTeacher();
   }
 
-  console.log(userData);
-
   useEffect(() => {
     if (userRole) checkIfLessonExists();
     else checkAlarmAlert();
@@ -109,13 +107,12 @@ const WelcomeImage = styled(WelcomeBgImg)`
   display: flex;
 
   position: absolute;
-  width: 100vw;
   height: 100%;
-  /* height: 57rem; */
+  width: 32rem;
 `;
 
 const ButtonWrapper = styled.div`
   position: absolute;
   bottom: 0;
-  width: 100%;
+  width: 32rem;
 `;

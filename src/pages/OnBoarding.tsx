@@ -1,12 +1,13 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import styled from "styled-components";
+import { getCookie } from "../api/cookie";
 import { OnBoardingFourImg, OnBoardingOneImg, OnBoardingThreeImg, OnBoardingTwoImg } from "../assets";
-import { BottomButton } from "../components/common";
 import SwiperLayout from "../components/OnBoarding/SwiperLayout";
+import { BottomButton } from "../components/common";
 import { SLIDER_SETTING } from "../core/OnBoarding";
 import REACTGA from "react-ga4";
 
@@ -15,6 +16,12 @@ export default function OnBoarding() {
   const [step, setStep] = useState(0);
   const navigate = useNavigate();
   const isLastSwiper = step === 3;
+
+  useEffect(() => {
+    if (getCookie("lastLogin")) {
+      navigate("/landing");
+    }
+  }, []);
 
   const SwiperPages = [
     <SwiperLayout text={["이번이 몇 회차 수업이지?", "회차별 출결 관리"]} img={OnBoardingOneImg} />,

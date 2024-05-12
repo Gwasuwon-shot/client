@@ -22,13 +22,10 @@ export default function AlarmAllow() {
 
   async function checkNotificationPermission() {
     const permission = Notification.permission;
-    console.log("permission", permission);
     if (permission === "granted") {
-      console.log("here");
       handleAllowNotification();
     } else if (permission === "default") {
       const response = await Notification.requestPermission();
-      console.log(response);
       if (response === "granted") {
         handleAllowNotification();
       } else {

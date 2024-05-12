@@ -72,6 +72,8 @@ const ContentWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+
+  margin-bottom: 8rem;
 `;
 
 const ContentText = styled.div`

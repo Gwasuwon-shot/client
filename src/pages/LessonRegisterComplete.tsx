@@ -18,8 +18,6 @@ export default function LessonRegisterComplete() {
   const [startDate, setStartDate] = useRecoilState(dateState);
   const [regularScheduleList, setRegularScheduleList] = useRecoilState(dayState);
 
-  console.log(regularScheduleList);
-
   function onHandleNavigate(path: string) {
     navigate(path);
   }
@@ -50,9 +48,9 @@ export default function LessonRegisterComplete() {
         <CenterWrapper>
           <ScheduleContainer>
             <ModalName>
-              <span>{studentName}박송현</span> 학생
+              <span>{studentName}</span> 학생
             </ModalName>
-            <ModalSubject $backgroundcolor={STUDENT_COLOR[2354 % 10]}>{subject}과목</ModalSubject>
+            <ModalSubject $backgroundcolor={STUDENT_COLOR[2354 % 10]}>{subject}</ModalSubject>
           </ScheduleContainer>
           <ScheduleContainer>
             {regularScheduleList.map((schedule) => (
