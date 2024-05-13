@@ -12,7 +12,7 @@ import useTeacherFooter from "../../hooks/useTeacherFooter";
 import { SuccessSendingAlarmSnackBar } from "../common";
 import Header from "../common/Header";
 import TeacherFooter from "../common/TeacherFooter";
-import PreypaymentModal from "../modal/PreypaymentModal";
+import PrepaymentModal from "../modal/PrepaymentModal";
 import NoClassHome from "./NoClassHome";
 import YesClassHome from "./YesClassHome";
 
@@ -45,7 +45,7 @@ export default function TeacherHome() {
 
   return (
     <>
-      {prepaymentModal && <PreypaymentModal setPreyPaymentModal={setPreyPaymentModal} />}
+      {prepaymentModal && <PrepaymentModal setPreyPaymentModal={setPreyPaymentModal} />}
       {/* 경우의 수에 따라 어떤 스낵바 보일지 로직 짜야함 */}
       {snackBarOpen && (!successPay?.isOpen || isAgreeSend) && <SuccessSendingAlarmSnackBar />}
       {/* {snackBarOpen && <CancelLessonMaintenanceSnackBar />} */}
