@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { newSocialUser } from "../../atom/signup/signup";
+import { errMessage, newSocialUser } from "../../atom/signup/signup";
 import { AUTH_CODE_PATTERN } from "../../core/signup/regex";
 import useReverseRole from "../../hooks/signupLogin/useReverseRole";
 import useSendValidNumber from "../../hooks/signupLogin/useSendValidNumber";
@@ -14,6 +14,7 @@ import SignupTitleLayout from "./SignupTitleLayout";
 
 export default function UserPhone() {
   const [newUser, setNewUser] = useRecoilState(newSocialUser);
+  const errMsg = useRecoilValue(errMessage);
   const [number, setNumber] = useState("");
   const [validCode, setValidCode] = useState("");
   const [isCodeSent, setIsCodeSent] = useState(false);
@@ -92,7 +93,6 @@ export default function UserPhone() {
             </>
           )}
         </InputWrapper>
-        {isCodeSent && isVisible && <InputHint text="문자로 인증문자를 전송했어요" color="green" />}
         <InputBtnLayout
           labelText="휴대폰 번호"
           placeholder="번호 ‘-’ 제외하고 입력"
@@ -101,6 +101,10 @@ export default function UserPhone() {
           onInputChange={handleChangePhoneNum}
           onClickButton={handleClickSend}
         />
+        {isCodeSent && isVisible && (
+          <InputHint text="문자로 인증문자를 전송했어요" color="green" isVisible={isVisible} />
+        )}
+        {errMsg && <InputHint text={errMsg} color="red" isVisible={errMsg !== ""} />}
         <SubmitButton disabled={!isDone} $isActive={isDone} onClick={handleClickConfirm}>
           인증번호 확인
         </SubmitButton>
