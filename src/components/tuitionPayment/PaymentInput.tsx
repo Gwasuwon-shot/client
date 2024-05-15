@@ -114,7 +114,7 @@ export default function PaymentInput() {
       </BankInputSection>
 
       <MoneyInputSection $moneyFocused={isMoneyFocused}>
-        <InputName> 수업비 입금 </InputName>
+        <InputName> 수업료 </InputName>
         <MoneyInput
           placeholder="금액 입력"
           value={money === 0 ? "" : money.toLocaleString() + "원"}

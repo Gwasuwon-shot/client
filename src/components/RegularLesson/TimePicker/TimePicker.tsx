@@ -72,7 +72,8 @@ const TimePickerWrapper = styled.div`
 
   position: relative;
 
-  width: 32rem;
+  /* width: 33rem; */
+  width: 100%;
   height: 20rem;
 
   background-color: ${({ theme }) => theme.colors.grey20};
