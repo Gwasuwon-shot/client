@@ -46,8 +46,8 @@ export default function TeacherHome() {
   return (
     <>
       {prepaymentModal && <PrepaymentModal setPreyPaymentModal={setPreyPaymentModal} />}
-      {/* 경우의 수에 따라 어떤 스낵바 보일지 로직 짜야함 */}
-      {snackBarOpen && (!successPay?.isOpen || isAgreeSend) && <SuccessSendingAlarmSnackBar />}
+      {/* TODO 경우의 수에 따라 어떤 스낵바 보일지 로직 짜야함 */}
+      {/* {snackBarOpen && (!successPay?.isOpen || isAgreeSend) && <SuccessSendingAlarmSnackBar />} */}
       {/* {snackBarOpen && <CancelLessonMaintenanceSnackBar />} */}
       <TeacherHomeWrapper>
         <Header />
