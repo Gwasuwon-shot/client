@@ -15,3 +15,8 @@ export const newSocialUser = atom<NewSocialUserTypes>({
   key: "newSocialUser",
   default: { role: "", name: "", phone: "", isMarketing: true },
 });
+
+export const errMessage = atom<string>({
+  key: "errMessage",
+  default: "",
+});
