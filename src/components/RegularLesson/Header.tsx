@@ -3,9 +3,8 @@ import { dayState, firstLessonDay, focusDayState } from "../../atom/timePicker/t
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { RegisterLessonHeaderIc } from "../../assets";
-import ProgressBar from "../common/ProgressBar";
 import CustomBackButton from "../common/CustomBackButton";
+import ProgressBar from "../common/ProgressBar";
 
 export default function Header() {
   const [firstLesson, setfirstLesson] = useRecoilState(firstLessonDay);
