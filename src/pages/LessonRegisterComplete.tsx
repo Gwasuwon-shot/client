@@ -19,6 +19,7 @@ export default function LessonRegisterComplete() {
   function onHandleNavigate(path: string) {
     navigate(path);
   }
+
   return (
     <>
       <ConfirmWrapper>
@@ -27,20 +28,20 @@ export default function LessonRegisterComplete() {
           <CompleteText>수업 등록 완료!</CompleteText>
         </CenterWrapper>
         <CenterWrapper>
-          <ScheduleContainer>
+          <InformContainer>
             <ModalName>
               <span>{studentName}</span> 학생
             </ModalName>
             <ModalSubject $backgroundcolor={STUDENT_COLOR[2354 % 10]}>{subject}</ModalSubject>
-          </ScheduleContainer>
+          </InformContainer>
           <ScheduleContainer>
             {regularScheduleList.map((schedule) => (
-              <Fragment key={schedule.dayOfWeek}>
-                <DayOfWeekCircle>월</DayOfWeekCircle>
+              <IndividualSchedule key={schedule.dayOfWeek}>
+                <DayOfWeekCircle>{schedule.dayOfWeek}</DayOfWeekCircle>
                 <ModalTime>
                   {schedule.startTime} - {schedule.startTime}
                 </ModalTime>
-              </Fragment>
+              </IndividualSchedule>
             ))}
           </ScheduleContainer>
         </CenterWrapper>
@@ -65,12 +66,24 @@ const ConfirmWrapper = styled.div`
   flex-direction: column;
 `;
 
-const ScheduleContainer = styled.div`
+const InformContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 0.8rem;
   gap: 0.9rem;
+`;
+
+const ScheduleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.8rem;
+  gap: 0.9rem;
+`;
+
+const IndividualSchedule = styled.div`
+  display: flex;
+  gap: 0.4rem;
 `;
 
 const CenterWrapper = styled.div`
