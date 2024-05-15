@@ -9,8 +9,9 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { RegisterLessonHeaderIc } from "../../assets";
+import { BackButtonSignupIc, RegisterLessonHeaderIc } from "../../assets";
 import ProgressBar from "../common/ProgressBar";
+import CustomBackButton from "../common/CustomBackButton";
 
 export default function Header() {
   const setPersonName = useSetRecoilState<string>(payingPersonName);
@@ -32,7 +33,7 @@ export default function Header() {
 
   return (
     <HeaderWrapper>
-      <RegisterLessonHeaderIc onClick={handleMoveToBack} />
+      <CustomBackButton onClick={handleMoveToBack} />
       <ProgressBar progress={83} />
       <PaymentHeader>
         수업비 입금에 대한 <br /> 정보를 입력해주세요
@@ -57,4 +58,10 @@ const PaymentHeader = styled.h1`
 
   ${({ theme }) => theme.fonts.title01};
   color: ${({ theme }) => theme.colors.grey900};
+`;
+
+const BackButtonSignupIcon = styled(BackButtonSignupIc)`
+  width: 4rem;
+  height: 4rem;
+  margin-left: -0.4rem;
 `;

@@ -79,8 +79,9 @@ export default function ManageLessonMain() {
       {openModal && isClickedMainteance && (
         <ExtensionLessonModal setIsClickedMainteance={setIsClickedMainteance} setIsSuccess={setIsSuccess} />
       )}
-      {snackBarOpen && isSuccess && <SuccessLessonMaintenanceSnackBar />}
-      {snackBarOpen && !isSuccess && <CancelLessonMaintenanceSnackBar />}
+      {/*  TODO 모달 분기 처리 */}
+      {/* {snackBarOpen && isSuccess && <SuccessLessonMaintenanceSnackBar />} */}
+      {/* {snackBarOpen && !isSuccess && <CancelLessonMaintenanceSnackBar />} */}
       <MainLessonsWrapper>
         <MainLessonsHeader>수업관리</MainLessonsHeader>
         <TitleWrapper>

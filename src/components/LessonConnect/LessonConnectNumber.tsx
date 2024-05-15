@@ -137,6 +137,7 @@ export default function LessonConnectNumber() {
           {phoneNumber} <br /> 이 번호가 맞나요?
         </BasicDoubleModal>
       )}
+      <Header></Header>
       <CommonBackButton />
       <ProgressBar progress={50} />
       <Container>
@@ -160,6 +161,10 @@ export default function LessonConnectNumber() {
     </>
   );
 }
+
+const Header = styled.header`
+  margin-top: 2rem;
+`;
 
 const Container = styled.section`
   display: flex;
