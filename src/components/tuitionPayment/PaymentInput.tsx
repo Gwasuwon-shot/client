@@ -67,6 +67,19 @@ export default function PaymentInput() {
     }
   }
 
+  function handleMoneyKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Backspace") {
+      const inputValue = event.currentTarget.value;
+      const strippedValue = inputValue.replace(/,/g, "").replace("원", "");
+      const newValue = strippedValue.slice(0, -1);
+      const numericValue = Number(newValue);
+
+      if (!isNaN(numericValue)) {
+        setMoney(numericValue);
+      }
+    }
+  }
+
   // 5. checkbox
   const [order, setOrder] = useRecoilState<string>(paymentOrder);
 
@@ -120,6 +133,7 @@ export default function PaymentInput() {
           value={money === 0 ? "" : money.toLocaleString() + "원"}
           onChange={handleMoneyChange}
           onFocus={handleMoneyFocus}
+          onKeyDown={handleMoneyKeyDown}
         />
         {isMoneyFocused && <RegisterLessonInputIcon onClick={handleMoneyDelete} />}
       </MoneyInputSection>
