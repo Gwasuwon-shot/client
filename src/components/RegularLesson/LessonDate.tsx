@@ -40,8 +40,11 @@ export default function LessonDate() {
 
   const DAYS = ["월", "화", "수", "목", "금", "토", "일"];
 
+  // TODO 오늘 삭제 안되는 로직 해결하기
   const [selectedDays, setSelectedDays] = useRecoilState(dayState);
+  console.log(selectedDays);
   const [firstLesson, setfirstLesson] = useRecoilState(firstLessonDay);
+  console.log(firstLesson);
 
   function handleDayButton(day: string) {
     setSelectedDays((prevSelectedDays) => {

@@ -60,7 +60,7 @@ export default function BankListBottomSheet() {
       <ContentsWrapper>
         <TextWrapper>
           {BANKS.map((bank, index) => (
-            <BankButtonBg key={index} onClick={(e) => handleClickBank(e)}>
+            <BankButtonBg $bankName={bank.name} key={index} onClick={(e) => handleClickBank(e)}>
               {bank.ic}
               <p>{bank.name}</p>
             </BankButtonBg>
@@ -76,6 +76,7 @@ const ContentsWrapper = styled.div`
   justify-content: center;
   padding: 20px;
 `;
+
 const TextWrapper = styled.div`
   display: inline-flex;
   justify-content: center;
@@ -85,7 +86,7 @@ const TextWrapper = styled.div`
   overflow-y: scroll;
 `;
 
-const BankButtonBg = styled.div`
+const BankButtonBg = styled.div<{ $bankName: string }>`
   border-radius: 0.8rem;
   display: flex;
   gap: 0.8rem;
@@ -94,7 +95,7 @@ const BankButtonBg = styled.div`
   justify-content: center;
   width: 7.5rem;
   height: 6.2rem;
-  background-color: ${({ theme }) => theme.colors.grey50};
+  background-color: ${({ theme, $bankName }) => ($bankName === "" ? "" : theme.colors.grey50)};
   ${({ theme }) => theme.fonts.caption02};
 `;
 
@@ -105,7 +106,6 @@ const CancelButton = styled.button`
 
 const ModalHeaderWrapper = styled.header`
   display: flex;
-  justify-content: space-between;
 
   width: 17rem;
   margin-bottom: 0.4rem;
@@ -113,6 +113,7 @@ const ModalHeaderWrapper = styled.header`
 `;
 
 const ModalHeader = styled.h1`
+  padding-left: 8.4rem;
   color: ${({ theme }) => theme.colors.grey900};
   ${({ theme }) => theme.fonts.body02};
 `;
@@ -149,4 +150,6 @@ const BANKS = [
   { name: "BNP파리바", ic: <BankNameBNP파리바Ic /> },
   { name: "HSBC", ic: <BankNameHSBCIc /> },
   { name: "JP모건", ic: <BankNameJP모건Ic /> },
+  { name: "", ic: "" },
+  { name: "", ic: "" },
 ];

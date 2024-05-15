@@ -5,6 +5,7 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { RegisterLessonHeaderIc } from "../../assets";
 import ProgressBar from "../common/ProgressBar";
+import CustomBackButton from "../common/CustomBackButton";
 
 export default function Header() {
   const [firstLesson, setfirstLesson] = useRecoilState(firstLessonDay);
@@ -23,7 +24,7 @@ export default function Header() {
 
   return (
     <HeaderWrapper>
-      <RegisterLessonHeaderIc onClick={handleMoveToBack} />
+      <CustomBackButton onClick={handleMoveToBack} />
       <ProgressBar progress={66.4} />
       <InputHeader>정기적인 수업 일정을 알려주세요!</InputHeader>
       <InputNotice>첫 수업일을 기준으로 수업 일정을 캘린더에 표시해 드릴게요</InputNotice>
