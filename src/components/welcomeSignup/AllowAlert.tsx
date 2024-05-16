@@ -35,7 +35,6 @@ export default function AllowAlert() {
   const [lessonInfo, setLessonInfo] = useState<lessonListType[]>();
 
   const MAIN_TEXT = `쉬운 관리를 위해\n알림을 활성화 해보세요 `;
-
   const SUB_TEXT =
     "푸시알림을 활성화를 통해 출결,\n수업비 관리 도움을 받을 수 있어요";
 
