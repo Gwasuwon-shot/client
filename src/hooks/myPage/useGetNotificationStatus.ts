@@ -1,4 +1,3 @@
-// hooks/useGetNotificationStatus.js
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { getNotificationStatus } from "../../api/myPage/getNotificationStatus";
