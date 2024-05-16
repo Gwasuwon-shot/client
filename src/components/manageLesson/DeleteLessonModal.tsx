@@ -38,6 +38,7 @@ export default function DeleteLessonModal(props: DeleteLessonModalProps) {
   return (
     <>
       <BasicDoubleModal
+        position="fixed"
         leftButtonName="취소"
         rightButtonName="확인"
         handleClickLeftButton={handleBackToManageLessonPage}
