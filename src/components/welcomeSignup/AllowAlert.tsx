@@ -7,7 +7,6 @@ import { useRecoilValue } from "recoil";
 import { styled } from "styled-components";
 import { getLessonByTeacher } from "../../api/getLessonByTeacher";
 import { patchDeviceToken } from "../../api/myPage/patchDeviceToken";
-import { postNotificationRequest } from "../../api/postNotificationRequest";
 import { BackButtonSignupIc, BellWelcomeIc } from "../../assets";
 import { userRoleData } from "../../atom/loginUser/loginUser";
 import { messaging } from "../../core/notification/settingFCM";
@@ -90,11 +89,7 @@ export default function AllowAlert() {
       console.log(err);
     },
   });
-
-  function handleShowNotification() {
-    postNotificationRequest(deviceToken.token);
-  }
-
+  
   function handleMoveToHome() {
     if (userRole == "선생님") {
       lessonInfo && lessonInfo.length ? navigate("/home") : navigate("/tree");
