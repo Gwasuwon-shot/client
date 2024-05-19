@@ -52,9 +52,9 @@ export default function LessonInfoList(props: LessonInfoListProp) {
       )}
 
       <LessonInfoMainCategory>은행</LessonInfoMainCategory>
-      {[accountInfo?.name, accountInfo?.bank, accountInfo?.number]?.map((info: string, idx: number) => {
+      {[accountInfo?.bank, accountInfo?.number]?.map((info: string, idx: number) => {
         return (
-          <LessonInfoItemLayout isBankAccount={idx === 2} key={idx} detailCategory={BANK_INFO[idx]} content={info} />
+          <LessonInfoItemLayout isBankAccount={idx === 1} key={idx} detailCategory={BANK_INFO[idx]} content={info} />
         );
       })}
       <LessonInfoMainCategory>수업진행</LessonInfoMainCategory>
