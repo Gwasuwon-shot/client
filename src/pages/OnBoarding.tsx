@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
@@ -12,12 +12,15 @@ import { SLIDER_SETTING } from "../core/OnBoarding";
 
 export default function OnBoarding() {
   const sliderRef = useRef<Slider>(null);
+  const location = useLocation();
+  const { isFromParentsHome } = location.state || {};
+
   const [step, setStep] = useState(0);
   const navigate = useNavigate();
   const isLastSwiper = step === 3;
 
   useEffect(() => {
-    if (getCookie("lastLogin")) {
+    if (getCookie("lastLogin") && !isFromParentsHome) {
       navigate("/landing");
     }
   }, []);

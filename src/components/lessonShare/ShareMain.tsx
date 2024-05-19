@@ -1,18 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { CopyLessonShareIc, ShareViaEtc, ShareViaMessage } from "../../assets";
-import { studentNameState, subjectNameState } from "../../atom/common/datePicker";
-import { cycleNumberState, dateState, dayState, firstLessonDay, focusDayState } from "../../atom/timePicker/timePicker";
-import {
-  accountNumber,
-  bankName,
-  lessonCodeAndPaymentId,
-  moneyAmount,
-  payingPersonName,
-  paymentOrder,
-} from "../../atom/tuitionPayment/tuitionPayment";
+import { studentNameState } from "../../atom/common/datePicker";
+import { lessonCodeAndPaymentId } from "../../atom/tuitionPayment/tuitionPayment";
 import useGetLessonByUser from "../../hooks/useGetLessonByUser";
 import { handleMoveToPageProps } from "../../pages/LessonShare";
 import { BottomButton, ProgressBar } from "../common";
@@ -32,39 +24,19 @@ interface Day {
 
 export default function ShareMain({ handleMoveToPage }: handleMoveToPageProps) {
   const { userName } = useGetLessonByUser();
-
-  const [cycleNumber, setCycleNumberState] = useRecoilState(cycleNumberState);
-  const [date, setdateState] = useRecoilState(dateState);
-  const [day, setDayState] = useRecoilState(dayState);
-  const [firstLesson, setFirstLessonDay] = useRecoilState(firstLessonDay);
-  const [focusDay, setFocusDayState] = useRecoilState(focusDayState);
-  const [studentName, setStudentName] = useRecoilState<string>(studentNameState);
-  const [subjectName, setSubjectNameState] = useRecoilState(subjectNameState);
-  const [accountNum, setAccountNumber] = useRecoilState(accountNumber);
-  const [bank, setBankName] = useRecoilState(bankName);
-  const [money, setMoneyAmount] = useRecoilState(moneyAmount);
-  const [payingPerson, setPayingPersonName] = useRecoilState(payingPersonName);
-  const [payment, setPaymentOrder] = useRecoilState(paymentOrder);
-
-  function setAllSet() {
-    setCycleNumberState(-1);
-    setdateState({ year: new Date().getFullYear(), month: new Date().getMonth() + 1, date: new Date().getDate() });
-    setDayState([]);
-    setFirstLessonDay({ 1: "월", 2: "화", 3: "수", 4: "목", 5: "금", 6: "토", 0: "일" }[new Date().getDay()]);
-    setStudentName("");
-    setSubjectNameState("");
-    setAccountNumber("");
-    setBankName("");
-    setMoneyAmount(0);
-    setPayingPersonName("");
-  }
-
+  const studentName = useRecoilValue<string>(studentNameState);
   const navigate = useNavigate();
   const codeAndId = useRecoilValue(lessonCodeAndPaymentId);
   const [URL, setURL] = useState(`https://tutice.com/${codeAndId?.lessonCode}`);
 
   const SHARE_ICON = [
-    { icon: ShareViaMessage, text: "메시지", onClick: () => {} },
+    {
+      icon: ShareViaMessage,
+      text: "메시지",
+      onClick: () => {
+        alert("준비 중인 기능입니다.");
+      },
+    },
     {
       icon: ShareViaEtc,
       text: "기타",
@@ -76,7 +48,6 @@ export default function ShareMain({ handleMoveToPage }: handleMoveToPageProps) {
 
   useEffect(() => {
     setURL(`https://tutice.com/${codeAndId?.lessonCode}`);
-    setAllSet();
   }, [codeAndId]);
 
   function handleMoveToHome() {
