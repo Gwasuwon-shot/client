@@ -1,52 +1,93 @@
-import React from "react";
+import { useParams } from "react-router-dom";
 import { styled } from "styled-components";
-import LessonInfoItemLayout from "./LessonInfoItemLayout";
 import { BANK_INFO, CLASS_INFO } from "../../core/Parents/lessonInfo";
+import useGetLessonAccount from "../../hooks/useGetLessonAccount";
+import useGetLessonDetail from "../../hooks/useGetLessonDetail";
+import useGetLessonRegularSchedule from "../../hooks/useGetLessonRegularSchedule";
+import LessonInfoItemLayout from "./LessonInfoItemLayout";
 
-export default function LessonInfoList() {
-  const lesson = {
-    idx: 4,
-    teacherName: "이은수",
-    account: {
-      name: "이은수",
-      bank: "농협은행",
-      number: "302-1097-9103-21",
-    },
-    startDate: "2023-07-09",
-    payment: "선불",
-    amount: 300000,
-  };
+interface LessonInfoListProp {
+  state: boolean;
+}
 
+interface ScheduleType {
+  dayOfWeekList: string[];
+  startTime: string;
+  endTime: string;
+}
+
+export default function LessonInfoList(props: LessonInfoListProp) {
+  const { state } = props;
   //커스텀 훅에서 account 객체 값 배열로 만들어서 리턴
-  const { account, startDate, payment, amount } = lesson;
-  const accountInfoArray = [account.name, account.bank, account.number];
-  const formattedAmount = amount / 10000 + "만원";
-  const classInfoArrray = [startDate, payment, formattedAmount];
+  const { lessonId } = useParams();
+  const { amount, payment, startDate, teacherName } = useGetLessonDetail(Number(lessonId));
+  const { accountInfo } = useGetLessonAccount(Number(lessonId));
+  const { lessonRegularSchedule } = useGetLessonRegularSchedule(Number(lessonId));
 
   return (
     <>
-      <LessonInfoMainCategory>선생님</LessonInfoMainCategory>
-      <LessonInfoItemLayout detailCategory="이름" content="이은수" />
+      <LessonInfoMainCategory>정기수업 일시</LessonInfoMainCategory>
+      <ScheduleBox>
+        {lessonRegularSchedule.map(({ dayOfWeekList, startTime, endTime }: ScheduleType) => {
+          return (
+            <RegularSchedule>
+              <Days>
+                {dayOfWeekList?.map((day: string, index: number) => (
+                  <>
+                    {day}
+                    <Comma $isLast={index === dayOfWeekList.length - 1}>,</Comma>
+                  </>
+                ))}
+              </Days>
+              {startTime} - {endTime}
+            </RegularSchedule>
+          );
+        })}
+      </ScheduleBox>
+      {!state && (
+        <>
+          <LessonInfoMainCategory>선생님</LessonInfoMainCategory>
+          <LessonInfoItemLayout detailCategory="이름" content={teacherName} />
+        </>
+      )}
 
       <LessonInfoMainCategory>은행</LessonInfoMainCategory>
-      {BANK_INFO.map((info, idx) => {
+      {[accountInfo?.bank, accountInfo?.number]?.map((info: string, idx: number) => {
         return (
-          <LessonInfoItemLayout
-            isBankAccount={idx === 2}
-            key={idx}
-            detailCategory={info}
-            content={accountInfoArray[idx]}
-          />
+          <LessonInfoItemLayout isBankAccount={idx === 1} key={idx} detailCategory={BANK_INFO[idx]} content={info} />
         );
       })}
-
       <LessonInfoMainCategory>수업진행</LessonInfoMainCategory>
-      {CLASS_INFO.map((classInfo, idx) => {
-        return <LessonInfoItemLayout key={idx} detailCategory={classInfo} content={classInfoArrray[idx]} />;
+      {[startDate, payment, amount].map((classInfo, idx) => {
+        return <LessonInfoItemLayout key={idx} detailCategory={CLASS_INFO[idx]} content={classInfo} />;
       })}
     </>
   );
 }
+
+const Days = styled.div`
+  display: flex;
+  margin-right: 1.2rem;
+`;
+
+const RegularSchedule = styled.div`
+  display: flex;
+  color: ${({ theme }) => theme.colors.grey500};
+  ${({ theme }) => theme.fonts.body02};
+`;
+
+const ScheduleBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 2.2rem 1.4rem;
+  gap: 0.8rem;
+`;
+
+const Comma = styled.p<{ $isLast: boolean }>`
+  margin-right: 0.5rem;
+  display: ${({ $isLast }) => ($isLast ? "none" : "block")};
+`;
 
 const LessonInfoMainCategory = styled.div`
   width: 100%;

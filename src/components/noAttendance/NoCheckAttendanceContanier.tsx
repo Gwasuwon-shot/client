@@ -1,44 +1,82 @@
 import React from "react";
+import { useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
-import StudentColorBox from "../common/StudentColorBox";
+import { attendanceLesson } from "../../atom/attendanceCheck/attendanceLesson";
+import { attendanceStatus } from "../../atom/attendanceCheck/attendanceStatus";
 import { STUDENT_COLOR } from "../../core/common/studentColor";
-import SubjectLabel from "../common/SubjectLabel";
+import { scheduleType } from "../../type/common/scheduleType";
 import NoCheckPageAttendanceButton from "../common/NoCheckPageAttendanceButton";
+import StudentColorBox from "../common/StudentColorBox";
+import SubjectLabel from "../common/SubjectLabel";
 
-// interface NoCheckAttendanceContanierProps {
-//   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-//   setSelectedLesson: React.Dispatch<React.SetStateAction<lesson | null>>;
-// }
-export default function NoCheckAttendanceContanier() {
-  // const { setOpenModal, setSelectedLesson } = props;
-  // const { idx, studentName, subject } = lesson;
-  // const { startTime, endTime, count } = schedule;
+interface LessonData {
+  idx: number;
+  studentName: string;
+  subject: string;
+}
 
-  // function handleAttendanceCheck() {
-  //   setSelectedLesson(lesson);
-  //   setOpenModal(true);
-  //   console.log("here");
-  // }
+interface LessonNScheduleData {
+  lessonIdx: number;
+  studentName: string;
+  count: number;
+  scheduleIdx: number;
+  subject: string;
+}
+
+interface ScheduleData {
+  idx: number;
+  startTime: string;
+  endTime: string;
+  expectedCount: number;
+}
+
+interface NoCheckAttendanceContanierProps {
+  lesson: LessonData;
+  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+  schedule: scheduleType;
+}
+
+export default function NoCheckAttendanceContanier(props: NoCheckAttendanceContanierProps) {
+  const { setOpenModal, lesson, schedule } = props;
+  const { idx, studentName, subject } = lesson;
+  const { startTime, endTime, expectedCount } = schedule;
+  const setSelectedLesson = useSetRecoilState(attendanceLesson);
+  const setAttendanceData = useSetRecoilState(attendanceStatus);
+
+  function handleAttendanceCheck(): void {
+    setSelectedLesson({
+      lessonIdx: idx,
+      studentName: studentName,
+      count: expectedCount,
+      scheduleIdx: schedule?.idx,
+      subject: subject,
+    });
+    setAttendanceData({ idx: schedule?.idx, status: "" });
+    setOpenModal(true);
+  }
+
   return (
     <>
       <ContentContainer>
-        {/* <StudentColorBox backgroundColor={STUDENT_COLOR[idx % 11]} />
-        <InforContainer>
+        <StudentColorBox backgroundColor={STUDENT_COLOR[idx % 10]} />
+        <InformContainer>
           <TimeWrapper>
             <Time>
               {startTime} ~ {endTime}
             </Time>
             <Bar> | </Bar>
-            <Time>{count}회차</Time>
+            <Time>{expectedCount}회차</Time>
           </TimeWrapper>
           <NameSubjectWrapper>
             <Name> {studentName}</Name>
             <Subject>
-              <SubjectLabel subject={subject} color="#757A80" backgroundColor={STUDENT_COLOR[idx % 11]}></SubjectLabel>
+              <SubjectLabel subject={subject} color="#757A80" backgroundColor={STUDENT_COLOR[idx % 10]}></SubjectLabel>
             </Subject>
           </NameSubjectWrapper>
-        </InforContainer>
-        <NoCheckPageAttendanceButton onClick={handleAttendanceCheck()} /> */}
+        </InformContainer>
+        <ButtonWrapper onClick={() => handleAttendanceCheck()}>
+          <NoCheckPageAttendanceButton />
+        </ButtonWrapper>
       </ContentContainer>
     </>
   );
@@ -47,15 +85,16 @@ export default function NoCheckAttendanceContanier() {
 const ContentContainer = styled.div`
   display: flex;
   gap: 1.4rem;
+  margin: 1rem 0;
 `;
 
-const InforContainer = styled.div`
+const InformContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-
-  margin-right: 6rem;
+  width: 19rem;
 `;
+
 const Bar = styled.p`
   color: ${({ theme }) => theme.colors.grey100};
 `;
@@ -67,6 +106,7 @@ const Time = styled.h2`
 
 const TimeWrapper = styled.div`
   display: flex;
+  align-items: center;
 
   height: 1.3rem;
 
@@ -96,4 +136,10 @@ const NameSubjectWrapper = styled.div`
 
   height: 1.6rem;
   gap: 0.4rem;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

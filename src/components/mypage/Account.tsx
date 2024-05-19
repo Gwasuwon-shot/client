@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
+import styled from "styled-components";
 import { isModalOpen } from "../../atom/common/isModalOpen";
-import LogoutModal from "./LogoutModal";
 import AccountDeleteModal from "./AccountDeleteModal";
+import LogoutModal from "./LogoutModal";
 
 export default function Account() {
   const [openModal, setOpenModal] = useRecoilState<boolean>(isModalOpen);
@@ -28,15 +28,15 @@ export default function Account() {
         </TitleWrapper>
         <ContentWrapper>
           <ContentText onClick={handleLogout}>로그아웃</ContentText>
-          {openModal && isCheckingDeleteAccount && (
+          {openModal && isCheckingLogout && (
             <LogoutModalSection $isCheckingLogout={isCheckingLogout}>
-              <LogoutModal setOpenModal={setOpenModal} />
+              <LogoutModal setOpenModal={setOpenModal} setIsCheckingLogout={setIsCheckingLogout} />
             </LogoutModalSection>
           )}
-          <ContentText onClick={handleDeleteAccount}>삭제</ContentText>
+          {/* <ContentText onClick={handleDeleteAccount}>삭제</ContentText> */}
           {openModal && isCheckingDeleteAccount && (
             <DeleteAccountModalSection $isCheckingDeleteAccount={isCheckingDeleteAccount}>
-              <AccountDeleteModal setOpenModal={setOpenModal} />
+              <AccountDeleteModal setOpenModal={setOpenModal} setIsCheckingDeleteAccount={setIsCheckingDeleteAccount} />
             </DeleteAccountModalSection>
           )}
         </ContentWrapper>
@@ -48,10 +48,7 @@ export default function Account() {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
-
   width: 32rem;
-  height: 15.8rem;
 `;
 
 const TitleWrapper = styled.header`
@@ -73,15 +70,17 @@ const TitleText = styled.h1`
 
 const ContentWrapper = styled.div`
   display: flex;
-  gap: 2.8rem;
-
+  justify-content: space-between;
   flex-direction: column;
 
-  height: 13.2rem;
-  margin-left: 1.4rem;
+  margin-bottom: 8rem;
 `;
 
-const ContentText = styled.h2`
+const ContentText = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 1.4rem;
+  height: 6rem;
   ${({ theme }) => theme.fonts.body02};
   color: ${({ theme }) => theme.colors.grey900};
   cursor: pointer;
@@ -89,12 +88,10 @@ const ContentText = styled.h2`
 
 const LogoutModalSection = styled.section<{ $isCheckingLogout: boolean }>`
   position: absolute;
-
-  margin: -38rem -4rem 0 -1.5em;
+  top: 0;
 `;
 
 const DeleteAccountModalSection = styled.section<{ $isCheckingDeleteAccount: boolean }>`
   position: absolute;
-
-  margin: -38rem -4rem 0 -1.5em;
+  top: 0;
 `;

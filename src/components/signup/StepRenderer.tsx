@@ -1,25 +1,30 @@
-import React, { useState } from "react";
-import Role from "./Role";
-import NameEmail from "./NameEmail";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
+import { getCookie } from "../../api/cookie";
 import { stepNum } from "../../atom/signup/signup";
-import PasswordAgreeChecking from "./PasswordAgreeChecking";
-import WelcomeSignup from "../welcomeSignup/WelcomeSignup";
+import Role from "./Role";
+import UserName from "./UserName";
+import UserPhone from "./UserPhone";
 
 export default function StepRenderer() {
   const step = useRecoilValue(stepNum);
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    if(!getCookie("tempToken")) {
+      navigate('/')
+    }},[])
+
   switch (step) {
     case 0:
       navigate(-1);
       break;
     case 1:
-      return <WelcomeSignup />;
-    // return <Role />;
+      return <Role />; //0
     case 2:
-      return <NameEmail />;
+      return <UserName />; //25
     case 3:
-      return <PasswordAgreeChecking />;
+      return <UserPhone />; //50 | 75
   }
 }

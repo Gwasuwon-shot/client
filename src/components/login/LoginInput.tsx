@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
-import TextLabelLayout from "../signup/TextLabelLayout";
-import { viewingLoginIc, canViewingLoginIc } from "../../assets";
+import { setCookie } from "../../api/cookie";
+import { postLocalLogin } from "../../api/localLogin";
+import { canViewingLoginIc, viewingLoginIc } from "../../assets";
+import { userRoleData } from "../../atom/loginUser/loginUser";
+import { connectLessonId } from "../../atom/registerLesson/registerLesson";
+import { lessonCode } from "../../atom/share/share";
+import { lessonCodeAndPaymentId } from "../../atom/tuitionPayment/tuitionPayment";
+import InputHint from "../signup/InputHint";
+import TextLabel from "../signup/TextLabel";
 import LoginButton from "./LoginButton";
 
 export default function LoginInput() {
@@ -12,6 +22,28 @@ export default function LoginInput() {
   const [password, setPassword] = useState("");
   const [pwFocus, setPwFocus] = useState(false);
   const [pwViewing, setPwViewing] = useState("password");
+  const setUserRole = useSetRecoilState(userRoleData);
+  const [isError, setIsError] = useState(false);
+  const codeInfo = useRecoilValue(lessonCodeAndPaymentId);
+  const navigate = useNavigate();
+  const connectCode = useRecoilValue(connectLessonId);
+
+  const { mutate: postLoginData } = useMutation(postLocalLogin, {
+    onSuccess: (data) => {
+      const accessToken = data.data.data.accessToken;
+      setUserRole(data.data.data.user.role);
+      setCookie("accessToken", accessToken, {
+        secure: true,
+      });
+
+      if (connectCode != "") navigate(`/${lessonCode}`);
+      else navigate("/welcome", { state: data.data });
+    },
+    onError: (error) => {
+      console.debug(error);
+      setIsError(true);
+    },
+  });
 
   // setEmail
   function handelEmailChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -23,8 +55,9 @@ export default function LoginInput() {
     setPassword(e.target.value);
   }
 
-  //데이터 전달 : 추후 추가
-  function handleLoginClick() {}
+  function handleLoginClick() {
+    postLoginData(userLogin);
+  }
 
   //뷰잉 상태 전환
   function handlePasswordViewing() {
@@ -45,14 +78,13 @@ export default function LoginInput() {
   useEffect(() => {
     setUserLogin((prev) => ({ ...prev, email: email, password: password }));
 
-    // 이메일, 이름 입력 및 정규식 확인 : 버튼 활성화
     password && email ? setIsActive(true) : setIsActive(false);
   }, [email, password]);
 
   return (
-    <>
+    <form>
       <InputEmailWrapper $email={email} $emailFocus={emailFocus}>
-        <TextLabelLayout labelText="이메일" />
+        <TextLabel>이메일</TextLabel>
         <Inputfield
           onFocus={() => setEmailFocus(true)}
           onBlur={() => setEmailFocus(false)}
@@ -62,22 +94,22 @@ export default function LoginInput() {
         />
       </InputEmailWrapper>
       <InputPasswordWrapper $password={password} $pwFocus={pwFocus}>
-        <TextLabelLayout labelText="비밀번호" />
+        <TextLabel>비밀번호</TextLabel>
         <PasswordIconWrapper>
-          <form>
-            <Inputfield
-              onFocus={() => setPwFocus(true)}
-              onBlur={() => setPwFocus(false)}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handlePasswordChange(e)}
-              type={pwViewing}
-              placeholder="비밀번호를 입력하세요"
-            />
-          </form>
+          <Inputfield
+            onFocus={() => setPwFocus(true)}
+            onBlur={() => setPwFocus(false)}
+            autoComplete="off"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handlePasswordChange(e)}
+            type={pwViewing}
+            placeholder="비밀번호를 입력하세요"
+          />
           {viewingIcon()}
         </PasswordIconWrapper>
       </InputPasswordWrapper>
       <LoginButton onClick={handleLoginClick} isActive={isActive} disabled={!isActive} />
-    </>
+      <ErrorMessage>{isError && <InputHint text="로그인 실패 다시 시도하십시오" color="red" />}</ErrorMessage>
+    </form>
   );
 }
 
@@ -85,7 +117,7 @@ const InputEmailWrapper = styled.div<{ $emailFocus: boolean; $email: string }>`
   display: flex;
   flex-direction: column;
 
-  width: 80%;
+  width: 95%;
   margin-right: 1.4rem;
   margin-bottom: 2rem;
 
@@ -93,11 +125,14 @@ const InputEmailWrapper = styled.div<{ $emailFocus: boolean; $email: string }>`
     ${({ theme, $emailFocus, $email }) => ($emailFocus || $email ? theme.colors.green5 : theme.colors.grey70)};
 `;
 
-const InputPasswordWrapper = styled.div<{ $pwFocus: boolean; $password: string }>`
+const InputPasswordWrapper = styled.div<{
+  $pwFocus: boolean;
+  $password: string;
+}>`
   display: flex;
   flex-direction: column;
 
-  width: 80%;
+  width: 95%;
   margin-right: 1.4rem;
   margin-bottom: 2rem;
 
@@ -107,9 +142,10 @@ const InputPasswordWrapper = styled.div<{ $pwFocus: boolean; $password: string }
 
 const Inputfield = styled.input`
   width: 20rem;
+  height: 2rem;
   margin: 1rem 0.2rem;
 
-  &::placeholder {
+  &textarea::placeholder {
     color: ${({ theme }) => theme.colors.grey400};
     ${({ theme }) => theme.fonts.title03};
   }
@@ -133,4 +169,10 @@ const CanViewingLoginIcon = styled(canViewingLoginIc)`
   height: 1.6rem;
   margin-right: 0.6rem;
   flex-shrink: 0;
+`;
+
+const ErrorMessage = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 1rem 2rem;
 `;

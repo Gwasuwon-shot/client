@@ -1,37 +1,28 @@
-import React, { useState } from "react";
-import NoDeposit from "./NoDeposit";
+import { useParams } from "react-router-dom";
 import { styled } from "styled-components";
+import useGetDepositRecord from "../../hooks/useGetDepositRecord";
+import { DepositInfoType } from "../../type/lessonRecord/lessonRecord";
 import DepositRecordItem from "./DepositRecordItem";
+import NoDeposit from "./NoDeposit";
 
 export default function DepositRecordList() {
-  const [isDepositRecordExists, setIsDepositRecordExists] = useState(true);
+  const { lessonId } = useParams();
+  const { paymentRecordList } = useGetDepositRecord(Number(lessonId));
 
-  const PAYMENT_LIST = [
-    {
-      idx: 34,
-      date: null,
-      amount: 300000,
-      status: false,
-    },
-    {
-      idx: 54,
-      date: "2023-08-23",
-      amount: 300000,
-      status: true,
-    },
-    {
-      idx: 37,
-      date: "2023-07-23",
-      amount: 300000,
-      status: true,
-    },
-  ];
-
-  return isDepositRecordExists ? (
+  return paymentRecordList ? (
     <>
       <DepositRecordListWrapper>
-        {PAYMENT_LIST.map(({ idx, date, amount, status }) => {
-          return <DepositRecordItem key={idx} idx={idx} date={date} amount={amount} status={status} />;
+        {paymentRecordList?.map(({ idx, date, amount, status }: DepositInfoType, index: number) => {
+          return (
+            <DepositRecordItem
+              count={Math.abs(index - paymentRecordList?.length)}
+              key={idx}
+              idx={idx}
+              date={date}
+              amount={amount}
+              status={status}
+            />
+          );
         })}
       </DepositRecordListWrapper>
     </>
@@ -44,7 +35,6 @@ const DepositRecordListWrapper = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
 
   margin-top: 2.4rem;
 `;

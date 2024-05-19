@@ -10,7 +10,7 @@ export default function LoginButton(props: LoginButtonProps) {
   const { onClick, isActive, disabled } = props;
 
   return (
-    <Button disabled={disabled} $isActive={isActive} onClick={onClick}>
+    <Button type="button" disabled={disabled} $isActive={isActive} onClick={onClick}>
       로그인
     </Button>
   );
@@ -20,12 +20,13 @@ const Button = styled.button<{ $isActive: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 1.6rem;
 
   width: 29.2rem;
   height: 5rem;
   padding: 0.8rem;
 
-  border-radius: 8px;
+  border-radius: 0.8rem;
 
   flex-shrink: 0;
 

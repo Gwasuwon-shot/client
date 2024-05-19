@@ -1,17 +1,17 @@
-<svg width="74" height="110" viewBox="0 0 74 110" fill="none" xmlns="http://www.w3.org/2000/svg">
-<mask id="mask0_1322_357" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="30" y="51" width="14" height="59">
-<path d="M35.0833 51.0645H39.8453L43.7516 109.374H30.5L35.0833 51.0645Z" fill="#D7953B"/>
+<svg width="114" height="155" viewBox="0 0 114 155" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_984_58781" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="50" y="96" width="14" height="59">
+<path d="M55.0833 96.0645H59.8453L63.7516 154.374H50.5L55.0833 96.0645Z" fill="#D7953B"/>
 </mask>
-<g mask="url(#mask0_1322_357)">
-<path opacity="0.8" d="M35.0794 51.0645H39.8414L43.7477 109.374H30.4961L35.0794 51.0645Z" fill="#D7953B"/>
-<rect opacity="0.7" x="34.8711" y="69.7498" width="9.95024" height="40.5995" fill="#D7953B"/>
-<rect x="39.2305" y="68.7734" width="11.0345" height="40.5995" fill="#D7953B"/>
+<g mask="url(#mask0_984_58781)">
+<path opacity="0.8" d="M55.0794 96.0645H59.8414L63.7477 154.374H50.4961L55.0794 96.0645Z" fill="#D7953B"/>
+<rect opacity="0.7" x="54.8711" y="114.75" width="9.95024" height="40.5995" fill="#D7953B"/>
+<rect x="59.2305" y="113.773" width="11.0345" height="40.5995" fill="#D7953B"/>
 </g>
-<mask id="mask1_1322_357" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="74" height="74">
-<ellipse cx="36.8122" cy="37.3062" rx="36.2107" ry="36.5659" fill="#00D6A2"/>
+<mask id="mask1_984_58781" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="20" y="45" width="74" height="74">
+<ellipse cx="56.8122" cy="82.3062" rx="36.2107" ry="36.5659" fill="#00D6A2"/>
 </mask>
-<g mask="url(#mask1_1322_357)">
-<rect x="36.8125" y="-14.5503" width="42.8854" height="91.7574" fill="#02BDA5"/>
-<rect x="-5.76172" y="-14.5503" width="42.8854" height="91.7574" fill="#00D6A2"/>
+<g mask="url(#mask1_984_58781)">
+<rect x="56.8125" y="30.4497" width="42.8854" height="91.7574" fill="#02BDA5"/>
+<rect x="14.2383" y="30.4497" width="42.8854" height="91.7574" fill="#00D6A2"/>
 </g>
 </svg>

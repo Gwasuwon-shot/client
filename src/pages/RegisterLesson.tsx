@@ -1,15 +1,22 @@
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { paymentOrder } from "../atom/tuitionPayment/tuitionPayment";
 import Footer from "../components/RegisterLessonPage/Footer";
 import Header from "../components/RegisterLessonPage/Header";
 import LessonInput from "../components/RegisterLessonPage/LessonInput";
-import ProgressBar from "../components/common/ProgressBar";
 
 export default function RegisterLesson() {
+  const [payment, setPayment] = useRecoilState(paymentOrder);
+
+  useEffect(() => {
+    setPayment("");
+  }, []);
+
   return (
-  <>
-    <ProgressBar progress = {25} />
-    <Header />
-    <LessonInput />
-    <Footer />
-  </>
+    <>
+      <Header />
+      <LessonInput />
+      <Footer />
+    </>
   );
 }

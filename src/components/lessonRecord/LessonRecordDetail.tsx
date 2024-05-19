@@ -1,46 +1,44 @@
-import React, { useState } from "react";
-import { styled } from "styled-components";
+import { useState } from "react";
+import { css, styled } from "styled-components";
 import { LessonInfoLessonRecordIc } from "../../assets";
-import RestOfClassesInfo from "./RestOfClassesInfo";
-import BackButton from "../common/BackButton";
-import SubjectLabel from "../common/SubjectLabel";
 import { STUDENT_COLOR } from "../../core/common/studentColor";
+import SubjectLabel from "../common/SubjectLabel";
 import PastLessonRecordList from "./PastLessonRecordList";
-import { css } from "styled-components";
+import RestOfClassesInfo from "./RestOfClassesInfo";
 
+import { useNavigate, useParams } from "react-router-dom";
+import useGetLessonDetail from "../../hooks/useGetLessonDetail";
+import useGetLessonProgress from "../../hooks/useGetLessonProgress";
+import CommonBackButton from "../common/CommonBackButton";
 import DepositRecordList from "./DepositRecord";
 
 export default function LessonRecordDetail() {
-  const [isClassRecord, setIsClassRecord] = useState(false);
+  const { lessonId } = useParams();
+  const [isClassRecord, setIsClassRecord] = useState<boolean>(true);
+  const { count, nowCount, percent } = useGetLessonProgress(Number(lessonId));
+  const { idx, teacherName, studentName, subject } = useGetLessonDetail(Number(lessonId));
 
-  const LESSON_INFO = {
-    idx: 34,
-    studentName: "수화",
-    teacherName: "은수김",
-    subject: "수영",
-    count: 10,
-    nowCount: 7,
-    percent: 45,
-  };
+  const navigate = useNavigate();
 
-  const { idx, studentName, teacherName, subject, count, nowCount, percent } = LESSON_INFO;
+  function handleGotoLessonInfoList() {
+    navigate(`/lesson-info/${lessonId}`, { state: false });
+  }
 
   return (
     <>
-      <BackButton />
-      <LessonInfoIcon />
-
+      <CommonBackButton />
+      <LessonManageIcon onClick={() => handleGotoLessonInfoList()} />
       <LessonRecordHeader>
         <StudentName>{studentName}</StudentName>
-        <SubjectLabel subject={subject} backgroundColor={STUDENT_COLOR[idx % 11]} color={"#5B6166"} />
+        <SubjectLabel subject={subject} backgroundColor={STUDENT_COLOR[idx % 10]} color={"#5B6166"} />
         <TeacherName>{teacherName} 선생님</TeacherName>
       </LessonRecordHeader>
 
       <SelectMenuWrapper>
-        <SelectMenuButton isClassRecord={isClassRecord} onClick={() => setIsClassRecord(true)}>
+        <SelectMenuButton $isClassRecord={isClassRecord} onClick={() => setIsClassRecord(true)}>
           수업내역
         </SelectMenuButton>
-        <SelectMenuButton isClassRecord={!isClassRecord} onClick={() => setIsClassRecord(false)}>
+        <SelectMenuButton $isClassRecord={!isClassRecord} onClick={() => setIsClassRecord(false)}>
           입금내역
         </SelectMenuButton>
       </SelectMenuWrapper>
@@ -81,14 +79,15 @@ const TeacherName = styled.p`
   margin-left: 0.6rem;
 
   ${({ theme }) => theme.fonts.body06};
-  color: ${({ theme }) => theme.colors.grey900};
+  color: ${({ theme }) => theme.colors.grey600};
 `;
 
-const LessonInfoIcon = styled(LessonInfoLessonRecordIc)`
-  width: 1.9rem;
+const LessonManageIcon = styled(LessonInfoLessonRecordIc)`
+  width: 2rem;
+  height: 2rem;
 
   position: absolute;
-  top: 4.23rem;
+  top: 5.3rem;
   right: 1.493rem;
 `;
 
@@ -107,7 +106,7 @@ const SelectMenuWrapper = styled.aside`
   background-color: ${({ theme }) => theme.colors.grey50};
 `;
 
-const SelectMenuButton = styled.button<{ isClassRecord: boolean }>`
+const SelectMenuButton = styled.button<{ $isClassRecord: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -115,9 +114,11 @@ const SelectMenuButton = styled.button<{ isClassRecord: boolean }>`
   width: 13.5075rem;
   height: 3.2rem;
   border-radius: 0.8rem;
+  ${({ theme }) => theme.fonts.body02};
+  color: ${({ theme, $isClassRecord }) => ($isClassRecord ? theme.colors.grey900 : theme.colors.grey400)};
 
-  ${({ isClassRecord }) =>
-    isClassRecord
+  ${({ $isClassRecord }) =>
+    $isClassRecord
       ? css`
           background-color: #ffffff;
         `

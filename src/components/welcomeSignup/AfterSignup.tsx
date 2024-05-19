@@ -1,51 +1,57 @@
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { TuticeWithTextCommonIc } from "../../assets";
 import SignupTitleLayout from "../signup/SignupTitleLayout";
 import ButtonLayout from "./ButtonLayout";
-import { Dispatch, SetStateAction } from "react";
 
-interface AfterSignupProp {
-  setIsWelcome: Dispatch<SetStateAction<boolean>>;
-}
-
-export default function AfterSignup(prop: AfterSignupProp) {
-  const { setIsWelcome } = prop;
-  const MAIN_TEXT = `이은수 선생님 환영합니다! \n 수업 나무 관리를 통해 \n 과외 관리를 시작해보세요. `;
-
-  const SUB_TEXT = "*수업나무 : 수강생을 추가하여 관리할 수 있는 서비스입니다.";
+export default function AfterSignup() {
+  const navigate = useNavigate();
+  const MAIN_TEXT = `환영해요!`;
+  const SUB_TEXT = `관리할 수업을 추가해보세요!`;
 
   function handleToNextStep() {
-    setIsWelcome(false);
+    navigate("/register-lesson");
+  }
+
+  function handleToHome() {
+    navigate("/home");
   }
 
   return (
     <>
       <Container>
         <TuticeWithTextCommonIcon />
-        <SignupTitleLayout MainText={MAIN_TEXT} />
+        <SignupTitleLayout>{MAIN_TEXT}</SignupTitleLayout>
         <SubText>{SUB_TEXT}</SubText>
+        <ButtonLayout
+          onClickButton={handleToNextStep}
+          onClickJump={handleToHome}
+          buttonText="수업 추가"
+          passText="건너뛰기"
+        />
       </Container>
-
-      <ButtonLayout onClick={handleToNextStep} buttonText={"수업 나무 생성"} />
     </>
   );
 }
 
 const Container = styled.div`
-  margin-top: 6.3rem;
+  margin-top: 11.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const TuticeWithTextCommonIcon = styled(TuticeWithTextCommonIc)`
-  width: 10rem;
-  height: 3.3rem;
-  margin-bottom: 1.3rem;
-  margin-left: -1.4rem;
-  flex-shrink: 0;
+  width: 16.8rem;
+  height: 5.6rem;
+
+  margin-bottom: 6.1rem;
 `;
 
 const SubText = styled.p`
-  margin-top: 2.2rem;
+  margin-top: 1.2rem;
+  white-space: pre-wrap;
 
-  color: ${({ theme }) => theme.colors.grey400};
-  ${({ theme }) => theme.fonts.body07};
+  color: ${({ theme }) => theme.colors.grey600};
+  ${({ theme }) => theme.fonts.body02};
 `;

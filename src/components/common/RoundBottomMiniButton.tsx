@@ -23,7 +23,7 @@ const Button = styled.button<{ $isGreen: boolean }>`
 
   width: 13.8rem;
   height: 5rem;
-  border-radius: 8px;
+  border-radius: 0.8rem;
 
   background-color: ${({ theme, $isGreen }) => ($isGreen ? theme.colors.green5 : theme.colors.green1)};
   color: ${({ theme, $isGreen }) => ($isGreen ? theme.colors.white : theme.colors.green5)};

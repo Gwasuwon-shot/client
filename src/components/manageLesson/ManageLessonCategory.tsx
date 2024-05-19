@@ -43,7 +43,7 @@ const Category = styled.article<{ $isLesson: boolean; $isSelected: boolean }>`
 
   background-color: ${({ theme, $isSelected }) => ($isSelected ? theme.colors.white : "transparent")};
 
-  border-radius: 8px;
+  border-radius: 0.8rem;
 
   cursor: pointer;
 
@@ -64,5 +64,5 @@ const CategoryWrapper = styled.section`
 
   background-color: ${({ theme }) => theme.colors.grey50};
 
-  border-radius: 8px;
+  border-radius: 0.8rem;
 `;

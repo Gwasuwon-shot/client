@@ -21,7 +21,7 @@ const NoclassBannerWrapper = styled.header`
 
   border: 1px solid ${({ theme }) => theme.colors.green2};
 
-  border-radius: 8px;
+  border-radius: 0.8rem;
 
   color: ${({ theme }) => theme.colors.green5};
   ${({ theme }) => theme.fonts.body02};

@@ -1,12 +1,6 @@
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-import {
-  FifthTreeParentsHomeIc,
-  FirstTreeParentsHomeIc,
-  FourthTreeParentsHomeIc,
-  RightArrowParentsHomeIc,
-  SecondTreeParentsHomeIc,
-  ThirdTreeParentsHomeIc,
-} from "../../assets";
+import { FirstTreeParentsHomeIc, RightArrowParentsHomeIc } from "../../assets";
 import SubjectLabel from "../common/SubjectLabel";
 
 interface ClassScheduleProps {
@@ -17,6 +11,7 @@ interface ClassScheduleProps {
   currentClassCount: number;
   currentClassCountPercent: number;
   subjectLabelBackgroundColor: string;
+  idx: number;
 }
 
 export default function ClassSchedule(props: ClassScheduleProps) {
@@ -24,14 +19,20 @@ export default function ClassSchedule(props: ClassScheduleProps) {
     subjectName,
     teacherName,
     studentName,
-    entireClassCount,
-    currentClassCount,
     currentClassCountPercent,
+    currentClassCount,
+    entireClassCount,
     subjectLabelBackgroundColor,
+    idx,
   } = props;
+  const navigate = useNavigate();
+
+  function handleGoToLessonDetail() {
+    navigate(`/lesson-detail/${idx}`);
+  }
 
   return (
-    <ClassScheduleWrapper>
+    <ClassScheduleWrapper onClick={() => handleGoToLessonDetail()}>
       <StudentInfoWrapper>
         <ProgressTreeIconWrapper>
           <FirstTreeParentsHomeIc />
@@ -90,12 +91,15 @@ const ClassDetailInfoWrapper = styled.div`
   flex-direction: column;
 
   margin-left: 2.3rem;
-
+  width: 100%;
+  height: 3.7rem;
   gap: 0.7rem;
 `;
 
 const TeacherSubjectWrapper = styled.div`
   display: flex;
+  height: 1.6rem;
+  width: 100%;
   gap: 0.6rem;
 `;
 
@@ -118,5 +122,6 @@ const EntireCountMessage = styled.p`
 
 const RightArrowParentsHomeIcon = styled(RightArrowParentsHomeIc)`
   width: 2rem;
-  margin-left: 8.4rem;
+  height: 2rem;
+  cursor: pointer;
 `;

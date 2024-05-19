@@ -1,36 +1,67 @@
-import React from "react";
-import styled from "styled-components";
 import { format, isSameDay } from "date-fns";
 import { ko } from "date-fns/locale";
-import { STUDENT_COLOR } from "../../../core/common/studentColor";
+import { useRecoilValue } from "recoil";
+import styled from "styled-components";
+
+import { DEEFAULT_STUDENT_COLOR, STUDENT_COLOR } from "../../../core/common/studentColor";
+import useGetScheduleByUser from "../../../hooks/useGetScheduleByUser";
+import { modalType } from "../../../type/calendar/modalType";
 import StudentColorBox from "../../common/StudentColorBox";
 import ToastModal from "../../common/ToastModal";
-import useGetTeacherSchedule from "../../../hooks/useGetTeacherSchedule";
-import { modalType } from "../../../type/calendar/modalType";
+
+import { temporarySchedule } from "../../../atom/timePicker/timePicker";
+
+interface scheduleListType {
+  endTime: string;
+  startTime: string;
+  studentName: string;
+  subject: string;
+}
+
+interface temporaryListType {
+  date: string;
+  scheduleList: any;
+}
 
 export default function RegisterModal(props: modalType) {
-  const { selectedDate, setOpenModal } = props;
-  const { scheduleList } = useGetTeacherSchedule();
+  const { selectedDate, setOpenModal, formattedMonth } = props;
+  const { isUserSchedule } = useGetScheduleByUser(formattedMonth);
+  const temporarySchedules = useRecoilValue(temporarySchedule);
+  const temporaryList: temporaryListType[] = temporarySchedules.temporaryScheduleList;
 
   return (
     <>
       <ToastModal>
         <ModalContentWrapper>
           <ModalDate>{format(selectedDate as Date, "M월 d일 EEEE", { locale: ko })}</ModalDate>
-          {scheduleList
-            .find((item) => isSameDay(new Date(item.date), selectedDate as Date))
-            ?.dailyScheduleList.map((item) => {
-              const { schedule } = item;
-              const { idx, studentName, subject, startTime, endTime } = schedule;
-
+          {temporaryList
+            ?.find((item) => isSameDay(new Date(item.date), selectedDate as Date))
+            ?.scheduleList?.map(({ startTime, endTime, studentName, subject }: scheduleListType, idx: number) => {
               return (
                 <ScheduleWrapper key={idx}>
-                  <StudentColorBox backgroundColor={STUDENT_COLOR[idx % 11]} />
+                  <StudentColorBox backgroundColor={DEEFAULT_STUDENT_COLOR} />
                   <ModalTime>
                     {startTime} - {endTime}
                   </ModalTime>
                   <ModalName>{studentName}</ModalName>
-                  <ModalSubject $backgroundcolor={STUDENT_COLOR[idx % 11]}>{subject}</ModalSubject>
+                  <ModalSubjectPreview $backgroundcolor={DEEFAULT_STUDENT_COLOR}>{subject}</ModalSubjectPreview>
+                </ScheduleWrapper>
+              );
+            })}
+          {isUserSchedule
+            ?.find((item) => isSameDay(new Date(item.date), selectedDate as Date))
+            ?.dailyScheduleList?.map((item) => {
+              const { schedule, lessonIdx } = item;
+              const { idx, studentName, subject, startTime, endTime } = schedule;
+
+              return (
+                <ScheduleWrapper key={idx}>
+                  <StudentColorBox backgroundColor={STUDENT_COLOR[lessonIdx % 10]} />
+                  <ModalTime>
+                    {startTime} - {endTime}
+                  </ModalTime>
+                  <ModalName>{studentName}</ModalName>
+                  <ModalSubject $backgroundcolor={STUDENT_COLOR[lessonIdx % 10]}>{subject}</ModalSubject>
                 </ScheduleWrapper>
               );
             })}
@@ -83,5 +114,19 @@ const ModalSubject = styled.span<{ $backgroundcolor: string }>`
   background-color: ${(props) => props.$backgroundcolor};
   ${({ theme }) => theme.fonts.caption01};
   color: ${({ theme }) => theme.colors.grey500};
-  border-radius: 8px;
+  border-radius: 0.8rem;
+`;
+
+const ModalSubjectPreview = styled.span<{ $backgroundcolor: string }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 1.6rem;
+  padding: 0.2rem 0.6rem;
+
+  background-color: ${(props) => props.$backgroundcolor};
+  ${({ theme }) => theme.fonts.caption01};
+  color: ${({ theme }) => theme.colors.white};
+  border-radius: 0.8rem;
 `;

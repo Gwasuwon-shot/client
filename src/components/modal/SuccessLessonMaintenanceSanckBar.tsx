@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import SnackBarPopup from "../common/SnackBarPopup";
 
-export default function SuccessLessonMaintenanceSanckBar() {
+export default function SuccessLessonMaintenanceSnackBar() {
   return (
     <SnackBarPopup isCheck={false}>
       <Contents>수업을 연장했어요!</Contents>

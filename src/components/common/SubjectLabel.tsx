@@ -23,5 +23,5 @@ const SubjectBox = styled.span<{ $backgroundColor: string; $color: string }>`
   background-color: ${({ $backgroundColor }) => $backgroundColor};
   color: ${({ $color }) => $color};
 
-  border-radius: 8px;
+  border-radius: 0.8rem;
 `;

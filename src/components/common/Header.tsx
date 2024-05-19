@@ -1,12 +1,13 @@
-import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { TuticeWithTextCommonIc } from "../../assets";
+import { TEACHER_FOOTER_CATEGORY } from "../../core/teacherHome/teacherFooter";
+import useTeacherFooter from "../../hooks/useTeacherFooter";
 
 export default function Header() {
-  const navigate = useNavigate();
+  const { handleMoveToPage } = useTeacherFooter();
 
   function handleMoveToHome() {
-    navigate("/");
+    handleMoveToPage(TEACHER_FOOTER_CATEGORY.home);
   }
 
   return (

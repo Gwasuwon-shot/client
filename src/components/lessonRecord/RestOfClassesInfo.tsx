@@ -1,6 +1,4 @@
-import React from "react";
 import { styled } from "styled-components";
-import ProgressBar from "../common/ProgressBar";
 import { PROGRESS_TREE_IMG_LIST } from "../../core/common/ProgressTree";
 import TreeProgress from "../common/TreeProgress";
 
@@ -12,26 +10,38 @@ interface RestOfClassesInfoProps {
 
 export default function RestOfClassesInfo(props: RestOfClassesInfoProps) {
   const { count, nowCount, percent } = props;
+
   let treeImgSrc = "";
 
-  if (percent <= 20) {
+  if (percent < 25) {
     treeImgSrc = PROGRESS_TREE_IMG_LIST[1];
-  } else if (percent > 20 && percent <= 40) {
+  } else if (percent >= 25 && percent < 50) {
     treeImgSrc = PROGRESS_TREE_IMG_LIST[2];
-  } else if (percent > 40 && percent <= 60) {
+  } else if (percent >= 50 && percent < 75) {
     treeImgSrc = PROGRESS_TREE_IMG_LIST[3];
-  } else if (percent > 60 && percent <= 80) {
+  } else if (percent >= 75 && percent < 100) {
     treeImgSrc = PROGRESS_TREE_IMG_LIST[4];
-  } else {
+  } else if (percent === 100) {
     treeImgSrc = PROGRESS_TREE_IMG_LIST[5];
   }
 
   return (
     <RestOfClassesInfoWrapper>
-      <RestOfClassesTitle>
-        열매가 열리기 까지 <br />
-        {count - nowCount}회차 남았습니다
-      </RestOfClassesTitle>
+      {count - nowCount > 0 ? (
+        <>
+          <RestOfClassesTitle>결실을 수확하기까지 </RestOfClassesTitle>
+          <RestOfClassesTitle>
+            <Count> {count - nowCount}회차&nbsp;</Count> 남았습니다
+          </RestOfClassesTitle>
+        </>
+      ) : (
+        <>
+          <RestOfClassesTitle>모든 회차가 끝났어요</RestOfClassesTitle>
+          <RestOfClassesTitle>
+            <Count>결실</Count>을 수확하세요!
+          </RestOfClassesTitle>
+        </>
+      )}
 
       <ProgressTreeIcon src={treeImgSrc} />
 
@@ -42,6 +52,10 @@ export default function RestOfClassesInfo(props: RestOfClassesInfoProps) {
     </RestOfClassesInfoWrapper>
   );
 }
+
+const Count = styled.p`
+  ${({ theme }) => theme.fonts.title02}
+`;
 
 const RestOfClassesInfoWrapper = styled.main`
   display: flex;
@@ -56,7 +70,8 @@ const RestOfClassesInfoWrapper = styled.main`
 `;
 
 const RestOfClassesTitle = styled.h1`
-  ${({ theme }) => theme.fonts.title02};
+  display: flex;
+  ${({ theme }) => theme.fonts.title03};
   color: ${({ theme }) => theme.colors.grey900};
 `;
 

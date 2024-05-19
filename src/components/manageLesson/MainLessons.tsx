@@ -1,30 +1,45 @@
 import { styled } from "styled-components";
 import useGetAllLessons from "../../hooks/useGetAllLessons";
+import { lessonListType } from "../../type/manageLesson/lessonListType";
 import MainLesson from "./MainLesson";
 
-export default function MainLessons() {
+interface MainLessonsProp {
+  isClickedEdit: boolean;
+  handleConfirmDeleteLesson: () => void;
+}
+
+export default function MainLessons(props: MainLessonsProp) {
+  const { isClickedEdit, handleConfirmDeleteLesson } = props;
   const { lessonList } = useGetAllLessons();
+
+  let teacherLessonList = lessonList.filter((lesson: lessonListType) => {
+    return lesson?.percent !== 100;
+  });
 
   return (
     <>
-      <Title>나의 수업</Title>
-      {lessonList.map(({ idx, studentName, subject, percent, dayOfWeekList }) => (
-        <MainLesson
-          key={idx}
-          idx={idx}
-          studentName={studentName}
-          subject={subject}
-          percent={percent}
-          dayOfWeekList={dayOfWeekList}
-        />
-      ))}
+      <MainLessonsWrapper>
+        {teacherLessonList &&
+          teacherLessonList?.map(({ idx, studentName, subject, percent, latestRegularSchedule }: lessonListType) => (
+            <MainLesson
+              isClickedEdit={isClickedEdit}
+              handleConfirmDeleteLesson={handleConfirmDeleteLesson}
+              key={idx}
+              idx={idx}
+              studentName={studentName}
+              subject={subject}
+              percent={percent}
+              latestRegularSchedule={latestRegularSchedule}
+            />
+          ))}
+      </MainLessonsWrapper>
     </>
   );
 }
 
-const Title = styled.h1`
-  margin-bottom: 1.2rem;
-
-  color: ${({ theme }) => theme.colors.grey900};
-  ${({ theme }) => theme.fonts.title02};
+const MainLessonsWrapper = styled.article`
+  display: flex;
+  flex-wrap: wrap;
+  width: 30rem;
+  gap: 1.1rem;
 `;

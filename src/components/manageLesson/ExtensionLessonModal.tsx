@@ -1,27 +1,69 @@
-import React from "react";
+import { useMutation, useQueryClient } from "react-query";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { styled } from "styled-components";
-import StudentNameLabel from "../common/StudentNameLabel";
-import ToastModal from "../common/ToastModal";
+import { createLessonMaintenance } from "../../api/createLessonMaintenance";
+import { attendanceLesson } from "../../atom/attendanceCheck/attendanceLesson";
+import { isSnackBarOpen } from "../../atom/common/isSnackBarOpen";
+import { STUDENT_COLOR } from "../../core/common/studentColor";
 import useModal from "../../hooks/useModal";
 import RoundBottomMiniButton from "../common/RoundBottomMiniButton";
-import useExtensionLesson from "../../hooks/useExtensionLesson";
+import StudentNameLabel from "../common/StudentNameLabel";
+import ToastModal from "../common/ToastModal";
 
 interface ExtensionLessonModalProps {
-  studentName: string;
-  subject: string;
-  backgroundColor: string;
-  color: string;
-  isBig: boolean;
+  setIsClickedMainteance: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSuccess: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+interface createLessonMaintenanceProps {
+  lessonIdx: number;
+  isLessonMaintenance: boolean;
 }
 
 export default function ExtensionLessonModal(props: ExtensionLessonModalProps) {
-  const { studentName, subject, backgroundColor, color, isBig } = props;
   const { unShowModal } = useModal();
+  const { setIsSuccess, setIsClickedMainteance } = props;
+  const [snackBarOpen, setSnackBarOpen] = useRecoilState(isSnackBarOpen);
+  const selectedLesson = useRecoilValue(attendanceLesson);
+  const { studentName, subject, lessonIdx } = selectedLesson;
 
-  function handleExtensionLesson() {
-    //서버 api 통신 (연장완)
-    unShowModal;
+  const postInformationTrue = {
+    lessonIdx: selectedLesson.lessonIdx,
+    isLessonMaintenance: true,
+  };
+
+  const postInformationFalse = {
+    lessonIdx: selectedLesson.lessonIdx,
+    isLessonMaintenance: false,
+  };
+
+  const queryClient = useQueryClient();
+
+  const { mutate: createNewLessonMaintenance } = useMutation(createLessonMaintenance, {
+    onSuccess: (response) => {
+      queryClient.invalidateQueries("lessonByTeacher");
+      queryClient.invalidateQueries("getMissingMaintenanceLesson");
+    },
+    onError: (error) => console.debug(error),
+  });
+
+  function handleExtensionLesson(info: createLessonMaintenanceProps) {
+    createNewLessonMaintenance(info);
+    setIsClickedMainteance(false);
+    unShowModal();
+    setSnackBarOpen(true);
+    setIsSuccess(true);
   }
+
+  function handleNotExtensionLesson(info: createLessonMaintenanceProps) {
+    createNewLessonMaintenance(info);
+    setIsClickedMainteance(false);
+
+    unShowModal();
+    setSnackBarOpen(true);
+    setIsSuccess(false);
+  }
+
   return (
     <ModalWrapper>
       <ToastModal>
@@ -30,9 +72,9 @@ export default function ExtensionLessonModal(props: ExtensionLessonModalProps) {
           <StudentNameLabel
             studentName={studentName}
             subject={subject}
-            backgroundColor={backgroundColor}
-            color={color}
-            isBig={isBig}
+            backgroundColor={STUDENT_COLOR[lessonIdx % 10]}
+            color="#757A80"
+            isBig={false}
           />
         </TextWrapper>
         <TextWrapper>
@@ -40,10 +82,10 @@ export default function ExtensionLessonModal(props: ExtensionLessonModalProps) {
           <p>수업을 계속해서 연장하시겠어요?</p>
         </TextWrapper>
         <ButtonWrapper>
-          <RoundBottomMiniButton isGreen={false} onClick={unShowModal}>
+          <RoundBottomMiniButton isGreen={false} onClick={() => handleNotExtensionLesson(postInformationFalse)}>
             아니요
           </RoundBottomMiniButton>
-          <RoundBottomMiniButton isGreen={true} onClick={handleExtensionLesson}>
+          <RoundBottomMiniButton isGreen={true} onClick={() => handleExtensionLesson(postInformationTrue)}>
             연장할래요
           </RoundBottomMiniButton>
         </ButtonWrapper>

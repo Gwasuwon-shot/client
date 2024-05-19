@@ -1,14 +1,27 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { removeCookie } from "../api/cookie";
+import { userRoleData } from "../atom/loginUser/loginUser";
 import ParentsHome from "../components/parentsHome/ParentsHome";
 import TeacherHome from "../components/teacherHome/TeacherHome";
 
 export default function Home() {
-  const [isTeacherHome, setIsTeacherHome] = useState(true);
+  const navigate = useNavigate();
+  const userRole = useRecoilValue(userRoleData);
 
-  return (
-    <>
-      {/* 선생님인 경우 TeacherHome, 학부모인 경우 ParentHome 컴포넌트 띄워주기*/}
-      {isTeacherHome ? <TeacherHome /> : <ParentsHome />}
-    </>
-  );
+  useEffect(() => {
+    if (userRole === "") {
+      removeCookie("accessToken");
+      removeCookie("refreshToken");
+
+      navigate("/home");
+    }
+  }, []);
+
+  function checkIsTeacher() {
+    return userRole === "선생님";
+  }
+
+  return <>{checkIsTeacher() ? <TeacherHome /> : <ParentsHome />}</>;
 }

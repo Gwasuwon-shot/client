@@ -1,44 +1,13 @@
-import { useEffect, useState } from "react";
 import { RegularLessonClockIc } from "../../assets";
-import { dayState, focusDayState, openFinishDetailState, openStartDetailState } from "../../atom/timePicker/timePicker";
+import { editSchedule } from "../../atom/EditSchedule/editSchedule";
+import { openFinishDetailState, openStartDetailState } from "../../atom/timePicker/timePicker";
 
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import BottomButton from "../common/BottomButton";
 
 export default function EditPageTime() {
-  const [selectedDays, setSelectedDays] = useRecoilState(dayState);
-  const [focusDay, setFocusDay] = useRecoilState(focusDayState);
-  const [isActive, setIsActive] = useState(false);
-
-  function handleDayButton(day: string) {
-    let dayIndex;
-    if (selectedDays.length >= 1) {
-      dayIndex = selectedDays.findIndex((selectedDay) => selectedDay.dayOfWeek === day);
-    } else {
-      dayIndex = -1;
-    }
-
-    if (dayIndex !== -1) {
-      setSelectedDays((prevSelectedDays) => prevSelectedDays.filter((selectedDay) => selectedDay.dayOfWeek !== day));
-    } else {
-      // 만약 시작, 종료시간을 선택하지 않은 요일이 있다면 선택하도록 강제
-      const isTimeNotSelected = focusDay.dayOfWeek !== "" && (focusDay.startTime === "" || focusDay.endTime === "");
-
-      if (isTimeNotSelected) {
-        return;
-      }
-
-      setFocusDay({ dayOfWeek: day, startTime: "", endTime: "" });
-    }
-  }
-
-  // check 용
-  useEffect(() => {
-    console.log(selectedDays);
-    console.log(focusDay);
-  }, [selectedDays, focusDay]);
-
+  const [selectedTime, setSelectedTime] = useRecoilState(editSchedule);
+  const { startTime, endTime } = selectedTime;
   // 2. 요일 시작, 종료시간 관리
 
   const [isStartPickerOpen, setIsStartPickerOpen] = useRecoilState<boolean>(openStartDetailState);
@@ -53,19 +22,6 @@ export default function EditPageTime() {
     setIsFinishPickerOpen(true);
   }
 
-  // 수업일시 추가하기
-
-  function handleEditLesson() {
-    // 현재 focusDay의 값을 selectedDays에 추가
-    setSelectedDays((prevSelectedDays) => [...prevSelectedDays, focusDay]);
-    // 현재 focusDay의 값을 빈 값으로 초기화
-    setFocusDay({
-      dayOfWeek: "",
-      startTime: "",
-      endTime: "",
-    });
-  }
-
   return (
     <LessonDateWrapper>
       <IconWrapper>
@@ -76,44 +32,48 @@ export default function EditPageTime() {
 
       <TimeWrapper>
         <TimeChoose> 시작 </TimeChoose>
-        {focusDay.startTime === "" ? (
-          <TimeButton onClick={handlStartTimePicker}>시간을 선택하세요</TimeButton>
+        {selectedTime?.startTime === "" ? (
+          <TimeButton $isPickerDone={isStartPickerOpen} onClick={handlStartTimePicker}>
+            시간을 선택하세요
+          </TimeButton>
         ) : (
-          <TimeButton onClick={handlStartTimePicker}>
-            {Number(focusDay.startTime.slice(0, 2)) <= 12 ? (
+          <TimeButton onClick={handlStartTimePicker} $isPickerDone={!isStartPickerOpen}>
+            {Number(selectedTime?.startTime.slice(0, 2)) < 12 ? (
               <>
-                오전 {Number(focusDay.startTime.slice(0, 2))} {focusDay.startTime.slice(2)}
+                오전 {Number(selectedTime?.startTime.slice(0, 2))} {selectedTime?.startTime.slice(2)}
               </>
             ) : (
               <>
-                오후 {Number(focusDay.startTime.slice(0, 2)) - 12} {focusDay.startTime.slice(2)}
+                오후{" "}
+                {Number(selectedTime?.startTime.slice(0, 2)) === 12
+                  ? 12
+                  : Number(selectedTime?.startTime.slice(0, 2)) - 12}
+                {selectedTime?.startTime.slice(2)}
               </>
             )}
           </TimeButton>
         )}
         <TimeChoose> 종료 </TimeChoose>
-        {focusDay.endTime === "" ? (
-          <TimeButton onClick={handleFinishTimePicker}>시간을 선택하세요</TimeButton>
+        {selectedTime?.endTime === "" ? (
+          <TimeButton $isPickerDone={isStartPickerOpen} onClick={handleFinishTimePicker}>
+            시간을 선택하세요
+          </TimeButton>
         ) : (
-          <TimeButton onClick={handleFinishTimePicker}>
-            {Number(focusDay.endTime.slice(0, 2)) <= 12 ? (
+          <TimeButton onClick={handleFinishTimePicker} $isPickerDone={!isFinishPickerOpen}>
+            {Number(selectedTime?.endTime.slice(0, 2)) < 12 ? (
               <>
-                오전 {Number(focusDay.endTime.slice(0, 2))} {focusDay.endTime.slice(2)}
+                오전 {Number(selectedTime?.endTime.slice(0, 2))} {selectedTime?.endTime.slice(2)}
               </>
             ) : (
               <>
-                오후 {Number(focusDay.endTime.slice(0, 2)) - 12} {focusDay.endTime.slice(2)}
+                오후{" "}
+                {Number(selectedTime?.endTime.slice(0, 2)) === 12 ? 12 : Number(selectedTime?.endTime.slice(0, 2)) - 12}
+                {selectedTime?.endTime.slice(2)}
               </>
             )}
           </TimeButton>
         )}
       </TimeWrapper>
-
-      <ButtonWrapper>
-        <BottomButton type="button" disabled={true} isActive={isActive} onClick={handleEditLesson}>
-          저장
-        </BottomButton>
-      </ButtonWrapper>
     </LessonDateWrapper>
   );
 }
@@ -149,8 +109,7 @@ const Explain = styled.h3`
 
 const TimeWrapper = styled.section`
   display: flex;
-  justify-content: space-between;
-
+  justify-content: space-around;
   padding-right: 2rem;
   padding-left: 2rem;
   margin-top: 1.6rem;
@@ -167,13 +126,20 @@ const TimeChoose = styled.h3`
   color: ${({ theme }) => theme.colors.grey400};
 `;
 
-const TimeButton = styled.button`
+interface ButtonProp {
+  $isPickerDone: boolean;
+}
+
+const TimeButton = styled.button<ButtonProp>`
   display: flex;
   justify-content: center;
   align-items: center;
 
   ${({ theme }) => theme.fonts.body04};
   color: ${({ theme }) => theme.colors.grey100};
+  ${({ $isPickerDone }) => `
+      ${$isPickerDone && "color: black"}
+    `};
 `;
 
 const ButtonWrapper = styled.div`

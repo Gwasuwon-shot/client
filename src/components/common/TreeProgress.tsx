@@ -18,7 +18,7 @@ export default function TreeProgress(props: TreeProgressProps) {
 const ProgressBarWrapper = styled.div<{ $width: number }>`
   width: ${({ $width }) => $width}rem;
   height: 0.4rem;
-  border-radius: 3px;
+  border-radius: 0.3rem;
 
   background-color: ${({ theme }) => theme.colors.green1};
 `;
@@ -28,5 +28,5 @@ const Progress = styled.div<{ $progress: number }>`
   height: 100%;
 
   background-color: ${({ theme }) => theme.colors.green5};
-  border-radius: 3px;
+  border-radius: 0.3rem;
 `;

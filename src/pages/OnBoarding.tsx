@@ -1,39 +1,64 @@
-import FirstSwiper from "../components/OnBoarding/FirstSwiper";
-import FourthSwiper from "../components/OnBoarding/FourthSwiper";
-import SecondSwiper from "../components/OnBoarding/SecondSwiper";
-import ThirdSwiper from "../components/OnBoarding/ThirdSwiper";
-
+import { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import { styled } from "styled-components";
-import { SLIDER_SETTINGS } from "../core/OnBoarding";
-
-import { Link } from "react-router-dom";
-import RoundBottomButton from "../components/common/RoundBottomButton";
+import styled from "styled-components";
+import { getCookie } from "../api/cookie";
+import { OnBoardingFourImg, OnBoardingOneImg, OnBoardingThreeImg, OnBoardingTwoImg } from "../assets";
+import SwiperLayout from "../components/OnBoarding/SwiperLayout";
+import { BottomButton } from "../components/common";
+import { SLIDER_SETTING } from "../core/OnBoarding";
 
 export default function OnBoarding() {
-  const SwiperPages = [<FirstSwiper />, <SecondSwiper />, <ThirdSwiper />, <FourthSwiper />];
+  const sliderRef = useRef<Slider>(null);
+  const location = useLocation();
+  const { isFromParentsHome } = location.state || {};
+
+  const [step, setStep] = useState(0);
+  const navigate = useNavigate();
+  const isLastSwiper = step === 3;
+
+  useEffect(() => {
+    if (getCookie("lastLogin") && !isFromParentsHome) {
+      navigate("/landing");
+    }
+  }, []);
+
+  const SwiperPages = [
+    <SwiperLayout text={["이번이 몇 회차 수업이지?", "회차별 출결 관리"]} img={OnBoardingOneImg} />,
+    <SwiperLayout text={["나무의 성장 과정으로", "수업 회차 진행도 확인"]} img={OnBoardingTwoImg} />,
+    <SwiperLayout text={["과외 수업에 100% 집중!", "과외 일정만 한눈에 확인"]} img={OnBoardingThreeImg} />,
+    <SwiperLayout text={["과외비 입금 요청은", "알림 전송으로 바로바로"]} img={OnBoardingFourImg} />,
+  ];
+
+  const handleAfterChange = (currentSlide: number) => {
+    setStep(currentSlide);
+  };
+
+  const SLIDER_SETTINGS = {
+    ...SLIDER_SETTING,
+    afterChange: handleAfterChange,
+  };
+
+  const handleClickBtn = () => {
+    isLastSwiper ? navigate("/landing") : sliderRef?.current?.slickNext();
+  };
 
   return (
     <>
       <OnBoardingWrapper>
         <SliderWrapper>
-          <Slider {...SLIDER_SETTINGS}>
+          <Slider ref={sliderRef} {...SLIDER_SETTINGS}>
             {SwiperPages.map((page, idx) => {
               return <article key={idx}>{page}</article>;
             })}
           </Slider>
         </SliderWrapper>
-
-        <ButtonWrapper>
-          <RoundBottomButton buttonMessage="시작하기" />
-        </ButtonWrapper>
-
-        <GoToLoginMessage>
-          이미 계정이 있으신가요? 바로&nbsp;<Link to="/login">로그인 하기</Link>
-        </GoToLoginMessage>
       </OnBoardingWrapper>
+      <BottomButton disabled={false} isActive={true} onClick={handleClickBtn}>
+        {isLastSwiper ? "시작하기" : "다음"}
+      </BottomButton>
     </>
   );
 }
@@ -46,7 +71,8 @@ const SliderWrapper = styled.section`
   margin-bottom: 5.863rem;
 
   & > .slick-slider > .slick-dots {
-    bottom: -2.863rem;
+    top: 1.6rem;
+    bottom: auto;
   }
 
   & > .slick-slider > .slick-dots > li {
@@ -72,26 +98,6 @@ const SliderWrapper = styled.section`
   & > .slick-slider > .slick-dots > .slick-active > button::before {
     opacity: 1;
 
-    color: ${({ theme }) => theme.colors.green5};
-  }
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const GoToLoginMessage = styled.p`
-  display: flex;
-  justify-content: center;
-
-  margin-top: 2rem;
-
-  ${({ theme }) => theme.fonts.body02};
-
-  color: #7c7e7e;
-
-  > a {
-    color: ${({ theme }) => theme.colors.green5};
+    color: ${({ theme }) => theme.colors.sementic_red};
   }
 `;

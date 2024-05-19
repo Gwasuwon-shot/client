@@ -1,15 +1,13 @@
+import { addDays, endOfMonth, endOfWeek, isSameDay, startOfMonth, startOfWeek } from "date-fns";
 import React, { useState } from "react";
-import styled from "styled-components";
 import { useRecoilState } from "recoil";
+import styled from "styled-components";
 import { isModalOpen } from "../../../atom/common/isModalOpen";
-import { endOfMonth, endOfWeek, startOfMonth, startOfWeek, addDays, isSameDay } from "date-fns";
-import useGetTeacherSchedule from "../../../hooks/useGetTeacherSchedule";
+import useGetScheduleByUser from "../../../hooks/useGetScheduleByUser";
 
 import ChangeModal from "./ChangeModal";
 import DayItemchange from "./DayItemchange";
-interface DaysProp {
-  currentMonth: Date;
-}
+import { DaysProp } from "../../../type/calendar/daysPropsType";
 
 export default function Days(props: DaysProp) {
   const { currentMonth } = props;
@@ -18,8 +16,10 @@ export default function Days(props: DaysProp) {
   const startDate = startOfWeek(monthStart);
   const endDate: Date = endOfWeek(monthEnd);
   const [openModal, setOpenModal] = useRecoilState<boolean>(isModalOpen);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const { scheduleList } = useGetTeacherSchedule();
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const formattedMonth = `${currentMonth.getFullYear()}-${String(currentMonth.getMonth() + 1).padStart(2, "0")}`;
+
+  const { isUserSchedule } = useGetScheduleByUser(formattedMonth);
 
   const rows: React.ReactNode[] = [];
   let days: React.ReactNode[] = [];
@@ -27,7 +27,7 @@ export default function Days(props: DaysProp) {
 
   while (day <= endDate) {
     for (let i = 0; i < 7; i++) {
-      const myLessons = scheduleList.find((item) => isSameDay(new Date(item.date), day));
+      const myLessons = isUserSchedule?.find((item) => isSameDay(new Date(item.date), day));
       days.push(
         <DayItemchange
           setOpenModal={setOpenModal}
@@ -43,7 +43,7 @@ export default function Days(props: DaysProp) {
         rows.push(
           <WeekWrapper key={day.toString()}>
             <DivideLine />
-            <DayWrapper>{days}</DayWrapper>
+            <DayWrapper>{[...days]}</DayWrapper>
           </WeekWrapper>,
         );
       }
@@ -55,10 +55,10 @@ export default function Days(props: DaysProp) {
   return (
     <>
       <DaysWrapper>
-        {rows}
+        {[...rows]}
         {openModal && selectedDate && (
           <ModalWrapper>
-            <ChangeModal selectedDate={selectedDate} setOpenModal={setOpenModal} />
+            <ChangeModal formattedMonth={formattedMonth} selectedDate={selectedDate} setOpenModal={setOpenModal} />
           </ModalWrapper>
         )}
       </DaysWrapper>
@@ -101,6 +101,6 @@ const ModalWrapper = styled.section`
   display: flex;
   position: absolute;
 
-  margin-top: -12rem;
+  margin-top: -10.6rem;
   margin-left: -0.4rem;
 `;

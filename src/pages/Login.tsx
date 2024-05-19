@@ -1,10 +1,15 @@
+import { Navigate } from "react-router-dom";
 import { styled } from "styled-components";
+import AccountManaging from "../components/login/AccountManaging";
 import LoginHeader from "../components/login/LoginHeader";
 import LoginInput from "../components/login/LoginInput";
-import LoginButton from "../components/login/LoginButton";
-import AccountManaging from "../components/login/AccountManaging";
+import { isGuest } from "../utils/common/isLogined";
 
 export default function Login() {
+  if (!isGuest) {
+    return <Navigate to="/home" replace />;
+  }
+
   return (
     <>
       <Container>

@@ -4,17 +4,19 @@ import BasicDoubleModal from "../common/BasicDoubleModal";
 
 interface AccountDeleteModalProps {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsCheckingDeleteAccount: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function AccountDeleteModal(props: AccountDeleteModalProps) {
-  const { setOpenModal } = props;
+  const { setOpenModal, setIsCheckingDeleteAccount } = props;
 
   function handleBacktoMypage() {
     setOpenModal(false);
+    setIsCheckingDeleteAccount(false);
   }
 
   function handleDelteAccount() {
-    //로그아웃로직
+    //계정 삭제 로직
   }
 
   return (

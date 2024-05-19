@@ -1,15 +1,14 @@
-import { DEEFAULT_STUDENT_COLOR, STUDENT_COLOR } from "../../core/common/studentColor";
-import { studentNameSelector, subjectNameSelector } from "../../atom/common/datePicker";
-
-import React from "react";
-import { RegularLessonStudentIc } from "../../assets";
-import SubjectLabel from "../common/SubjectLabel";
 import styled from "styled-components";
+import { STUDENT_COLOR } from "../../core/common/studentColor";
+
 import { useRecoilValue } from "recoil";
+import { RegularLessonStudentIc } from "../../assets";
+import { editLessonIdxState } from "../../atom/EditSchedule/editLessonIdx";
+import { editSchedule } from "../../atom/EditSchedule/editSchedule";
 
 export default function StudentInformation() {
-  const studentName = useRecoilValue(studentNameSelector);
-  const subjectName = useRecoilValue(subjectNameSelector);
+  const { studentName, subject, idx } = useRecoilValue(editSchedule);
+  const lessonIdx = useRecoilValue(editLessonIdxState);
 
   return (
     <StudentInformationWrapper>
@@ -19,7 +18,7 @@ export default function StudentInformation() {
       </IconWrapper>
       <StudentWrapper>
         <StudentName> {studentName} </StudentName>
-        <SubjectLabel subject={subjectName} backgroundColor={DEEFAULT_STUDENT_COLOR} color="#5B6166" />
+        <ModalSubject $backgroundcolor={STUDENT_COLOR[lessonIdx % 10]}>{subject}</ModalSubject>
       </StudentWrapper>
     </StudentInformationWrapper>
   );
@@ -66,4 +65,18 @@ const StudentName = styled.h2`
 
   ${({ theme }) => theme.fonts.body01};
   color: ${({ theme }) => theme.colors.grey700};
+`;
+
+const ModalSubject = styled.span<{ $backgroundcolor: string }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 1.6rem;
+  padding: 0.2rem 0.6rem;
+
+  background-color: ${(props) => props.$backgroundcolor};
+  ${({ theme }) => theme.fonts.caption01};
+  color: ${({ theme }) => theme.colors.grey500};
+  border-radius: 0.8rem;
 `;

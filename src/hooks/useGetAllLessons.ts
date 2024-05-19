@@ -1,8 +1,13 @@
-import { GET_LESSON_BY_TEACHER } from "../core/manageLesson/getLessonByTeacher";
+import { useQuery } from "react-query";
+import { getLessonByTeacher } from "../api/getLessonByTeacher";
 
 export default function useGetAllLessons() {
   //   api 패칭
-  const { lessonList } = GET_LESSON_BY_TEACHER?.data;
+  const { data: lessonList } = useQuery(["lessonByTeacher"], getLessonByTeacher, {
+    onError: (err) => {
+      console.log(err);
+    },
+  });
 
   return { lessonList };
 }

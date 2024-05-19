@@ -5,7 +5,7 @@ export default function NoDeposit() {
   return (
     <NoDepositWrapper>
       <NoDepositTitle>아직 등록된 입금이 없어요</NoDepositTitle>
-      <NoDepositSubTitle>수업 출결을 등록하고 열매를 수확하세요</NoDepositSubTitle>
+      <NoDepositSubTitle>수업 출결을 등록하고 결실을 수확하세요</NoDepositSubTitle>
       <EmptyDepositIcon />
     </NoDepositWrapper>
   );

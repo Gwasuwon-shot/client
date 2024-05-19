@@ -1,32 +1,54 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { ko } from "date-fns/locale";
 import { format, isSameDay } from "date-fns";
+import { ko } from "date-fns/locale";
+import { useEffect, useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
+import styled from "styled-components";
+import { deleteSchedule } from "../../../api/calendar/deleteSchedule";
+import { removeTrashCan } from "../../../assets";
 import { STUDENT_COLOR } from "../../../core/common/studentColor";
-import { useNavigate } from "react-router-dom";
+import useGetScheduleByUser from "../../../hooks/useGetScheduleByUser";
+import useModal from "../../../hooks/useModal";
+import { modalType } from "../../../type/calendar/modalType";
+import { BasicDoubleModal } from "../../common";
 import StudentColorBox from "../../common/StudentColorBox";
 import ToastModal from "../../common/ToastModal";
-import useGetTeacherSchedule from "../../../hooks/useGetTeacherSchedule";
-
-import { EditPencilIc, removeTrashCan } from "../../../assets";
-import { modalType } from "../../../type/calendar/modalType";
+import EditScheduleButton from "./EditScheduleButton";
 
 export default function ChangeModal(props: modalType) {
-  const { selectedDate, setOpenModal } = props;
-  const { scheduleList } = useGetTeacherSchedule();
-  const navigate = useNavigate();
+  const { selectedDate, setOpenModal, formattedMonth } = props;
+  const WEEKDAY: string[] = ["일", "월", "화", "수", "목", "금", "토"]; //TODO 이거 함수로 빼기
+  const { isUserSchedule } = useGetScheduleByUser(formattedMonth);
+  const queryClient = useQueryClient();
+  const { unShowModal } = useModal();
 
+  const [modalOn, setModalOn] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [modalContents, setModalContents] = useState({
+    year: selectedDate.getFullYear(),
+    month: selectedDate.getMonth() + 1,
+    day: selectedDate.getDate(),
+    dayOfWeekKor: WEEKDAY[selectedDate.getDay()],
+    startTime: "",
+    endTime: "",
+    studentName: "",
+    subject: "",
+    scheduleIdx: 0,
+  });
+
+  const { mutate: deleteScheduleStatus } = useMutation(() => deleteSchedule(modalContents.scheduleIdx), {
+    onSuccess: () => {
+      queryClient.refetchQueries("getScheduleByUser");
+      setModalOn(false);
+      unShowModal();
+    },
+    onError: () => {
+      alert("일정 삭제에 실패했습니다.");
+    },
+  });
 
   function handleCloseButton() {
-    //update 로직 추가
     setOpenModal(false);
     setIsEdit(false);
-  }
-
-  function moveClickEditPage() {
-    //params 추가
-    navigate("/change-lessonschedule");
   }
 
   function handleClickEdit() {
@@ -35,6 +57,23 @@ export default function ChangeModal(props: modalType) {
 
   return (
     <>
+      {modalOn && (
+        <ConfirmModalWrapper>
+          <BasicDoubleModal
+            leftButtonName="취소"
+            rightButtonName="삭제"
+            handleClickLeftButton={() => setModalOn(false)}
+            handleClickRightButton={() => deleteScheduleStatus()}>
+            <ContentWrapper>
+              {modalContents.year}년 {modalContents.month}월 {modalContents.day}일 {modalContents.dayOfWeekKor}요일{" "}
+              <br />
+              {modalContents.startTime} - {modalContents.endTime} <br /> {modalContents.studentName}(
+              {modalContents.subject}
+              )학생의 수업 일정을 <br /> 삭제할까요?
+            </ContentWrapper>
+          </BasicDoubleModal>
+        </ConfirmModalWrapper>
+      )}
       <ToastModal>
         <ModalContentWrapper>
           <ModalHeaderWrapper>
@@ -50,29 +89,45 @@ export default function ChangeModal(props: modalType) {
               </ModalButtonWrapper>
             )}
           </ModalHeaderWrapper>
-          {scheduleList
-            .find((item) => isSameDay(new Date(item.date), selectedDate as Date))
+
+          {isUserSchedule
+            ?.find((item) => isSameDay(new Date(item.date), selectedDate as Date))
             ?.dailyScheduleList.map((lesson) => {
-              const { schedule } = lesson;
+              const { schedule, lessonIdx } = lesson;
               const { idx, subject, studentName, startTime, endTime } = schedule;
+              useEffect(() => {
+                setModalContents({
+                  ...modalContents,
+                  startTime: startTime,
+                  endTime: endTime,
+                  studentName: studentName,
+                  subject: subject,
+                  scheduleIdx: idx,
+                });
+              }, []);
 
               return (
                 <ScheduleWrapper key={idx}>
                   <ScheduleContainer>
-                    <StudentColorBox backgroundColor={STUDENT_COLOR[idx % 11]} />
+                    <StudentColorBox backgroundColor={STUDENT_COLOR[lessonIdx % 10]} />
                     <ModalTime>
                       {startTime} - {endTime}
                     </ModalTime>
                     <ModalName>{studentName}</ModalName>
-                    <ModalSubject $backgroundcolor={STUDENT_COLOR[idx % 11]}>{subject}</ModalSubject>
+                    <ModalSubject $backgroundcolor={STUDENT_COLOR[lessonIdx % 10]}>{subject}</ModalSubject>
                   </ScheduleContainer>
 
-                  {isEdit ? (
+                  {isEdit && (
                     <ScheduleEditWrapper>
-                      <EditScheduleButton onClick={moveClickEditPage} />
-                      <RemoveSchedule />
+                      <EditScheduleButton
+                        lessonIdx={lessonIdx}
+                        schedule={schedule}
+                        selectedDate={selectedDate}
+                        idx={idx}
+                      />
+                      <RemoveSchedule onClick={() => setModalOn(true)} />
                     </ScheduleEditWrapper>
-                  ) : undefined}
+                  )}
                 </ScheduleWrapper>
               );
             })}
@@ -92,16 +147,11 @@ const ModalHeaderWrapper = styled.div`
 const ModalButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
-
-  width: 6.2rem;
-
   gap: 1.2rem;
 `;
 
 const ModalButton = styled.button`
-  display: felx;
-
-  ${({ theme }) => theme.fonts.body02};
+  display: flex;
   color: ${({ theme }) => theme.colors.grey400};
 `;
 
@@ -111,6 +161,7 @@ const ModalContentWrapper = styled.article`
   flex-direction: column;
 
   width: 29.2rem;
+  margin-bottom: 2rem;
   height: auto;
   gap: 1.4rem;
 `;
@@ -156,12 +207,12 @@ const ModalSubject = styled.span<{ $backgroundcolor: string }>`
   background-color: ${(props) => props.$backgroundcolor};
   ${({ theme }) => theme.fonts.caption01};
   color: ${({ theme }) => theme.colors.grey500};
-  border-radius: 8px;
+  border-radius: 0.8rem;
 `;
 
-const EditScheduleButton = styled(EditPencilIc)`
-  width: 1.6rem;
-  height: 1.6rem;
+const ScheduleEditWrapper = styled.div`
+  display: flex;
+  gap: 0.6rem;
 `;
 
 const RemoveSchedule = styled(removeTrashCan)`
@@ -169,6 +220,12 @@ const RemoveSchedule = styled(removeTrashCan)`
   height: 1.6rem;
 `;
 
-const ScheduleEditWrapper = styled.div`
-  display: felx;
+const ContentWrapper = styled.div`
+  text-align: center;
+`;
+
+const ConfirmModalWrapper = styled.div`
+  width: 100vw;
+  height: 100%;
+  position: absolute;
 `;

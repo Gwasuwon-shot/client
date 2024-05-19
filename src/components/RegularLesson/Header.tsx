@@ -1,40 +1,60 @@
-import {RegisterLessonHeaderIc} from '../../assets';
-import { TuticeWithTextCommonIc } from "../../assets";
-import styled from 'styled-components';
+import { dayState, firstLessonDay, focusDayState } from "../../atom/timePicker/timePicker";
+
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import styled from "styled-components";
+import CustomBackButton from "../common/CustomBackButton";
+import ProgressBar from "../common/ProgressBar";
 
 export default function Header() {
+  const [firstLesson, setfirstLesson] = useRecoilState(firstLessonDay);
 
-    return (
+  const [focusDay, setFocusDay] = useRecoilState(focusDayState);
+  const [day, setDayState] = useRecoilState(dayState);
+  const navigate = useNavigate();
 
-        <HeaderWrapper>
-            <RegisterLessonHeaderIcon />
-            <HeaderName> 정기수업 일정 등록 </HeaderName>
-        </HeaderWrapper>
+  function handleMoveToBack() {
+    if (firstLesson) {
+      setDayState([{ dayOfWeek: firstLesson, startTime: "12:00", endTime: "12:00" }]);
+    }
+    setFocusDay("");
+    navigate(-1);
+  }
 
-    );
+  return (
+    <HeaderWrapper>
+      <CustomBackButton onClick={handleMoveToBack} />
+      <ProgressBar progress={66.4} />
+      <InputHeader>정기적인 수업 일정을 알려주세요!</InputHeader>
+      <InputNotice>첫 수업일을 기준으로 수업 일정을 캘린더에 표시해 드릴게요</InputNotice>
+    </HeaderWrapper>
+  );
 }
 
 const HeaderWrapper = styled.header`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    position: relative;
-    
-    height: 5rem;
-    border-bottom: 1px solid ${({ theme }) => theme.colors.grey50}
-`
+  display: flex;
+  flex-direction: column;
 
-const HeaderName = styled.h1`
-    display: flex;
-    
-    ${({ theme }) => theme.fonts.body01};
-    color: ${({ theme }) => theme.colors.grey900};
-`
-const RegisterLessonHeaderIcon = styled(RegisterLessonHeaderIc)`
-    position: absolute;
-    top: 0.8rem;
-    left: 0rem;
-    width: 4rem;
-    height: 4rem;
+  margin-bottom: 4.1rem;
+  margin-top: 2rem;
+`;
+
+const InputHeader = styled.h1`
+  display: flex;
+
+  margin-top: 2.2rem;
+  margin-left: 1.6rem;
+
+  ${({ theme }) => theme.fonts.title01};
+  color: ${({ theme }) => theme.colors.grey900};
+`;
+
+const InputNotice = styled.h2`
+  display: flex;
+
+  margin-top: 1.1rem;
+  margin-left: 1.6rem;
+
+  ${({ theme }) => theme.fonts.body05};
+  color: ${({ theme }) => theme.colors.grey600};
 `;

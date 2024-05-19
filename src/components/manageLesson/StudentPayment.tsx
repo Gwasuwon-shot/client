@@ -1,7 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { styled } from "styled-components";
-import { RegisterPaymentManageLessonIc, SendPaymentAlarmManageLessonIc } from "../../assets";
-import { PAYMENT_STATUS_IMAGE } from "../../core/manageLesson/paymentStatusImage";
+import {
+  GreyFruitPaymentIc,
+  RedFruitPaymentIc,
+  RegisterPaymentManageLessonIc,
+  SendPaymentAlarmManageLessonIc,
+} from "../../assets";
 import useModal from "../../hooks/useModal";
 
 interface StudentPaymentProps {
@@ -10,29 +14,31 @@ interface StudentPaymentProps {
   amount: number;
   status: boolean;
   count: number;
+  setPayMentAlarmOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function StudentPayment(props: StudentPaymentProps) {
-  const { idx, date, amount, status, count } = props;
+  const { idx, date, amount, status, count, setPayMentAlarmOpen } = props;
   const { showModal } = useModal();
   const navigate = useNavigate();
   const { manageLessonId } = useParams();
 
   function handleMoveToRegisterPayment() {
-    navigate(`/register-payment/${manageLessonId}`);
+    navigate(`/register-payment/${manageLessonId}`, { state: { paymentIdx: idx, count: count } });
+  }
+
+  function handleShowDoubleCheckModal() {
+    setPayMentAlarmOpen(true);
+    showModal();
   }
 
   return (
     <StudentPaymentBox>
-      {status ? (
-        <img src={PAYMENT_STATUS_IMAGE.done} alt="입금 완료 열매" />
-      ) : (
-        <img src={PAYMENT_STATUS_IMAGE.notYet} alt="입금 미완료 열매" />
-      )}
+      {status ? <RedFruitPaymentIcon /> : <GreyFruitPaymentIcon />}
       <NumberWrapper>
-        <FruitCount>{count}번째 열매</FruitCount>
+        <FruitCount>{count}번째 결실</FruitCount>
         <Date>
-          {new window.Date(date).getMonth() + 1}월 {new window.Date(date).getDate() + 1}일
+          {new window.Date(date).getMonth() + 1}월 {new window.Date(date).getDate()}일
         </Date>
       </NumberWrapper>
       <Payment>
@@ -40,7 +46,7 @@ export default function StudentPayment(props: StudentPaymentProps) {
           <Amount>{amount.toLocaleString()}</Amount>
         ) : (
           <>
-            <SendPaymentAlarmManageLessonIcon onClick={showModal} />
+            <SendPaymentAlarmManageLessonIcon onClick={handleShowDoubleCheckModal} />
             <RegisterPaymentManageLessonIcon onClick={handleMoveToRegisterPayment} />
           </>
         )}
@@ -48,6 +54,14 @@ export default function StudentPayment(props: StudentPaymentProps) {
     </StudentPaymentBox>
   );
 }
+
+const RedFruitPaymentIcon = styled(RedFruitPaymentIc)`
+  width: 4.4rem;
+`;
+
+const GreyFruitPaymentIcon = styled(GreyFruitPaymentIc)`
+  width: 4.4rem;
+`;
 
 const Payment = styled.div`
   display: flex;
@@ -85,6 +99,7 @@ const FruitCount = styled.p`
 
 const SendPaymentAlarmManageLessonIcon = styled(SendPaymentAlarmManageLessonIc)`
   width: 5.5rem;
+  height: 2.9rem;
   margin-right: 1rem;
 
   cursor: pointer;
@@ -92,6 +107,7 @@ const SendPaymentAlarmManageLessonIcon = styled(SendPaymentAlarmManageLessonIc)`
 
 const RegisterPaymentManageLessonIcon = styled(RegisterPaymentManageLessonIc)`
   width: 5.5rem;
+  height: 2.9rem;
   cursor: pointer;
 `;
 

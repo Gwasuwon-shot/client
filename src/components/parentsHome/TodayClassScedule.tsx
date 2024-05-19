@@ -1,7 +1,7 @@
-import React from "react";
 import { styled } from "styled-components";
-import SubjectLabel from "../common/SubjectLabel";
 import { STUDENT_COLOR } from "../../core/common/studentColor";
+import SubjectLabel from "../common/SubjectLabel";
+import StudentColorBox from "../common/StudentColorBox";
 
 interface TodayClassSceduleProps {
   studentName: string;
@@ -17,57 +17,67 @@ export default function TodayClassScedule(props: TodayClassSceduleProps) {
 
   return (
     <TodayClassScheduleWrapper>
-      <ClassScheduleMark backgroundColor={STUDENT_COLOR[classCount % 11]} />
-      <ClassTime>
-        {startTime} ~ {endTime}
-      </ClassTime>
-      <StudentName>{studentName}</StudentName>
-      <SubjectLabel subject={subject} backgroundColor={STUDENT_COLOR[classCount % 11]} color="#5B6166" />
-      <TeacherName>{teacherName} 선생님</TeacherName>
+      <TodayClassContainer>
+        <ClassInfo>
+          <StudentColorBox backgroundColor={STUDENT_COLOR[classCount % 11]} />
+          <ClassTime>
+            {startTime} ~ {endTime}
+          </ClassTime>
+          <StudentName>{studentName}</StudentName>
+          <SubjectLabel subject={subject} backgroundColor={STUDENT_COLOR[classCount % 11]} color="#5B6166" />
+          <TeacherName>{teacherName} 선생님</TeacherName>
+        </ClassInfo>
+      </TodayClassContainer>
     </TodayClassScheduleWrapper>
   );
 }
 
 const TodayClassScheduleWrapper = styled.article`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 
   width: 29.2rem;
   height: 6rem;
   margin: 0.9rem auto 0 auto;
+  padding-left: 1.4rem;
 
   border-radius: 0.8rem;
-
   border: 1px solid ${({ theme }) => theme.colors.grey100};
 `;
 
-const ClassScheduleMark = styled.div<{ backgroundColor: string }>`
-  width: 1.3rem;
+const TodayClassContainer = styled.div`
+  display: flex;
   height: 3.6rem;
-  margin-right: 1.8rem;
-
-  border-radius: 0.2rem;
-
-  background-color: ${(props) => props.backgroundColor};
-  color: ${({ theme }) => theme.colors.grey900};
+  gap: 1.8rem;
 `;
 
-const ClassTime = styled.time`
-  ${({ theme }) => theme.fonts.body05};
+const ClassTime = styled.div`
+  display: flex;
+  width: 9rem;
+  padding-left: 1rem;
+  align-items: center;
+  height: 1.4rem;
+  color: ${({ theme }) => theme.colors.grey600};
 `;
 
 const StudentName = styled.div`
-  margin-right: 0.3rem;
-  margin-left: 1.8rem;
-
+  display: flex;
+  align-items: center;
+  margin-right: 0.6rem;
   ${({ theme }) => theme.fonts.body01};
   color: ${({ theme }) => theme.colors.grey900};
 `;
 
 const TeacherName = styled.div`
-  margin-left: 0.6rem;
-
+  margin-left: 0.5rem;
+  width: 8rem;
   ${({ theme }) => theme.fonts.body04};
   color: ${({ theme }) => theme.colors.grey600};
+`;
+
+const ClassInfo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;

@@ -1,75 +1,104 @@
+import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
-import { NextArrowManageLessonIc } from "../../assets";
+import { ManageLessonEditIc } from "../../assets";
+import { attendanceLesson } from "../../atom/attendanceCheck/attendanceLesson";
 import { STUDENT_COLOR } from "../../core/common/studentColor";
 import useMoveToLessonDetail from "../../hooks/useMoveToLessonDetail";
-import StudentColorBox from "../common/StudentColorBox";
+import { latestRegularScheduleType } from "../../type/manageLesson/lessonListType";
 import SubjectLabel from "../common/SubjectLabel";
-import TreeProgress from "../common/TreeProgress";
+import MainLessonsProgressBar from "./MainLessonsProgressBar";
+import ManageStudentColorBox from "./ManageStudentColorBox";
 
 interface MainLessonProps {
   idx: number;
   studentName: string;
   subject: string;
   percent: number;
-  dayOfWeekList: string[];
+  isClickedEdit: boolean;
+  handleConfirmDeleteLesson: () => void;
+  latestRegularSchedule: latestRegularScheduleType;
 }
 
 export default function MainLesson(props: MainLessonProps) {
-  const { idx, studentName, subject, percent, dayOfWeekList } = props;
+  const { handleConfirmDeleteLesson, idx, studentName, subject, percent, latestRegularSchedule, isClickedEdit } = props;
+  const { dayOfWeek, startTime, endTime } = latestRegularSchedule;
   const { handleMoveToManageLessonDetail } = useMoveToLessonDetail();
+  const [deleteConfirmLesson, setDeleteConfirmLesson] = useRecoilState(attendanceLesson);
 
-  function checkIsLastDay(idx: number, day: string) {
-    return idx + 1 === dayOfWeekList.length ? day : day + ", ";
+  function handleClickedDeleteButton() {
+    handleConfirmDeleteLesson();
+    setDeleteConfirmLesson({ ...deleteConfirmLesson, lessonIdx: idx });
   }
 
   return (
-    <MainLessonBox onClick={() => handleMoveToManageLessonDetail(idx)}>
-      <MainLessonWrapperContainer>
-        <MainLessonWrapper>
-          <StudentColorBox backgroundColor={STUDENT_COLOR[idx % 11]} />
-          <StudentNameWrapper>{studentName}</StudentNameWrapper>
-          <SubjectLabel subject={subject} backgroundColor={STUDENT_COLOR[idx % 11]} color="#5B6166" />
+    <LessonIndividualContainer>
+      {isClickedEdit && <ManageLessonEditButton onClick={() => handleClickedDeleteButton()} />}
+      <MainLessonBox onClick={() => handleMoveToManageLessonDetail(idx)}>
+        <MainLessonWrapperContainer>
+          <MainLessonWrapper>
+            <ManageStudentColorBox backgroundColor={STUDENT_COLOR[idx % 10]} />
+            <StudentNameWrapper>{studentName}</StudentNameWrapper>
+            <SubjectLabel subject={subject} backgroundColor={STUDENT_COLOR[idx % 10]} color="#5B6166" />
+          </MainLessonWrapper>
           <DaysWrapper>
-            {dayOfWeekList.map((day, idx) => (
-              <>{checkIsLastDay(idx, day)}</>
-            ))}
+            <LessonInformation>진행예정</LessonInformation>
+            <DayOfWeekWrapper>
+              <p>{dayOfWeek}</p>
+              <p>
+                {startTime} - {endTime}
+              </p>
+            </DayOfWeekWrapper>
           </DaysWrapper>
-        </MainLessonWrapper>
-        <TreeProgress progress={percent} width={23} />
-      </MainLessonWrapperContainer>
-      <NextArrowManageLessonIcon />
-    </MainLessonBox>
+          <MainLessonsProgressBar progress={percent} />
+        </MainLessonWrapperContainer>
+      </MainLessonBox>
+    </LessonIndividualContainer>
   );
 }
+
+const LessonIndividualContainer = styled.article`
+  position: relative;
+  height: 15.1rem;
+  display: flex;
+`;
 
 const MainLessonBox = styled.article`
   display: flex;
   align-items: center;
 
   padding: 1rem;
-  margin-bottom: 1rem;
 
   border: 1px solid ${({ theme }) => theme.colors.grey70};
-  border-radius: 8px;
+  border-radius: 0.8rem;
+
+  width: 14rem;
+  height: 14.4rem;
+
+  margin-top: 0.8rem;
 `;
 
 const MainLessonWrapper = styled.div`
   display: flex;
   align-items: center;
-
-  margin-bottom: 1.2rem;
+  width: 11.6rem;
+  height: 1.6rem;
+  margin-bottom: 1.4rem;
+  gap: 0.7rem;
+  margin-left: 1.2rem;
 `;
 
 const StudentNameWrapper = styled.h1`
-  margin: 0 0.6rem 0 1.5rem;
-
   color: ${({ theme }) => theme.colors.grey900};
   ${({ theme }) => theme.fonts.body01};
 `;
 
-const DaysWrapper = styled.p`
-  margin-left: 1.5rem;
-
+const DaysWrapper = styled.div`
+  margin-left: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.4rem;
+  width: 11.6rem;
+  gap: 0.6rem;
   color: ${({ theme }) => theme.colors.grey600};
   ${({ theme }) => theme.fonts.body05};
 `;
@@ -81,6 +110,22 @@ const MainLessonWrapperContainer = styled.section`
   width: 23rem;
 `;
 
-const NextArrowManageLessonIcon = styled(NextArrowManageLessonIc)`
-  margin-left: 2rem;
+const LessonInformation = styled.h2`
+  ${({ theme }) => theme.fonts.body04};
+  color: ${({ theme }) => theme.colors.grey500};
+`;
+
+const DayOfWeekWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem ${({ theme }) => theme.colors.grey900};
+`;
+
+const ManageLessonEditButton = styled(ManageLessonEditIc)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
 `;

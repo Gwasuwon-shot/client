@@ -1,6 +1,6 @@
-export const SLIDER_SETTINGS = {
+export const SLIDER_SETTING = {
   dots: true,
-  infinite: true,
+  infinite: false,
   slidesToShow: 1,
   slidesToScroll: 1,
   speed: 600,

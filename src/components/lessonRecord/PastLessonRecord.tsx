@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { css, styled } from "styled-components";
 
 interface PastLessonRecordProps {
   date: string;
   startTime: string;
   endTime: string;
+  status: string;
+  count: number;
 }
 
 export default function PastLessonRecord(props: PastLessonRecordProps) {
-  const [attendance, setAttandance] = useState("");
-  const { date, startTime, endTime } = props;
+  const { date, startTime, endTime, status, count } = props;
+  const { lessonId } = useParams();
 
   //커스텀 훅에서 scheduleList에 status="상태없음"이 있으면 그 객체 빼고 return하게 filtering하기
   //status
@@ -23,13 +25,15 @@ export default function PastLessonRecord(props: PastLessonRecordProps) {
         {month}.{day}
       </DateWrapper>
       <LessonInfoWrapper>
-        <LessonCount>3회차 수업</LessonCount>
+        <LessonCount>{count}회차 수업</LessonCount>
         <LessonTime>
           {startTime}~{endTime}
         </LessonTime>
       </LessonInfoWrapper>
 
-      <AttendanceWrapper attendance={"결석"}>결석</AttendanceWrapper>
+      <AttendanceWrapper>
+        <AttendanceStatus attendance={status}>{status}</AttendanceStatus>
+      </AttendanceWrapper>
     </PastLessonRecordWrapper>
   );
 }
@@ -67,8 +71,6 @@ const LessonInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-
-  margin-right: 1.4rem;
 `;
 
 const LessonCount = styled.p`
@@ -81,13 +83,17 @@ const LessonTime = styled.time`
   color: ${({ theme }) => theme.colors.grey600};
 `;
 
-const AttendanceWrapper = styled.p<{ attendance: string }>`
-  width: 2.6rem;
+const AttendanceWrapper = styled.div`
+  width: 10rem;
 
   margin-left: 12.3rem;
 
   ${({ theme }) => theme.fonts.body01};
   color: ${({ theme }) => theme.colors.grey900};
+`;
+
+const AttendanceStatus = styled.p<{ attendance: string }>`
+  text-align: center;
 
   ${({ attendance }) =>
     attendance === "출석"

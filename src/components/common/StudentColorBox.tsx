@@ -16,5 +16,5 @@ const ColorBox = styled.label<{ $backgroundColor: string }>`
   height: 3.6rem;
 
   background-color: ${({ $backgroundColor }) => $backgroundColor};
-  border-radius: 2px;
+  border-radius: 0.2rem;
 `;

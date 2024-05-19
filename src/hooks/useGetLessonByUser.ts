@@ -1,19 +1,14 @@
-import { useState } from "react";
 import { useQuery } from "react-query";
 import { getLessonByUser } from "../api/getLessonByUser";
 
 export default function useGetLessonByUser() {
-  const [isLessonExist, setIsLessonExist] = useState<boolean>();
-
-  const { data: lessonByUser } = useQuery(["getLessonByUser"], getLessonByUser, {
-    onSuccess: (response) => {
-      setIsLessonExist(response.data.isLesson);
-    },
+  const { data } = useQuery(["getLessonByUser"], getLessonByUser, {
     onError: (error) => {
       console.log(error);
     },
-    staleTime: 300000,
   });
+  const isLesson = data?.isLesson;
+  const userName = data?.userName;
 
-  return { isLessonExist };
+  return { isLesson, userName };
 }

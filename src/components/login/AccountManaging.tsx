@@ -1,15 +1,20 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
 export default function AccountManaging() {
+  const navigate = useNavigate();
+
+  function handleOnSignUp() {
+    navigate("/signup");
+  }
   return (
     <Container>
       <TextWrapper>
-        <AText>아이디 찾기</AText>
+        <Text>아이디 찾기</Text>
         <VerticalLine />
-        <AText>비밀번호 찾기</AText>
+        <Text>비밀번호 찾기</Text>
         <VerticalLine />
-        <AText>회원가입</AText>
+        <Text onClick={handleOnSignUp}>회원가입</Text>
       </TextWrapper>
     </Container>
   );
@@ -34,6 +39,6 @@ const VerticalLine = styled.div`
   border-right: 0.0725px solid ${({ theme }) => theme.colors.grey300};
 `;
 
-const AText = styled.p`
+const Text = styled.p`
   margin: 0 0.8rem;
 `;

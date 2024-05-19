@@ -1,40 +1,104 @@
 import { useState } from "react";
-import { styled } from "styled-components";
-import useManageLesson from "../../hooks/useManageLesson";
-import useModal from "../../hooks/useModal";
+import { useParams } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import styled from "styled-components";
+import { attendanceLesson } from "../../atom/attendanceCheck/attendanceLesson";
+import { isModalOpen } from "../../atom/common/isModalOpen";
+import useOrderedSchedules from "../../hooks/attandanceInforms/useOrderedSchedules";
+import useGetCanceledScheduleByLesson from "../../hooks/manageLessons/useGetCanceledScheduleByLesson";
+import useGetLessonSchedule from "../../hooks/useGetLessonSchedule";
+import { ScheduleListType } from "../../type/manageLesson/scheduleListType";
 import AttendanceCheckModal from "../common/AttendanceCheckModal";
+import AttendanceDoubleCheckingModal from "../common/AttendanceDoubleCheckingModal";
+import CancelImpossibleModal from "../modal/CanceImpossibleModal";
 import AttendanceInform from "./AttendanceInform";
 
-export default function AttendanceList() {
-  const { scheduleList } = useManageLesson();
-  const { modalRef, closeModal, unShowModal, showModal, openModal } = useModal();
-  const [issCheckingModalOpen, setIsCheckingModalOpen] = useState(false);
+interface scheduleListType {
+  idx: number;
+  date: string;
+  status: string;
+  startTime: string;
+  endTime: string;
+}
 
-  function handleMoveToAttendanceCheck() {
-    showModal();
+export default function AttendanceInforms() {
+  const { manageLessonId } = useParams();
+
+  const [isCheckingModalOpen, setIsCheckingModalOpen] = useState(false);
+  const [isCancelImpossibleModalOpen, setIsCancelImpossibleModalOpen] = useState(false);
+  const [isUpdateOpen, setIsUpdateOpen] = useState(false);
+
+  const openModal = useRecoilValue<boolean>(isModalOpen);
+  const selectedLesson = useRecoilValue(attendanceLesson);
+
+  const { scheduleList } = useGetLessonSchedule(Number(manageLessonId));
+  const { cancelScheduleList } = useGetCanceledScheduleByLesson(Number(manageLessonId));
+  const { orderedSchedules, combinedClasses } = useOrderedSchedules(cancelScheduleList, scheduleList);
+
+  function handleCloseCancelImpossibleModal() {
+    setIsCancelImpossibleModalOpen(false);
+  }
+
+  function checkScheduleListExist() {
+    return scheduleList?.length != 0;
+  }
+
+  function handleUpdateChange() {
+    setIsUpdateOpen((iuo) => !iuo);
   }
 
   return (
     <>
-      <ModalWrapper>
-        {openModal && <AttendanceCheckModal setIsCheckingModalOpen={setIsCheckingModalOpen} />}
-      </ModalWrapper>
+      {openModal && selectedLesson && (
+        <ModalSection $isCheckingModalOpen={isCheckingModalOpen}>
+          <AttendanceCheckModal setIsCheckingModalOpen={setIsCheckingModalOpen} isUpdateOpen />
+        </ModalSection>
+      )}
+
+      {openModal && isCheckingModalOpen && (
+        <ModalSection $isCheckingModalOpen={isCheckingModalOpen}>
+          <AttendanceDoubleCheckingModal setIsCheckingModalOpen={setIsCheckingModalOpen} />
+        </ModalSection>
+      )}
+      {isCancelImpossibleModalOpen && (
+        <CancelImpossibleModalWrapper>
+          <CancelImpossibleModal handleCloseCancelImpossibleModal={handleCloseCancelImpossibleModal} />
+        </CancelImpossibleModalWrapper>
+      )}
+
       <GreyBox />
-      <ScheduleWrapper>
-        {scheduleList.map(({ idx, date, status, startTime, endTime }, index) => (
-          <AttendanceInform
-            key={idx}
-            date={date}
-            status={status}
-            startTime={startTime}
-            endTime={endTime}
-            count={Math.abs(index - scheduleList.length)}
-          />
-        ))}
-      </ScheduleWrapper>
+      <UpdateToggle onClick={handleUpdateChange}>{!isUpdateOpen ? "수정" : "취소"}</UpdateToggle>
+      {checkScheduleListExist() ? (
+        <ScheduleWrapper>
+          {combinedClasses?.map(({ idx, date, status, startTime, endTime }: ScheduleListType, index: number) => (
+            <AttendanceInform
+              key={idx}
+              date={date}
+              status={status}
+              startTime={startTime}
+              endTime={endTime}
+              count={orderedSchedules[index]}
+              lessonIdx={idx}
+              scheduleIdx={idx}
+              setIsCancelImpossibleModalOpen={setIsCancelImpossibleModalOpen}
+              isUpdateOpen={isUpdateOpen}
+            />
+          ))}
+        </ScheduleWrapper>
+      ) : (
+        <EmptyLesson> 아직 등록된 출결이 없어요</EmptyLesson>
+      )}
     </>
   );
 }
+
+const UpdateToggle = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 2.3rem;
+  color: ${({ theme }) => theme.colors.grey500};
+  ${({ theme }) => theme.fonts.body02};
+`;
 
 const GreyBox = styled.div`
   width: 32rem;
@@ -44,14 +108,27 @@ const GreyBox = styled.div`
   background-color: ${({ theme }) => theme.colors.grey50};
 `;
 
-const ModalWrapper = styled.section`
-  position: absolute;
-
-  margin: -20.1rem 0 0 -1.5rem;
+const ScheduleWrapper = styled.section`
+  padding-bottom: 15rem;
 `;
 
-const ScheduleWrapper = styled.section`
-  overflow: scroll;
+const ModalSection = styled.section<{ $isCheckingModalOpen: boolean }>`
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  margin-left: -1.5rem;
+`;
 
-  padding-bottom: 7.2rem;
+const CancelImpossibleModalWrapper = styled.aside`
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  margin-left: -1.5rem;
+`;
+
+const EmptyLesson = styled.h1`
+  color: ${({ theme }) => theme.colors.green5};
+  ${({ theme }) => theme.fonts.title02};
+
+  text-align: center;
 `;

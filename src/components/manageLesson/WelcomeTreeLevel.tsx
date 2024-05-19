@@ -1,9 +1,10 @@
+import { useParams } from "react-router-dom";
 import { styled } from "styled-components";
-import useManageLesson from "../../hooks/useManageLesson";
+import useGetLessonProgress from "../../hooks/useGetLessonProgress";
 
 export default function WelcomeTreeLevel() {
-  const { lesson } = useManageLesson();
-  const { count, nowCount } = lesson;
+  const { manageLessonId } = useParams();
+  const { count, nowCount } = useGetLessonProgress(Number(manageLessonId));
 
   function checkIsLastLesson() {
     return count === nowCount;
@@ -13,18 +14,32 @@ export default function WelcomeTreeLevel() {
     <WelcomeTitle>
       {checkIsLastLesson() ? (
         <>
-          수고했어요 <br /> 열매가 열렸어요!
+          <TitleWrapper>모든 회차가 끝났어요 </TitleWrapper>
+          <TitleWrapper>
+            <StrongText>결실</StrongText>을 수확하세요!
+          </TitleWrapper>
         </>
       ) : (
         <>
-          열매가 열리기 까지 <br /> {count - nowCount}회차 남았습니다
+          <TitleWrapper>결실을 수확하기까지 </TitleWrapper>
+          <TitleWrapper>
+            <StrongText>{count - nowCount}회차&nbsp;</StrongText> 남았습니다
+          </TitleWrapper>
         </>
       )}
     </WelcomeTitle>
   );
 }
 
-const WelcomeTitle = styled.h1`
-  margin-top: 1.6rem;
+const TitleWrapper = styled.div`
+  display: flex;
+`;
+
+const StrongText = styled.p`
   ${({ theme }) => theme.fonts.title02}
+`;
+
+const WelcomeTitle = styled.div`
+  margin-top: 1.6rem;
+  ${({ theme }) => theme.fonts.title03}
 `;

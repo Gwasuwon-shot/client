@@ -1,0 +1,35 @@
+<svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_2741_19853)">
+<mask id="mask0_2741_19853" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="4" y="0" width="10" height="11">
+<ellipse cx="9.33044" cy="5.65242" rx="4.67029" ry="4.67024" fill="#757A80"/>
+</mask>
+<g mask="url(#mask0_2741_19853)">
+<ellipse cx="9.33044" cy="5.65242" rx="4.67029" ry="4.67024" fill="#757A80"/>
+<ellipse cx="9.85074" cy="4.1378" rx="4.46011" ry="4.46007" fill="#5FE1B7"/>
+<ellipse opacity="0.8" cx="7.39761" cy="2.54527" rx="4.46011" ry="4.46007" fill="#5FE1B7"/>
+<ellipse opacity="0.8" cx="13.7882" cy="4.39049" rx="4.46011" ry="4.46007" fill="#008B6E"/>
+<ellipse opacity="0.7" cx="9.1207" cy="5.86284" rx="4.88242" ry="4.88237" fill="#02BDA5"/>
+<ellipse opacity="0.8" cx="7.14029" cy="7.38147" rx="2.94107" ry="2.94104" fill="#00CF91"/>
+<ellipse opacity="0.7" cx="10.766" cy="9.24444" rx="3.23471" ry="3.23468" fill="#5FE1B7"/>
+<ellipse opacity="0.8" cx="11.4367" cy="1.19274" rx="4.46011" ry="4.46007" fill="#55DEB2"/>
+<ellipse opacity="0.7" cx="4.46011" cy="4.46007" rx="4.46011" ry="4.46007" transform="matrix(0.997366 -0.072539 0.0725405 0.997365 1.33203 -2.10376)" fill="#008B6E"/>
+<ellipse opacity="0.7" cx="4.46011" cy="4.46007" rx="4.46011" ry="4.46007" transform="matrix(0.997366 -0.072539 0.0725405 0.997365 9.37891 -1.35742)" fill="#008B6E"/>
+<ellipse opacity="0.7" cx="4.46011" cy="4.46007" rx="4.46011" ry="4.46007" transform="matrix(0.997366 -0.072539 0.0725405 0.997365 10.5273 -1.90527)" fill="#008B6E"/>
+<ellipse opacity="0.7" cx="4.46011" cy="4.46007" rx="4.46011" ry="4.46007" transform="matrix(0.997366 -0.072539 0.0725405 0.997365 12.1172 -2.81519)" fill="#008B6E"/>
+</g>
+<mask id="mask1_2741_19853" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="11" width="18" height="7">
+<path d="M9.32812 11.6072C6.49125 11.6072 0.828125 13.0309 0.828125 15.8571V16.9196C0.828125 17.504 1.30625 17.9821 1.89062 17.9821H16.7656C17.35 17.9821 17.8281 17.504 17.8281 16.9196V15.8571C17.8281 13.0309 12.165 11.6072 9.32812 11.6072Z" fill="#757A80"/>
+</mask>
+<g mask="url(#mask1_2741_19853)">
+<rect x="1.04688" y="10.4807" width="18.3958" height="9.99926" fill="#009980"/>
+<rect opacity="0.5" x="-4.92969" y="12.9819" width="18.3958" height="9.99926" fill="#00D6A2"/>
+<rect opacity="0.8" x="-9.06641" y="15.4802" width="18.3958" height="9.99926" rx="4.70558" fill="#5FE1B7"/>
+<rect opacity="0.8" x="10.2461" y="8.6748" width="18.3958" height="9.99926" rx="4.70558" fill="#00CF91"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_2741_19853">
+<rect width="18" height="18" fill="white" transform="translate(0.507812)"/>
+</clipPath>
+</defs>
+</svg>

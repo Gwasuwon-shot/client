@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useDrag } from "react-use-gesture";
 import { useRecoilState } from "recoil";
 import { keyframes, styled } from "styled-components";
@@ -16,14 +16,23 @@ export default function ToastModal(props: ToastModalProps) {
   const [openModal, setOpenModal] = useRecoilState<boolean>(isModalOpen);
 
   const bindLogoPos = useDrag((params) => {
-    console.log(params.offset[1]);
-    setLogoPos({
-      y: params.offset[1],
-    });
+    if (params.offset[1] > 0) {
+      setLogoPos({
+        y: params.offset[1],
+      });
+    }
     if (params.offset[1] > 200) {
       setOpenModal(false);
     }
   });
+
+  useEffect(() => {
+    if (logoPos.y < 0) {
+      setLogoPos({
+        y: 0,
+      });
+    }
+  }, [logoPos]);
 
   return (
     <ModalWrapper ref={modalRef}>
@@ -44,11 +53,11 @@ const Slide = keyframes`
 `;
 
 const ModalWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   z-index: 2;
 
   width: 32rem;
-  height: 100vh;
+  height: 100dvh;
 
   background-color: rgb(33 37 41 / 60%);
 
@@ -61,16 +70,18 @@ const Modal = styled.aside`
   flex-direction: column;
 
   width: 32rem;
+  /* TODO 이 패딩이 버튼 세개인 모달에 맞는 패딩 */
   padding: 1.6rem 1.4rem 4.5rem;
+  padding-top: 1.6rem;
 
   background-color: ${({ theme }) => theme.colors.white};
-  border-radius: 20px 20px 0 0;
+  border-radius: 2rem 2rem 0 0;
   opacity: 1;
 
   animation: ${Slide} 0.5s linear forwards;
 `;
 
 const ModalMovingWrapper = styled.div<{ $bottom: number }>`
-  position: absolute;
+  position: fixed;
   bottom: -${({ $bottom }) => $bottom / 5}%;
 `;

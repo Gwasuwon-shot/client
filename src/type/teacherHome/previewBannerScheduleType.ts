@@ -2,7 +2,7 @@ export interface LessonType {
   idx: number;
   studentName: string;
   subject: string;
-  count?: number;
+  count?: number | undefined;
 }
 
 export interface ScheduleType {

@@ -37,10 +37,8 @@ export const GlobalStyle = createGlobalStyle`
     line-height: 1;
 
     width:32rem;
-    /* height: 56.8rem; */
-    height: 100vh;
-    /* 임시구현 선 */
-    /* border:1px solid black; */
+    height: 56.8rem;
+    /* height: 100vh; */
   }
   menu, ol, ul {
     list-style: none;
@@ -83,14 +81,14 @@ export const GlobalStyle = createGlobalStyle`
       font-size: 62.5%;
     } */
     @media (min-width: 1000px){ 
-      font-size: 200%;
+      font-size: 70%
     }
     @media (min-width: 931px) and (max-width:999px){ 
-      font-size:180%;
+      font-size: 62.5%;
     }
     //Surface Pro 7
     @media (min-width: 901px) and (max-width:930px){ 
-      font-size: 170%;
+      font-size:62.5%;
     }
     //
     @media (min-width: 831px) and (max-width:900px){ 
@@ -106,9 +104,9 @@ export const GlobalStyle = createGlobalStyle`
     }
     @media (min-width: 600px) and (max-width:749px){ 
       font-size: 100%;
-      /* @media (min-height: 740px) and (max-height: 999px){
+      @media (min-height: 740px) and (max-height: 999px){
             height: 80%!important;
-      } */
+      }
     }
     @media (min-width: 471px) and (max-width:580px){ 
       font-size: 93%;

@@ -1,7 +1,13 @@
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
-import { SmallAttendanceCheckButtonIc } from "../../assets";
+import { attendanceLesson } from "../../atom/attendanceCheck/attendanceLesson";
+import { attendanceStatus } from "../../atom/attendanceCheck/attendanceStatus";
 import { ATTENDANCE_STATUS } from "../../core/common/attendanceStatus";
 import useModal from "../../hooks/useModal";
+import NoCheckPageAttendanceButton from "../common/NoCheckPageAttendanceButton";
+
+//TODO 수업 관리 페이지
 
 interface AttendanceInformProps {
   date: string;
@@ -9,45 +15,85 @@ interface AttendanceInformProps {
   startTime: string;
   endTime: string;
   count: number;
+  lessonIdx: number;
+  scheduleIdx: number;
+  setIsCancelImpossibleModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isUpdateOpen: boolean;
 }
 
 export default function AttendanceInform(props: AttendanceInformProps) {
-  const { date, status, startTime, endTime, count } = props;
+  const {
+    date,
+    status,
+    startTime,
+    endTime,
+    count,
+    lessonIdx,
+    scheduleIdx,
+    setIsCancelImpossibleModalOpen,
+    isUpdateOpen,
+  } = props;
+
   const { showModal } = useModal();
+  const [selectedLesson, setSelectedLesson] = useRecoilState(attendanceLesson);
+  const [attendanceData, setAttendanceData] = useRecoilState(attendanceStatus);
 
   function checkIsStatusExist() {
     return status !== ATTENDANCE_STATUS.none;
   }
 
-  function handleOpenCheckAttendanceModal() {
-    showModal();
+  function checkIsCancel() {
+    return status === ATTENDANCE_STATUS.cancel;
   }
 
+  function handleOpenFixAttendanceModal() {
+    checkIsCancel() ? setIsCancelImpossibleModalOpen(true) : showModal();
+  }
+
+  function handleOpenCheckAttendanceModal() {
+    setAttendanceData({ ...attendanceData, status: status });
+    setSelectedLesson({ ...selectedLesson, lessonIdx: lessonIdx, count: count, scheduleIdx: scheduleIdx });
+    !isUpdateOpen && showModal();
+  }
+
+  useEffect(() => {
+    setAttendanceData({ ...attendanceData, status: status });
+    setSelectedLesson({ ...selectedLesson, lessonIdx: lessonIdx, count: count, scheduleIdx: scheduleIdx });
+  }, []);
+
   return (
-    <>
-      <AttnedanceInformBox>
-        <Label $isDate={true}>
-          {date.split("-")[1]}.{date.split("-")[2]}
+    <AttendanceInformBox>
+      <Label $isCancel={checkIsCancel() && isUpdateOpen} $isDate={true}>
+        {new Date(date).getMonth() + 1}.{new Date(date).getDate()}
+      </Label>
+      <div>
+        <LessonCount $isCancel={checkIsCancel() && isUpdateOpen}>
+          {status === "취소" ? <span>취소된 수업</span> : `${count}회차 수업`}
+        </LessonCount>
+        <Label $isCancel={checkIsCancel() && isUpdateOpen} $isDate={false}>
+          {startTime} ~ {endTime}
         </Label>
-        <div>
-          <LessonCount>{count}회차 수업</LessonCount>
-          <Label $isDate={false}>
-            {startTime} ~ {endTime}
-          </Label>
-        </div>
-        <section onClick={handleOpenCheckAttendanceModal}>
-          {checkIsStatusExist() ? (
-            <StatusLabel $status={status}>{status}</StatusLabel>
-          ) : (
-            <SmallAttendanceCheckButtonIcon />
-          )}
-        </section>
-      </AttnedanceInformBox>
-    </>
+      </div>
+      <StatusWrapper>
+        {checkIsStatusExist() ? (
+          <>
+            {!isUpdateOpen ? (
+              <StatusLabel $status={status}>{status}</StatusLabel>
+            ) : (
+              <StatusUpdateLabel $isCancel={checkIsCancel()} onClick={handleOpenFixAttendanceModal}>
+                {status}
+              </StatusUpdateLabel>
+            )}
+          </>
+        ) : (
+          <NoCheckPageAttendanceButton onClick={handleOpenCheckAttendanceModal} />
+        )}
+      </StatusWrapper>
+    </AttendanceInformBox>
   );
 }
 
-const AttnedanceInformBox = styled.article`
+const AttendanceInformBox = styled.article`
   display: flex;
 
   width: 29.2rem;
@@ -55,39 +101,59 @@ const AttnedanceInformBox = styled.article`
   margin-bottom: 1rem;
 
   background-color: ${({ theme }) => theme.colors.white};
-  border-radius: 8px;
+  border-radius: 0.8rem;
 
   &:active {
     background-color: ${({ theme }) => theme.colors.grey50};
   }
-
-  cursor: pointer;
 `;
 
-const Label = styled.p<{ $isDate: boolean }>`
+const StatusUpdateLabel = styled.div<{ $isCancel: boolean }>`
+  display: flex;
+  padding: 0.8rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 0.8rem;
+  border: ${({ $isCancel }) => !$isCancel && 1}px solid ${({ theme }) => theme.colors.grey200};
+
+  color: ${({ $isCancel, theme }) => ($isCancel ? theme.colors.grey100 : theme.colors.grey200)};
+  ${({ $isCancel, theme }) => ($isCancel ? theme.fonts.body01 : theme.fonts.body03)}
+`;
+
+const StatusWrapper = styled.div`
+  width: 7.4rem;
+`;
+
+const Label = styled.p<{ $isDate: boolean; $isCancel: boolean }>`
   width: ${({ $isDate }) => ($isDate ? 3.6 : 16)}rem;
   margin-top: 0.2rem;
   margin-right: 1rem;
 
-  color: ${({ theme }) => theme.colors.grey600};
+  color: ${({ $isCancel, theme }) => ($isCancel ? theme.colors.grey100 : theme.colors.grey600)};
   ${({ theme, $isDate }) => ($isDate ? theme.fonts.body07 : theme.fonts.body05)};
 `;
 
-const LessonCount = styled.h1`
+const LessonCount = styled.h1<{ $isCancel: boolean }>`
   margin-bottom: 0.3rem;
 
-  color: ${({ theme }) => theme.colors.grey900};
+  color: ${({ $isCancel, theme }) => ($isCancel ? theme.colors.grey100 : theme.colors.grey900)};
   ${({ theme }) => theme.fonts.body02};
+
+  > span {
+    color: ${({ theme }) => theme.colors.grey400};
+  }
 `;
 
 const StatusLabel = styled.label<{ $status: string }>`
   display: flex;
-  justify-content: flex-end;
+  padding: 0.8rem;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
 
-  width: 7.4rem;
-  height: 4rem;
-  padding-right: 1rem;
+  border-radius: 0.8rem;
 
   color: ${({ theme, $status }) =>
     $status === ATTENDANCE_STATUS.attend
@@ -95,9 +161,6 @@ const StatusLabel = styled.label<{ $status: string }>`
       : $status === ATTENDANCE_STATUS.absent
       ? theme.colors.red6
       : theme.colors.grey900};
-  ${({ theme }) => theme.fonts.body01};
-`;
 
-const SmallAttendanceCheckButtonIcon = styled(SmallAttendanceCheckButtonIc)`
-  width: 7.4rem;
+  ${({ theme }) => theme.fonts.body01};
 `;
