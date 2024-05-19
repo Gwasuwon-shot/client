@@ -5,7 +5,7 @@ export const connectLessonId = atom<string>({
   default: "",
 });
 
-export const parentsPhoneState = atom<string | undefined>({
+export const parentsPhoneState = atom<string>({
   key: "parentsPhoneState",
-  default: undefined,
+  default: "010-1234-1234",
 });
