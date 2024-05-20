@@ -1,9 +1,18 @@
 import Lottie from "lottie-react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import { LoadingIc } from "../assets";
 import loading from "../core/common/loading.json";
 
 export default function Loading() {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      window.location.reload();
+    }, 8000);
+
+    return () => clearTimeout(timer); // Clean up the timer on component unmount
+  }, []);
+
   return (
     <LottieWrapper>
       <Lottie loop={true} animationData={loading} style={{ width: "55%", height: "55%" }} />
