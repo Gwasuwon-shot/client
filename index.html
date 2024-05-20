@@ -7,13 +7,20 @@
   <link rel="apple-touch-icon" href="/tutice.png" />
   <link rel="shortcut icon" href="/tutice.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name=" apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="description" content="과외 관리의 새로운 표준 Tutice를 경험해보세요" />
   <meta property="og:title" content="Tutice: 쉬운 수업 관리로 열리는 정확한 나의 결실" />
   <meta property="og:description" content="과외 관리의 새로운 표준 Tutice를 경험해보세요" />
   <meta property="og:image" content="/og_img.png" />
+  <meta property="og:url" content="https://www.tutice.com" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Tutice: 쉬운 수업 관리로 열리는 정확한 나의 결실" />
+  <meta name="twitter:description" content="과외 관리의 새로운 표준 Tutice를 경험해보세요" />
+  <meta name="twitter:image" content="/og_img.png" />
 
-  <link rel="/manifest" href="js13kpwa.webmanifest" />
+  <!-- <link rel="/manifest" href="js13kpwa.webmanifest" /> -->
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" as="style" crossorigin
     href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
@@ -88,6 +95,20 @@
         }
       }
     });
+
+// 서비스 워커 등록
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker
+        .register("firebase-messaging-sw.js")
+        .then(function (registration) {
+          console.log("Service Worker 등록 성공:", registration);
+        })
+        .catch(function (error) {
+          console.log("Service Worker 등록 실패:", error);
+        });
+    });
+  }
   </script>
 
   <title>Tutice</title>
