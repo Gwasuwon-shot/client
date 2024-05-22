@@ -1,21 +1,32 @@
-import { useMutation } from "react-query";
-import { useNavigate } from "react-router-dom";
+import { AxiosError } from "axios";
+import { useMutation, UseMutationResult } from "react-query";
+import { useSetRecoilState } from "recoil";
 import { postSendValidationNumber } from "../../api/signUp/postSendValidationNumber";
+import { errMessage } from "../../atom/signup/signup";
 
-export default function useSendValidNumber(onSuccess: () => void) {
-  const navigate = useNavigate();
+interface ErrorResponse {
+  message: string;
+}
 
-  const mutation = useMutation({
+export default function useSendValidNumber(
+  onSuccess: () => void,
+): UseMutationResult<void, AxiosError<ErrorResponse>, string> {
+  const setErrMessage = useSetRecoilState(errMessage);
+
+  const mutation = useMutation<void, AxiosError<ErrorResponse>, string>({
     mutationFn: async (number: string) => {
       return await postSendValidationNumber(number);
     },
     onSuccess: () => {
       onSuccess();
+      setErrMessage("");
     },
-    onError: () => {
-      // 에러 모달 띄워주는 걸로 수정
-      // navigate("/error");
+    onError: (err: AxiosError<ErrorResponse>) => {
+      if (err.response?.data?.message) {
+        setErrMessage(err.response.data.message);
+      }
     },
   });
+
   return mutation;
 }

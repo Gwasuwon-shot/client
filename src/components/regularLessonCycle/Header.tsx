@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { RegisterLessonHeaderIc } from "../../assets";
 import { cycleNumberState } from "../../atom/timePicker/timePicker";
 import ProgressBar from "../common/ProgressBar";
+import CustomBackButton from "../common/CustomBackButton";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ export default function Header() {
 
   return (
     <HeaderWrapper>
-      <RegisterLessonHeaderIc onClick={handleMoveToBack} />
+      <CustomBackButton onClick={handleMoveToBack} />
       <ProgressBar progress={33.2} />
       <InputHeader>
         총 몇 회차로 이루어진 <br /> 수업인가요?

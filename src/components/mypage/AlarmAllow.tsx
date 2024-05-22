@@ -16,7 +16,6 @@ export default function AlarmAllow() {
     // 1. 서비스 워커 등록 확인
     // 2. 서비스 워커 등록 안되어 있으면 등록 / 등록 되어 있으면 알람 허용 여부 확인
     // 3. 알람 허용 상태 없으면 허용할 건지 묻기 / 허용이면 비허용으로 변경 / 비허용이면 허용으로 변경
-
     allowNotification ? handleBanNotification() : checkNotificationPermission();
   }
 
@@ -31,23 +30,20 @@ export default function AlarmAllow() {
       } else {
         alert("브라우저 알림 권한을 거부했습니다.");
       }
-    } else {
-      alert("브라우저 알림 권한을 거부했습니다.");
     }
   }
 
   async function handleAllowNotification() {
-    if (isRegistered) {
+    if (!isRegistered) {
       registerServiceWorker();
+    } 
+    
       const token = await getToken(messaging, { vapidKey: import.meta.env.VITE_APP_VAPID_KEY });
-      updateDeviceToken(token);
-    }
+      token ? updateDeviceToken(token) : handleAllowNotification();
   }
 
   async function handleBanNotification() {
-    // if (confirm("정말로 알림을 끄시겠습니까?")) {
-    updateDeviceToken(null);
-    // }
+    allowNotification && updateDeviceToken(null);
   }
 
   return (

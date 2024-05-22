@@ -36,6 +36,7 @@ export default function AttendanceDoubleCheckingModal(props: AttendanceDoubleChe
 
   function handleMoveToSuccessCheckingAttendance() {
     updateAttendance(attendanceData);
+    setIsCheckingModalOpen(false);
   }
 
   function checkStatusText() {

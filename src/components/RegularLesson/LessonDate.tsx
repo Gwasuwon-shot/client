@@ -46,22 +46,23 @@ export default function LessonDate() {
   function handleDayButton(day: string) {
     setSelectedDays((prevSelectedDays) => {
       const existingDayIndex = prevSelectedDays.findIndex((selectedDay) => selectedDay.dayOfWeek === day);
-
-      if (day == firstLesson) {
-        if (existingDayIndex === -1) {
-          return [...prevSelectedDays, { dayOfWeek: day, startTime: "12:00", endTime: "12:00" }];
-        } else {
-          return [...prevSelectedDays];
-        }
+      // TODO 오늘 삭제 안되는 로직 임시해결 : 왜 있는 코드인지 확인하기
+      // if (day == firstLesson) {
+      //   if (existingDayIndex === -1) {
+      //     return [...prevSelectedDays, { dayOfWeek: day, startTime: "12:00", endTime: "12:00" }];
+      //   } else {
+      //     return [...prevSelectedDays];
+      //   }
+      // } else
+      // {
+      if (existingDayIndex !== -1) {
+        const newSelectedDays = [...prevSelectedDays];
+        newSelectedDays.splice(existingDayIndex, 1);
+        return newSelectedDays;
       } else {
-        if (existingDayIndex !== -1) {
-          const newSelectedDays = [...prevSelectedDays];
-          newSelectedDays.splice(existingDayIndex, 1);
-          return newSelectedDays;
-        } else {
-          return [...prevSelectedDays, { dayOfWeek: day, startTime: "12:00", endTime: "12:00" }];
-        }
+        return [...prevSelectedDays, { dayOfWeek: day, startTime: "12:00", endTime: "12:00" }];
       }
+      // }
     });
   }
 

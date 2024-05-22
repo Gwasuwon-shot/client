@@ -18,7 +18,7 @@ export default function SelectedDayAndTime(props: selectedProps) {
 
   const [isStartPickerOpen, setIsStartPickerOpen] = useRecoilState<boolean>(openStartDetailState);
 
-  function handlStartTimePicker() {
+  function handleStartTimePicker() {
     setFocusDay(dayofweek);
     setIsStartPickerOpen(true);
   }
@@ -36,7 +36,7 @@ export default function SelectedDayAndTime(props: selectedProps) {
       <TimeWrapper>
         <Time>
           <TimeInfo> 시작 </TimeInfo>
-          <DetailTime onClick={handlStartTimePicker}>
+          <DetailTime onClick={handleStartTimePicker}>
             {focusingDay?.startTime.slice(0, 2)}시 {focusingDay?.startTime.slice(3)}분
           </DetailTime>
         </Time>

@@ -1,19 +1,11 @@
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { styled } from "styled-components";
-import { createLesson } from "../../api/createLesson";
-import { studentNameState, subjectNameState } from "../../atom/common/datePicker";
+import { updateLessonParents } from "../../api/manageLesson/updateLessonParents";
 import { parentsPhoneState } from "../../atom/registerLesson/registerLesson";
-import { cycleNumberState, dateState, dayState } from "../../atom/timePicker/timePicker";
-import {
-  accountNumber,
-  bankName,
-  lessonCodeAndPaymentId,
-  moneyAmount,
-  paymentOrder,
-} from "../../atom/tuitionPayment/tuitionPayment";
+import { lessonCodeAndPaymentId } from "../../atom/tuitionPayment/tuitionPayment";
 import { BUTTON_TEXT } from "../../core/signup/signUpTextLabels";
 import useFormattedPhoneNumber from "../../hooks/signupLogin/usePhoneNumberFormat";
 import useModal from "../../hooks/useModal";
@@ -44,78 +36,30 @@ interface createLessonProps {
 }
 
 export default function LessonConnectNumber() {
-  const studentName = useRecoilValue<string>(studentNameState);
-  const subject = useRecoilValue<string>(subjectNameState);
-  const payment = useRecoilValue<string>(paymentOrder);
-  const amount = useRecoilValue<number>(moneyAmount);
-  const count = useRecoilValue<number>(cycleNumberState);
-  const startDate = useRecoilValue(dateState);
-  const regularScheduleList = useRecoilValue(dayState);
-  const bank = useRecoilValue(bankName);
-  const number = useRecoilValue(accountNumber);
-  const setCodeAndId = useSetRecoilState(lessonCodeAndPaymentId);
-
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState(false);
+  const codeInfo = useRecoilValue(lessonCodeAndPaymentId);
   const [phoneNumber, setPhoneNumber] = useFormattedPhoneNumber();
   const [parentsPhone, setParentPhone] = useRecoilState(parentsPhoneState);
 
   const { showModal, unShowModal, openModal } = useModal();
 
-  const postStartDate =
-    String(startDate.year) +
-    "-" +
-    String(startDate.month).padStart(2, "0") +
-    "-" +
-    String(startDate.date).padStart(2, "0");
-
-  // post 할 데이터 구조로 만들기
-  const postInformation = {
-    lesson: {
-      parentsPhone: parentsPhone,
-      studentName: studentName,
-      subject: subject,
-      payment: payment,
-      amount: Number(amount),
-      count: count,
-      startDate: postStartDate,
-      regularScheduleList: regularScheduleList,
-    },
-    account: {
-      bank: bank,
-      number: number,
-    },
-  };
-
-  function handleMoveToLessonShare() {
-    navigate("/register-complete", { state: true });
-  }
-
-  const { mutate: createNewLesson } = useMutation(createLesson, {
-    onSuccess: (response) => {
-      // setLessonData(postInformation);
-      setCodeAndId(response);
-      //setStartDate(response); //-> 지수에 전달한 data recoil 저장
-      handleMoveToLessonShare();
-    },
-    onError: (error: any) => {
-      if (error.response.data.message === "은행 값이 유효하지 않습니다.") {
-        alert("유효하지 않은 은행 값입니다. 관리자에게 문의 바랍니다.");
-      }
+  const { mutate: updateParentsNumber } = useMutation(updateLessonParents, {
+    onSuccess: () => {
+      navigate("/register-complete", { state: true });
     },
     useErrorBoundary: false,
   });
 
-  function PostLessonInformation(info: createLessonProps) {
-    createNewLesson(info);
+  function handleMoveToLessonShare() {
+    if (codeInfo.lessonidx) {
+      updateParentsNumber({ lessonIdx: codeInfo.lessonidx, parentsPhone: parentsPhone });
+    }
+    unShowModal();
   }
 
   function handleClickNext() {
     showModal();
-  }
-
-  function handleClickOK() {
-    PostLessonInformation(postInformation);
   }
 
   function handleChangeNumber(value: string) {
@@ -133,10 +77,11 @@ export default function LessonConnectNumber() {
           handleClickLeftButton={() => {
             unShowModal();
           }}
-          handleClickRightButton={() => handleClickOK()}>
+          handleClickRightButton={() => handleMoveToLessonShare()}>
           {phoneNumber} <br /> 이 번호가 맞나요?
         </BasicDoubleModal>
       )}
+      <Header></Header>
       <CommonBackButton />
       <ProgressBar progress={50} />
       <Container>
@@ -160,6 +105,10 @@ export default function LessonConnectNumber() {
     </>
   );
 }
+
+const Header = styled.header`
+  margin-top: 2rem;
+`;
 
 const Container = styled.section`
   display: flex;

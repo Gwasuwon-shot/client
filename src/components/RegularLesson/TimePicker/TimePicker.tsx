@@ -37,9 +37,9 @@ export default function TimePicker() {
 
   return (
     <TimePickerWrapper>
-      <CancleWrapper>
-        <CancleButton onClick={handleCanCelTimePicker}> 취소 </CancleButton>
-      </CancleWrapper>
+      <CancelWrapper>
+        <CancelButton onClick={handleCanCelTimePicker}> 취소 </CancelButton>
+      </CancelWrapper>
 
       <StyledSwiper
         direction="vertical"
@@ -72,7 +72,8 @@ const TimePickerWrapper = styled.div`
 
   position: relative;
 
-  width: 32rem;
+  /* width: 33rem; */
+  width: 100%;
   height: 20rem;
 
   background-color: ${({ theme }) => theme.colors.grey20};
@@ -107,7 +108,7 @@ const StyledSwiper = styled(Swiper)`
   }
 `;
 
-const CancleWrapper = styled.div`
+const CancelWrapper = styled.div`
   display: flex;
 
   position: relative;
@@ -124,7 +125,7 @@ const ConfirmWrapper = styled.div`
   width: 6rem;
   height: 100%;
 `;
-const CancleButton = styled.button`
+const CancelButton = styled.button`
   position: absolute;
   top: 0.7rem;
   left: 1rem;

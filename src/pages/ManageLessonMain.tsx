@@ -6,14 +6,13 @@ import { AddTreeCodeButtonManageIc } from "../assets";
 import { attendanceStatus } from "../atom/attendanceCheck/attendanceStatus";
 import { isModalOpen } from "../atom/common/isModalOpen";
 import { isSnackBarOpen } from "../atom/common/isSnackBarOpen";
-import CancelLessonMaintenanceSnackBar from "../components/common/CancelLessonMaintenanceSnackBar";
 import TeacherFooter from "../components/common/TeacherFooter";
 import DeleteLessonModal from "../components/manageLesson/DeleteLessonModal";
 import ExtensionLessonModal from "../components/manageLesson/ExtensionLessonModal";
 import FinishedLessons from "../components/manageLesson/FinishedLessons";
 import MainLessons from "../components/manageLesson/MainLessons";
 import MissingMainteanceLessons from "../components/manageLesson/MissingMainteanceLessons";
-import SuccessLessonMaintenanceSnackBar from "../components/modal/SuccessLessonMaintenanceSanckBar";
+import useResetAllRecoilStates from "../hooks/manageLessons/useResetLessonInfo";
 import useGetAllLessons from "../hooks/useGetAllLessons";
 import useGetMissingMaintenanceLesson from "../hooks/useGetMissingMaintenanceLesson";
 import { lessonListType } from "../type/manageLesson/lessonListType";
@@ -22,7 +21,10 @@ export default function ManageLessonMain() {
   const [snackBarOpen, setSanckBarOpen] = useRecoilState(isSnackBarOpen);
   const [isSuccess, setIsSuccess] = useState(true);
   const navigate = useNavigate();
+
   const [attendanceData, setAttendanceData] = useRecoilState(attendanceStatus);
+  const resetAll = useResetAllRecoilStates();
+
   const [isClickedEdit, setIsClickedEdit] = useState(false);
   const [isClickedDeleteButton, setIsClickedDeleteButton] = useState(false);
   const [openModal, setOpenModal] = useRecoilState<boolean>(isModalOpen);
@@ -44,6 +46,7 @@ export default function ManageLessonMain() {
   }
 
   function handleMakeTreeCode() {
+    resetAll();
     navigate("/register-lesson");
   }
 
@@ -79,8 +82,9 @@ export default function ManageLessonMain() {
       {openModal && isClickedMainteance && (
         <ExtensionLessonModal setIsClickedMainteance={setIsClickedMainteance} setIsSuccess={setIsSuccess} />
       )}
-      {snackBarOpen && isSuccess && <SuccessLessonMaintenanceSnackBar />}
-      {snackBarOpen && !isSuccess && <CancelLessonMaintenanceSnackBar />}
+      {/*  TODO 모달 분기 처리 */}
+      {/* {snackBarOpen && isSuccess && <SuccessLessonMaintenanceSnackBar />} */}
+      {/* {snackBarOpen && !isSuccess && <CancelLessonMaintenanceSnackBar />} */}
       <MainLessonsWrapper>
         <MainLessonsHeader>수업관리</MainLessonsHeader>
         <TitleWrapper>

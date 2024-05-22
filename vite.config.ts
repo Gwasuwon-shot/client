@@ -21,7 +21,7 @@ export default defineConfig({
       sentryVitePlugin({
         org: "tutice",
         project: "javascript-react",
-        authToken: process.env.SENTRY_AUTH_TOKEN,
+        authToken: process.env.VITE_APP_SENTRY_AUTH_TOKEN,
         sourcemaps: {
           assets: "./dist/**",
           filesToDeleteAfterUpload: "./dist/**/*.map",

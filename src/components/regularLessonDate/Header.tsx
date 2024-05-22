@@ -5,6 +5,7 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { RegisterLessonHeaderIc } from "../../assets";
 import ProgressBar from "../common/ProgressBar";
+import CustomBackButton from "../common/CustomBackButton";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export default function Header() {
 
   return (
     <HeaderWrapper>
-      <RegisterLessonHeaderIc onClick={handleMoveToBack} />
+      <CustomBackButton onClick={handleMoveToBack} />
       <ProgressBar progress={49.8} />
       <InputHeader> 몇월 몇일의 수업부터 관리할까요? </InputHeader>
       <InputNotice>

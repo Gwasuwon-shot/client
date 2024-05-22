@@ -19,7 +19,7 @@ export default function LessonInfo() {
     setCodeAndId({
       ...codeAndId,
       lessonCode: lessonCode,
-      lessonIdx: idx,
+      lessonidx: idx,
     });
     setStudentNameForLinkShare(studentName);
     navigate("/lesson-share", { state: false });
