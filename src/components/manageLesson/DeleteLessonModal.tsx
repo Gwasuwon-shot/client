@@ -36,16 +36,14 @@ export default function DeleteLessonModal(props: DeleteLessonModalProps) {
   }
 
   return (
-    <>
       <BasicDoubleModal
         position="fixed"
         leftButtonName="취소"
         rightButtonName="확인"
         handleClickLeftButton={handleBackToManageLessonPage}
         handleClickRightButton={handleClickConfirmDelete}>
-        수업 삭제시, 모든 기록이 사라집니다 <br />
+        수업 삭제 시, 모든 기록이 사라집니다 <br />
         삭제하시겠어요?
       </BasicDoubleModal>
-    </>
   );
 }
