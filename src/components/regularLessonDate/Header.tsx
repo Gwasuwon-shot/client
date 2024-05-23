@@ -3,9 +3,8 @@ import { dateState, firstLessonDay } from "../../atom/timePicker/timePicker";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { RegisterLessonHeaderIc } from "../../assets";
-import ProgressBar from "../common/ProgressBar";
 import CustomBackButton from "../common/CustomBackButton";
+import ProgressBar from "../common/ProgressBar";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -22,7 +21,7 @@ export default function Header() {
   return (
     <HeaderWrapper>
       <CustomBackButton onClick={handleMoveToBack} />
-      <ProgressBar progress={49.8} />
+      <ProgressBar progress={50} />
       <InputHeader> 몇월 몇일의 수업부터 관리할까요? </InputHeader>
       <InputNotice>
         첫 수업일을 기준으로 수업 일정을 <br /> 캘린더에 표시해 드릴게요{" "}

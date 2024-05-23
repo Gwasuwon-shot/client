@@ -9,9 +9,9 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { BackButtonSignupIc, RegisterLessonHeaderIc } from "../../assets";
-import ProgressBar from "../common/ProgressBar";
+import { BackButtonSignupIc } from "../../assets";
 import CustomBackButton from "../common/CustomBackButton";
+import ProgressBar from "../common/ProgressBar";
 
 export default function Header() {
   const setPersonName = useSetRecoilState<string>(payingPersonName);

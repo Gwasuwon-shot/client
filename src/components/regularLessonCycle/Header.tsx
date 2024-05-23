@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { RegisterLessonHeaderIc } from "../../assets";
 import { cycleNumberState } from "../../atom/timePicker/timePicker";
-import ProgressBar from "../common/ProgressBar";
 import CustomBackButton from "../common/CustomBackButton";
+import ProgressBar from "../common/ProgressBar";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -18,7 +17,7 @@ export default function Header() {
   return (
     <HeaderWrapper>
       <CustomBackButton onClick={handleMoveToBack} />
-      <ProgressBar progress={33.2} />
+      <ProgressBar progress={25} />
       <InputHeader>
         총 몇 회차로 이루어진 <br /> 수업인가요?
       </InputHeader>

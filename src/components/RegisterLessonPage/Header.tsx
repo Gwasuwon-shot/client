@@ -1,12 +1,10 @@
 import { studentNameState, subjectNameState } from "../../atom/common/datePicker";
 
-import ProgressBar from "../common/ProgressBar";
-import React from "react";
-import { RegisterLessonHeaderIc } from "../../assets";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
+import styled from "styled-components";
 import CustomBackButton from "../common/CustomBackButton";
+import ProgressBar from "../common/ProgressBar";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -23,7 +21,7 @@ export default function Header() {
   return (
     <HeaderWrapper>
       <CustomBackButton onClick={handleMoveToBack} />
-      <ProgressBar progress={16.6} />
+      <ProgressBar progress={0} />
       <InputHeader>
         학생의 이름과 <br /> 과목을 입력해주세요. <Emphasis> * </Emphasis>
       </InputHeader>

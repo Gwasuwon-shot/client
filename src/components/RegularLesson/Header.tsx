@@ -24,7 +24,7 @@ export default function Header() {
   return (
     <HeaderWrapper>
       <CustomBackButton onClick={handleMoveToBack} />
-      <ProgressBar progress={66.4} />
+      <ProgressBar progress={75} />
       <InputHeader>정기적인 수업 일정을 알려주세요!</InputHeader>
       <InputNotice>첫 수업일을 기준으로 수업 일정을 캘린더에 표시해 드릴게요</InputNotice>
     </HeaderWrapper>
