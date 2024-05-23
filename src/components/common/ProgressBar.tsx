@@ -8,7 +8,7 @@ export default function ProgressBar({ progress }: ProgressBarProps) {
 
     return (
         <ProgressBarWrapper>
-            <Progress width = {progress}/>
+            <Progress width = {`${progress}%`}/>
         </ProgressBarWrapper>
     )
 }
@@ -18,7 +18,7 @@ const ProgressBarWrapper = styled.div`
     background-color: ${({ theme }) => theme.colors.grey20};
 `
 
-const Progress = styled.div<{width: number}>`
+const Progress = styled.div<{width: string}>`
     width: ${(props) => props.width};
     height: 100%;
     

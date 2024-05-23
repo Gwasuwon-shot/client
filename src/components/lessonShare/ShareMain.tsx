@@ -34,7 +34,7 @@ export default function ShareMain({ handleMoveToPage }: handleMoveToPageProps) {
       icon: ShareViaMessage,
       text: "메시지",
       onClick: () => {
-        alert("준비 중인 기능입니다.");
+        handleShareViaMessage();
       },
     },
     {
@@ -65,6 +65,12 @@ export default function ShareMain({ handleMoveToPage }: handleMoveToPageProps) {
     } else {
       alert("공유하기가 지원되지 않는 환경 입니다.");
     }
+  }
+
+  function handleShareViaMessage() {
+    const message = `안녕하세요, 과외 수업 관리 필수 앱 Tutice 입니다. \n\n[${userName}]선생님이 [${studentName}]학생의\nTutice 초대장을 보냈습니다.\n\nTutice 링크 \n ${URL}`;
+    const smsLink = `sms:?body=${encodeURIComponent(message)}`;
+    window.location.href = smsLink;
   }
 
   function handleCopyLink() {

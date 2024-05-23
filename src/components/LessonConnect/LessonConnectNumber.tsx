@@ -1,26 +1,17 @@
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { styled } from "styled-components";
-import { createLesson } from "../../api/createLesson";
-import { studentNameState, subjectNameState } from "../../atom/common/datePicker";
+import { updateLessonParents } from "../../api/manageLesson/updateLessonParents";
 import { parentsPhoneState } from "../../atom/registerLesson/registerLesson";
-import { cycleNumberState, dateState, dayState } from "../../atom/timePicker/timePicker";
-import {
-  accountNumber,
-  bankName,
-  lessonCodeAndPaymentId,
-  moneyAmount,
-  paymentOrder,
-} from "../../atom/tuitionPayment/tuitionPayment";
+import { lessonCodeAndPaymentId } from "../../atom/tuitionPayment/tuitionPayment";
 import { BUTTON_TEXT } from "../../core/signup/signUpTextLabels";
 import useFormattedPhoneNumber from "../../hooks/signupLogin/usePhoneNumberFormat";
 import useModal from "../../hooks/useModal";
 import { BasicDoubleModal, BottomButton, CommonBackButton, ProgressBar } from "../common";
 import InputLayout from "../signup/InputLayout";
 import SignupTitleLayout from "../signup/SignupTitleLayout";
-import { updateLessonParents } from "../../api/manageLesson/updateLessonParents";
 
 interface scheduleListProps {
   dayOfWeek: string;
