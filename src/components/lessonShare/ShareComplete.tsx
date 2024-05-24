@@ -3,8 +3,18 @@ import styled from "styled-components";
 import { BackButtonSignupIc, CheckLargeIcon } from "../../assets";
 import { BottomButton } from "../common";
 
+import REACTGA from "react-ga4";
+
 export default function ShareComplete({ handleMoveToPage }: { handleMoveToPage: (page: string) => void }) {
   const navigate = useNavigate();
+
+  function handleOnClickToHome() {
+    navigate("/home");
+    REACTGA.event({
+      category: "홈으로가기",
+      action: "GotoHome",
+    });
+  }
 
   return (
     <>
@@ -16,13 +26,7 @@ export default function ShareComplete({ handleMoveToPage }: { handleMoveToPage: 
           학부모님이 전화번호를 등록하시면 <br /> 자동으로 등록될거에요
         </SubTitle>
       </Wrapper>
-      <BottomButton
-        type="submit"
-        onClick={() => {
-          navigate("/home");
-        }}
-        isActive={true}
-        disabled={false}>
+      <BottomButton type="submit" onClick={() => handleOnClickToHome()} isActive={true} disabled={false}>
         홈으로 가기
       </BottomButton>
     </>

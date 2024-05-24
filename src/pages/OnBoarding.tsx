@@ -9,6 +9,7 @@ import { OnBoardingFourImg, OnBoardingOneImg, OnBoardingThreeImg, OnBoardingTwoI
 import SwiperLayout from "../components/OnBoarding/SwiperLayout";
 import { BottomButton } from "../components/common";
 import { SLIDER_SETTING } from "../core/OnBoarding";
+import REACTGA from "react-ga4";
 
 export default function OnBoarding() {
   const sliderRef = useRef<Slider>(null);
@@ -42,7 +43,15 @@ export default function OnBoarding() {
   };
 
   const handleClickBtn = () => {
-    isLastSwiper ? navigate("/landing") : sliderRef?.current?.slickNext();
+    if (isLastSwiper) {
+      navigate("/landing");
+      REACTGA.event({
+        category: "시작하기버튼",
+        action: "click",
+      });
+    } else {
+      sliderRef?.current?.slickNext();
+    }
   };
 
   return (

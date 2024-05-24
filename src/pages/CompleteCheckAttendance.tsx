@@ -17,6 +17,7 @@ import { ATTENDANCE_STATUS } from "../core/common/attendanceStatus";
 import { STUDENT_COLOR } from "../core/common/studentColor";
 import useModal from "../hooks/useModal";
 import useTeacherFooter from "../hooks/useTeacherFooter";
+import REACTGA from "react-ga4";
 
 export default function CompleteCheckAttendance() {
   const { state } = useLocation();
@@ -50,10 +51,18 @@ export default function CompleteCheckAttendance() {
   function handleMoveToHome() {
     setSnackBarOpen(true);
     navigate(-1);
+    REACTGA.event({
+      category: "출결체크 > 확인",
+      action: "Confirm",
+    });
   }
 
   function handleOpenSendAlarmModal() {
     showModal();
+    REACTGA.event({
+      category: "출결체크 > 학부모 알림 전송",
+      action: "Send Alarm to Parents",
+    });
   }
 
   return (
