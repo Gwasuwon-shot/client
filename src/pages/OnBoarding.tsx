@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import REACTGA from "react-ga4";
 import { useLocation, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
@@ -42,7 +43,15 @@ export default function OnBoarding() {
   };
 
   const handleClickBtn = () => {
-    isLastSwipe ? navigate("/landing") : sliderRef?.current?.slickNext();
+    if (isLastSwipe) {
+      navigate("/landing");
+      REACTGA.event({
+        category: "시작하기버튼",
+        action: "click",
+      });
+    } else {
+      sliderRef?.current?.slickNext();
+    }
   };
 
   return (
