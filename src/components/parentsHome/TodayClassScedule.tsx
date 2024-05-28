@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { STUDENT_COLOR } from "../../core/common/studentColor";
-import SubjectLabel from "../common/SubjectLabel";
 import StudentColorBox from "../common/StudentColorBox";
+import SubjectLabel from "../common/SubjectLabel";
 
 interface TodayClassSceduleProps {
   studentName: string;
@@ -19,7 +19,7 @@ export default function TodayClassScedule(props: TodayClassSceduleProps) {
     <TodayClassScheduleWrapper>
       <TodayClassContainer>
         <ClassInfo>
-          <StudentColorBox backgroundColor={STUDENT_COLOR[classCount % 11]} />
+          <StudentColorBox lessonIdx={classCount} />
           <ClassTime>
             {startTime} ~ {endTime}
           </ClassTime>

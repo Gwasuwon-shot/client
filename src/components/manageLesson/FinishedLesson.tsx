@@ -1,12 +1,11 @@
+import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
-import { STUDENT_COLOR } from "../../core/common/studentColor";
+import { ManageLessonEditIc } from "../../assets";
+import { attendanceLesson } from "../../atom/attendanceCheck/attendanceLesson";
 import useMoveToLessonDetail from "../../hooks/useMoveToLessonDetail";
+import { latestRegularScheduleType } from "../../type/manageLesson/lessonListType";
 import SubjectLabel from "../common/SubjectLabel";
 import ManageStudentColorBox from "./ManageStudentColorBox";
-import { ManageLessonEditIc } from "../../assets";
-import { useRecoilState } from "recoil";
-import { latestRegularScheduleType } from "../../type/manageLesson/lessonListType";
-import { attendanceLesson } from "../../atom/attendanceCheck/attendanceLesson";
 
 interface FinishedLessonType {
   idx: number;
