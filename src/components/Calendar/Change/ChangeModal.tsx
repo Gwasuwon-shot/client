@@ -109,7 +109,7 @@ export default function ChangeModal(props: modalType) {
               return (
                 <ScheduleWrapper key={idx}>
                   <ScheduleContainer>
-                    <StudentColorBox backgroundColor={STUDENT_COLOR[lessonIdx % 10]} />
+                    <StudentColorBox lessonIdx={lessonIdx} />
                     <ModalTime>
                       {startTime} - {endTime}
                     </ModalTime>

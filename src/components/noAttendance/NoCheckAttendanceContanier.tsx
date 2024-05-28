@@ -58,7 +58,7 @@ export default function NoCheckAttendanceContanier(props: NoCheckAttendanceConta
   return (
     <>
       <ContentContainer>
-        <StudentColorBox backgroundColor={STUDENT_COLOR[idx % 10]} />
+        <StudentColorBox lessonIdx={idx} />
         <InformContainer>
           <TimeWrapper>
             <Time>

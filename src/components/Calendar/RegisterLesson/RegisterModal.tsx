@@ -3,7 +3,7 @@ import { ko } from "date-fns/locale";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
-import { DEEFAULT_STUDENT_COLOR, STUDENT_COLOR } from "../../../core/common/studentColor";
+import { DEFAULT_STUDENT_COLOR, STUDENT_COLOR } from "../../../core/common/studentColor";
 import useGetScheduleByUser from "../../../hooks/useGetScheduleByUser";
 import { modalType } from "../../../type/calendar/modalType";
 import StudentColorBox from "../../common/StudentColorBox";
@@ -39,12 +39,12 @@ export default function RegisterModal(props: modalType) {
             ?.scheduleList?.map(({ startTime, endTime, studentName, subject }: scheduleListType, idx: number) => {
               return (
                 <ScheduleWrapper key={idx}>
-                  <StudentColorBox backgroundColor={DEEFAULT_STUDENT_COLOR} />
+                  <StudentColorBox lessonIdx={12} />
                   <ModalTime>
                     {startTime} - {endTime}
                   </ModalTime>
                   <ModalName>{studentName}</ModalName>
-                  <ModalSubjectPreview $backgroundcolor={DEEFAULT_STUDENT_COLOR}>{subject}</ModalSubjectPreview>
+                  <ModalSubjectPreview $backgroundcolor={DEFAULT_STUDENT_COLOR}>{subject}</ModalSubjectPreview>
                 </ScheduleWrapper>
               );
             })}
@@ -56,7 +56,7 @@ export default function RegisterModal(props: modalType) {
 
               return (
                 <ScheduleWrapper key={idx}>
-                  <StudentColorBox backgroundColor={STUDENT_COLOR[lessonIdx % 10]} />
+                  <StudentColorBox lessonIdx={lessonIdx} />
                   <ModalTime>
                     {startTime} - {endTime}
                   </ModalTime>
@@ -64,7 +64,7 @@ export default function RegisterModal(props: modalType) {
                   <ModalSubject $backgroundcolor={STUDENT_COLOR[lessonIdx % 10]}>{subject}</ModalSubject>
                 </ScheduleWrapper>
               );
-            })}
+            })}c
         </ModalContentWrapper>
       </ToastModal>
     </>

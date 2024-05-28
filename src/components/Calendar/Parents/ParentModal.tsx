@@ -24,7 +24,7 @@ export default function ParentModal(props: modalType) {
 
               return (
                 <ScheduleWrapper key={idx}>
-                  <StudentColorBox backgroundColor={STUDENT_COLOR[lessonIdx % 10]} />
+                  <StudentColorBox lessonIdx={lessonIdx} />
                   <ModalTime>
                     {startTime} - {endTime}
                   </ModalTime>

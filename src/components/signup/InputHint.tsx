@@ -16,6 +16,6 @@ const StyledText = styled.p<{ color: "red" | "green" }>`
   margin-top: 0.5rem;
   margin-left: 0.2rem;
   color: ${({ color, theme }) =>
-    color === "red" ? theme.colors.sementic_red : theme.colors.green5};
+    color === "red" ? theme.colors.semantic_red : theme.colors.green5};
   ${({ theme }) => theme.fonts.body06};
 `;

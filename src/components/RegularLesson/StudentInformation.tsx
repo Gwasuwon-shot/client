@@ -1,5 +1,5 @@
 import { studentNameSelector, subjectNameSelector } from "../../atom/common/datePicker";
-import { DEEFAULT_STUDENT_COLOR } from "../../core/common/studentColor";
+import { DEFAULT_STUDENT_COLOR } from "../../core/common/studentColor";
 
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
@@ -18,7 +18,7 @@ export default function StudentInformation() {
       </IconWrapper>
       <StudentWrapper>
         <StudentName> {studentName} </StudentName>
-        <SubjectLabel subject={subjectName} backgroundColor={DEEFAULT_STUDENT_COLOR} color="#00997D" />
+        <SubjectLabel subject={subjectName} backgroundColor={DEFAULT_STUDENT_COLOR} color="#00997D" />
       </StudentWrapper>
     </StudentInformationWrapper>
   );

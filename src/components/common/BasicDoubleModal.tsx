@@ -54,6 +54,7 @@ const ModalWrapper = styled.div<{ $position: string | undefined }>`
 
   width: 32rem;
   height: 100vh;
+  margin-top: -4rem;
 
   background-color: rgb(33 37 41 / 60%);
 

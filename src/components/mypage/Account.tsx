@@ -21,7 +21,6 @@ export default function Account() {
   }
 
   return (
-    <>
       <Wrapper>
         <TitleWrapper>
           <TitleText>계정</TitleText>
@@ -41,7 +40,6 @@ export default function Account() {
           )}
         </ContentWrapper>
       </Wrapper>
-    </>
   );
 }
 
