@@ -1,24 +1,24 @@
 import { FunctionComponent } from "react";
 import { styled } from "styled-components";
 
-interface SwiperLayoutProps {
+interface SwipeLayoutProps {
   text: string[];
   img: FunctionComponent<React.SVGProps<SVGSVGElement>>;
 }
 
-export default function SwiperLayout({ text, img }: SwiperLayoutProps) {
+export default function SwipeLayout({ text, img }: SwipeLayoutProps) {
   return (
-    <FirstSwiperContainer>
-      <FirstSwiperTitle>
+    <FirstSwipeContainer>
+      <FirstSwipeTitle>
         {text[0]}
         <br /> <span>{text[1]}</span>
-      </FirstSwiperTitle>
+      </FirstSwipeTitle>
 
       <MockUpImg as={img} />
-    </FirstSwiperContainer>
+    </FirstSwipeContainer>
   );
 }
-const FirstSwiperContainer = styled.div`
+const FirstSwipeContainer = styled.div`
   flex-direction: column;
   position: relative;
   height: 100vh;
@@ -33,7 +33,7 @@ const MockUpImg = styled.div`
   bottom: 0;
 `;
 
-const FirstSwiperTitle = styled.h1`
+const FirstSwipeTitle = styled.h1`
   display: flex;
   height: 50%;
   flex-direction: column;
