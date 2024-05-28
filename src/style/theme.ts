@@ -54,7 +54,7 @@ const colors = {
   bluegrey: "#CFDEE5",
 
   //sementic color
-  sementic_red: "#EC583E",
+  semantic_red: "#EC583E",
 };
 
 export type ColorsTypes = typeof colors;

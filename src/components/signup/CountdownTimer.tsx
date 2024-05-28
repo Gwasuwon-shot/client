@@ -39,5 +39,5 @@ const TimerWrapper = styled.div`
 const Timer = styled.h1`
   margin-right: 1rem;
   font: ${({ theme }) => theme.fonts.body02};
-  color: ${({ theme }) => theme.colors.sementic_red};
+  color: ${({ theme }) => theme.colors.semantic_red};
 `;

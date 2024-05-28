@@ -175,7 +175,7 @@ const SubjectInput = styled.input`
 
 const WarningMessage = styled.h3`
   ${({ theme }) => theme.fonts.body06};
-  color: ${({ theme }) => theme.colors.sementic_red};
+  color: ${({ theme }) => theme.colors.semantic_red};
 `;
 
 const RegisterLessonInputIcon = styled(RegisterLessonInputIc)`
