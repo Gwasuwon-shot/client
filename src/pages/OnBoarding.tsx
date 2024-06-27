@@ -1,14 +1,16 @@
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+
 import { useEffect, useRef, useState } from "react";
 import REACTGA from "react-ga4";
 import { useLocation, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
 import styled from "styled-components";
+
 import { getCookie } from "../api/cookie";
 import { OnBoardingFourImg, OnBoardingOneImg, OnBoardingThreeImg, OnBoardingTwoImg } from "../assets";
-import SwipeLayout from "../components/OnBoarding/SwiperLayout";
 import { BottomButton } from "../components/common";
+import SwipeLayout from "../components/OnBoarding/SwiperLayout";
 import { SLIDER_SETTING } from "../core/OnBoarding";
 
 export default function OnBoarding() {
@@ -65,7 +67,7 @@ export default function OnBoarding() {
           </Slider>
         </SliderWrapper>
       </OnBoardingWrapper>
-      <BottomButton disabled={false} isActive={true} onClick={handleClickBtn}>
+      <BottomButton disabled={false} isActive onClick={handleClickBtn}>
         {isLastSwipe ? "시작하기" : "다음"}
       </BottomButton>
     </>

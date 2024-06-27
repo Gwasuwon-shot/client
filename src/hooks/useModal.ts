@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
+
 import { isModalOpen } from "../atom/common/isModalOpen";
 import { isClickedOutside } from "../utils/common/modal";
 

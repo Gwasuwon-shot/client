@@ -1,5 +1,7 @@
 import axios from "axios";
+
 import { getCookie } from "./cookie";
+
 interface updateScheduleType {
   idx: number;
   date: string;
@@ -14,10 +16,10 @@ export async function updateSchedule(scheduleData: updateScheduleType) {
     `${import.meta.env.VITE_APP_BASE_URL}/api/schedule`,
     {
       schedule: {
-        idx: idx,
-        date: date,
-        startTime: startTime,
-        endTime: endTime,
+        idx,
+        date,
+        startTime,
+        endTime,
       },
     },
     {

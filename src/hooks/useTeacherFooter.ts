@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
+
 import { teacherFooterCategory } from "../atom/teacherFooterCategory";
 import { TEACHER_FOOTER_CATEGORY } from "../core/teacherHome/teacherFooter";
 import { TeacherFooterType } from "../type/teacherHome/teacherFooterType";

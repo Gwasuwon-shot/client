@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
+
 import { updatePaymentRecord } from "../api/updatePaymentRecord";
 import { EditPaymentIc, FruitPaymentIc } from "../assets";
 import { managingStatus } from "../atom/mangeLesson/managingStatus";
@@ -19,8 +20,8 @@ import useGetLessonDetail from "../hooks/useGetLessonDetail";
 import useGetPaymentRecordCycle from "../hooks/useGetPaymentRecordCycle";
 
 export default function RegisterPayment() {
-  const { state } = useLocation(); //paymentIdx
-  const { manageLessonId } = useParams(); //lessonIdx
+  const { state } = useLocation(); // paymentIdx
+  const { manageLessonId } = useParams(); // lessonIdx
   const { studentName, subject } = useGetLessonDetail(Number(manageLessonId));
   // const [student, setStudentName] = useRecoilState<string>(studentNameState);
   // const [subjectName, setSubjectName] = useRecoilState<string>(subjectNameState);
@@ -63,18 +64,18 @@ export default function RegisterPayment() {
   function checkMonthDay(dates: number) {
     if (dates / 10 < 1) {
       return "0" + `${dates}`;
-    } else {
+    } 
       return `${dates}`;
-    }
+    
   }
 
   function checkDate(): string {
     return (
       `${activeDateSlide?.year}` +
-      "-" +
-      checkMonthDay(activeDateSlide?.month) +
-      "-" +
-      checkMonthDay(activeDateSlide?.date)
+      `-${ 
+      checkMonthDay(activeDateSlide?.month) 
+      }-${ 
+      checkMonthDay(activeDateSlide?.date)}`
     );
   }
 
@@ -83,15 +84,14 @@ export default function RegisterPayment() {
   }
 
   return (
-    <>
-      <RegisterPaymentWrapper>
+    <RegisterPaymentWrapper>
         <Title>입금일 등록</Title>
         <StudentNameLabel
           studentName={studentName}
           subject={subject}
           backgroundColor={STUDENT_COLOR[idx % 10]}
           color="#757A80"
-          isBig={true}
+          isBig
         />
         <FruitWrapper>
           <FruitPaymentIcon />
@@ -110,7 +110,7 @@ export default function RegisterPayment() {
           <RoundBottomMiniButton isGreen={false} onClick={handleGoBack}>
             취소
           </RoundBottomMiniButton>
-          <RoundBottomMiniButton isGreen={true} onClick={handleReadyToRegister}>
+          <RoundBottomMiniButton isGreen onClick={handleReadyToRegister}>
             등록하기
           </RoundBottomMiniButton>
         </ButtonWrapper>
@@ -120,7 +120,6 @@ export default function RegisterPayment() {
           </ModalWrapper>
         )}
       </RegisterPaymentWrapper>
-    </>
   );
 }
 

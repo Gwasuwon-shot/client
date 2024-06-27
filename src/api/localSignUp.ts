@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { NewUserDataTypes } from "../type/SignUp/newUserDataType";
 
 export async function newUserPost(newUser: NewUserDataTypes) {

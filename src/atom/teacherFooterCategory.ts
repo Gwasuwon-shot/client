@@ -1,4 +1,5 @@
 import { atom } from "recoil";
+
 import { TEACHER_FOOTER } from "../core/teacherHome/teacherFooter";
 import { TeacherFooterType } from "../type/teacherHome/teacherFooterType";
 

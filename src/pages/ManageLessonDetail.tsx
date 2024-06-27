@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { styled } from "styled-components";
+
 import { attendanceLesson } from "../atom/attendanceCheck/attendanceLesson";
 import { attendanceStatus } from "../atom/attendanceCheck/attendanceStatus";
 import { isSnackBarOpen } from "../atom/common/isSnackBarOpen";
@@ -56,14 +57,14 @@ export default function ManageLessonDetail() {
           </StatusContent>
         );
       default:
-        return;
+        
     }
   }
 
   return (
     <>
       {snackBarOpen && attendanceData.idx !== 0 && (
-        <SnackBarPopup isCheck={true}>
+        <SnackBarPopup isCheck>
           <Comment>
             {selectedLesson.count}회차 수업을 <p>{checkStatus()}</p> 수정 완료했어요.
           </Comment>

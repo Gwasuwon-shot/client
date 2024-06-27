@@ -1,7 +1,9 @@
 import { useState } from "react";
+
 import ShareComplete from "../components/lessonShare/ShareComplete";
 import ShareMain from "../components/lessonShare/ShareMain";
 import SharePreview from "../components/lessonShare/SharePreview";
+
 export interface handleMoveToPageProps {
   handleMoveToPage: (page: string) => void;
 }
@@ -15,10 +17,10 @@ export default function LessonShare() {
 
   switch (shareState) {
     case "M":
-      return <ShareMain handleMoveToPage={handleMoveToPage} />; //0
+      return <ShareMain handleMoveToPage={handleMoveToPage} />; // 0
     case "C":
-      return <ShareComplete handleMoveToPage={handleMoveToPage} />; //25
+      return <ShareComplete handleMoveToPage={handleMoveToPage} />; // 25
     case "P":
-      return <SharePreview handleMoveToPage={handleMoveToPage} />; //50 | 75
+      return <SharePreview handleMoveToPage={handleMoveToPage} />; // 50 | 75
   }
 }

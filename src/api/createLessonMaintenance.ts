@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { getCookie } from "./cookie";
 
 interface createLessonMaintenanceProps {
@@ -12,8 +13,8 @@ export async function createLessonMaintenance(props: createLessonMaintenanceProp
   const data = await axios.post(
     `${import.meta.env.VITE_APP_BASE_URL}/api/lesson/maintenance`,
     {
-      lessonIdx: lessonIdx,
-      isLessonMaintenance: isLessonMaintenance,
+      lessonIdx,
+      isLessonMaintenance,
     },
     {
       headers: {

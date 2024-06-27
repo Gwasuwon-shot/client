@@ -1,6 +1,7 @@
 import Lottie from "lottie-react";
 import { useEffect } from "react";
 import styled from "styled-components";
+
 import { LoadingIc } from "../assets";
 import loading from "../core/common/loading.json";
 
@@ -15,7 +16,7 @@ export default function Loading() {
 
   return (
     <LottieWrapper>
-      <Lottie loop={true} animationData={loading} style={{ width: "55%", height: "55%" }} />
+      <Lottie loop animationData={loading} style={{ width: "55%", height: "55%" }} />
       <LoadingIcon />
     </LottieWrapper>
   );

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
+
 import { parentsFooterCategory } from "../atom/common/parentsFooterCategory";
 import { PARENTS_FOOTER_CATEGORY } from "../core/parentsHome/parentsFooter";
 import { ParentsFooterType } from "../type/parentsHome/ParentsFooterType";

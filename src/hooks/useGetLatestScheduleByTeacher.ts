@@ -1,4 +1,5 @@
 import { useQuery } from "react-query";
+
 import { getLatestScheduleByTeacher } from "../api/getLatestScheduleByTeacher";
 
 export default function useGetLatestScheduleByTeacher() {

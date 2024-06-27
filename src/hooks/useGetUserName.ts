@@ -1,4 +1,5 @@
 import { useQuery } from "react-query";
+
 import { getUserName } from "../api/getUserName";
 
 export default function useGetUserName() {

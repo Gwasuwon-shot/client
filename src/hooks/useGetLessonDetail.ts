@@ -1,4 +1,5 @@
 import { useQuery } from "react-query";
+
 import { getLessonDetail } from "../api/getLessonDetail";
 
 export default function useGetLessonDetail(lessonIdx: number) {

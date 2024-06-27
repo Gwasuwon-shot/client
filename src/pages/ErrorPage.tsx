@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
 import { ErrorShowingIc } from "../assets";
 import RoundBottomButton from "../components/common/RoundBottomButton";
 

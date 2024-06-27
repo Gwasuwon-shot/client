@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { getCookie } from "./cookie";
 
 export async function getAttendanceExist(scheduleIdx: number) {
