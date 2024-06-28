@@ -11,7 +11,7 @@ export default function Loading() {
       window.location.reload();
     }, 8000);
 
-    return () => clearTimeout(timer); // Clean up the timer on component unmount
+    return () => clearTimeout(timer);
   }, []);
 
   return (
