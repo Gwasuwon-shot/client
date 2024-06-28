@@ -9,6 +9,7 @@ import useModal from "../../hooks/useModal";
 import RoundBottomMiniButton from "../common/RoundBottomMiniButton";
 import StudentNameLabel from "../common/StudentNameLabel";
 import ToastModal from "../common/ToastModal";
+import REACTGA from "react-ga4";
 
 interface ExtensionLessonModalProps {
   setIsClickedMainteance: React.Dispatch<React.SetStateAction<boolean>>;
@@ -53,6 +54,10 @@ export default function ExtensionLessonModal(props: ExtensionLessonModalProps) {
     unShowModal();
     setSnackBarOpen(true);
     setIsSuccess(true);
+    REACTGA.event({
+      category: "연장할래요",
+      action: "click extension",
+    });
   }
 
   function handleNotExtensionLesson(info: createLessonMaintenanceProps) {

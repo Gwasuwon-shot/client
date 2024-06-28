@@ -1,7 +1,7 @@
-import { format, isSunday, isToday, getMonth } from "date-fns";
+import { format, getMonth, isSunday, isToday } from "date-fns";
 import styled from "styled-components";
 import { CalendarMoreLessonIc } from "../../../assets/index";
-import { DEEFAULT_STUDENT_COLOR, STUDENT_COLOR } from "../../../core/common/studentColor";
+import { DEFAULT_STUDENT_COLOR, STUDENT_COLOR } from "../../../core/common/studentColor";
 import { DayItemProps } from "../../../type/calendar/dayItemType";
 
 export default function DayItem(props: DayItemProps) {
@@ -25,7 +25,7 @@ export default function DayItem(props: DayItemProps) {
         </DayText>
         <LessonWrapper>
           {temporRegularSchedule?.scheduleList && (
-            <TemporaryScheduleWrapper $backgroundcolor={DEEFAULT_STUDENT_COLOR}>
+            <TemporaryScheduleWrapper $backgroundcolor={DEFAULT_STUDENT_COLOR}>
               {temporRegularSchedule?.scheduleList[0]?.startTime}
               {temporRegularSchedule?.scheduleList[0]?.studentName?.slice(0, 2)}
             </TemporaryScheduleWrapper>

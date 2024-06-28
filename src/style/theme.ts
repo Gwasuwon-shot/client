@@ -25,7 +25,7 @@ const colors = {
   red9: "#EB2706",
   red10: "#D30B00",
 
-  //회색
+  // 회색
   grey0: "#FFFFFF",
   white: "#FFFFFF",
   grey20: "#F8F9FA",
@@ -41,7 +41,7 @@ const colors = {
   grey700: "#45494D",
   grey900: "#212529",
 
-  //캘린더
+  // 캘린더
   yellowGreen: "#D3F1C1",
   lightGreen: "#EAF0A4",
   yellow: "#FFF5A8",
@@ -53,8 +53,8 @@ const colors = {
   blue: "#CCDDFF",
   bluegrey: "#CFDEE5",
 
-  //sementic color
-  sementic_red: "#EC583E",
+  // sementic color
+  semantic_red: "#EC583E",
 };
 
 export type ColorsTypes = typeof colors;

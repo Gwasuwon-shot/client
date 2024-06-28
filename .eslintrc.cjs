@@ -1,13 +1,23 @@
 module.exports = {
   parser: "@typescript-eslint/parser",
-  plugins: ["@typescript-eslint", "prettier"],
+  parserOptions: {
+    ecmaVersion: 2020,
+    sourceType: "module",
+  },
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
+  plugins: ["@typescript-eslint", "prettier", "react", "simple-import-sort"],
   extends: [
     "airbnb",
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:prettier/recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier/@typescript-eslint",
+    "plugin:react/recommended",
+    "prettier",
   ],
   rules: {
     "linebreak-style": 0,
@@ -22,6 +32,7 @@ module.exports = {
     "eol-last": ["error", "always"], // line의 가장 마지막 줄에는 개행 넣기
     "react/react-in-jsx-scope": "off",
     "no-multi-spaces": "error", // 스페이스 여러개 금지
-    "simple-import-sort/imports": "error"
+    "simple-import-sort/imports": "error",
+    "no-use-before-define": ["error", false],
   },
 };

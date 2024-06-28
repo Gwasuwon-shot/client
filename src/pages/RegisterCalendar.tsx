@@ -1,6 +1,7 @@
 import { addMonths, subMonths } from "date-fns";
 import { useState } from "react";
 import styled from "styled-components";
+
 import Dayofweek from "../components/Calendar/Dayofweek";
 import Days from "../components/Calendar/RegisterLesson/Days";
 import YearandMonthRegister from "../components/Calendar/RegisterLesson/YearandMonthRegister";
@@ -16,17 +17,15 @@ export default function RegisterCalendar() {
     setCurrentMonth(addMonths(currentMonth, 1));
   }
   return (
-    <>
-      <CalendarWrapper>
-        <YearandMonthRegister
-          currentMonth={currentMonth}
-          handleToPrevMonth={handleToPrevMonth}
-          handleToNextMonth={handleToNextMonth}
-        />
-        <Dayofweek />
-        <Days currentMonth={currentMonth} />
-      </CalendarWrapper>
-    </>
+    <CalendarWrapper>
+      <YearandMonthRegister
+        currentMonth={currentMonth}
+        handleToPrevMonth={handleToPrevMonth}
+        handleToNextMonth={handleToNextMonth}
+      />
+      <Dayofweek />
+      <Days currentMonth={currentMonth} />
+    </CalendarWrapper>
   );
 }
 

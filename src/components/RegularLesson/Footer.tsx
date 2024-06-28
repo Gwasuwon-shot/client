@@ -18,6 +18,8 @@ import useGetValidateTimesRange from "../../hooks/useGetValidateTimeRange";
 import useModal from "../../hooks/useModal";
 import CreateImpossibleModal from "../modal/CreateImpossibleModal";
 
+import REACTGA from "react-ga4";
+
 export default function Footer() {
   const navigate = useNavigate();
   const { openModal, showModal } = useModal();
@@ -45,6 +47,10 @@ export default function Footer() {
     } else {
       showModal();
     }
+    REACTGA.event({
+      category: "정기 수업 일정 다음 버튼",
+      action: "click",
+    });
   }
 
   return (

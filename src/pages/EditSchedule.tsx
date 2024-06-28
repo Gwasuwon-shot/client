@@ -4,7 +4,7 @@ import EditPageStudentInformation from "../components/EditSchedule/EditPageStude
 import EditPageTime from "../components/EditSchedule/EditPageTime";
 import Header from "../components/EditSchedule/Header";
 
-//캘린더에서 수정을 눌렀을 때 나오는 페이지
+// 캘린더에서 수정을 눌렀을 때 나오는 페이지
 export default function EditSchedule() {
   return (
     <>

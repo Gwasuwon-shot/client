@@ -5,6 +5,8 @@ import { ShareViaKakao } from "../../assets";
 import { studentNameState } from "../../atom/common/datePicker";
 import useGetLessonByUser from "../../hooks/useGetLessonByUser";
 
+import REACTGA from "react-ga4";
+
 interface KakaoShareProp {
   url: string;
 }
@@ -60,6 +62,10 @@ export function KakaoShare(props: KakaoShareProp) {
         ],
       });
     }
+    REACTGA.event({
+      category: "카카오톡으로 공유",
+      action: "Share",
+    });
   }
 
   return (

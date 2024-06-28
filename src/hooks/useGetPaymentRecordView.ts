@@ -1,4 +1,5 @@
 import { useQuery } from "react-query";
+
 import { getPaymentRecordView } from "../api/getPaymentRecordView";
 
 export default function useGetPaymentRecordView(paymentRecordIdx: number) {

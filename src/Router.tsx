@@ -1,8 +1,9 @@
 import * as Sentry from "@sentry/react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
+import { AxiosError } from "axios";
 import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
+import { removeCookie } from "./api/cookie";
 import ConnectParentsAndTeacher from "./components/RegularLesson/ConnectParentsAndTeacher";
 import AfterSignup from "./components/welcomeSignup/AfterSignup";
 import AllowAlert from "./components/welcomeSignup/AllowAlert";
@@ -38,12 +39,17 @@ import TimePickerPage from "./pages/TimePickerPage";
 import TuitionPayment from "./pages/TuitionPayment";
 import WelcomeSignup from "./pages/WelcomeSignup";
 import PrivateRoute from "./utils/common/privateRoute";
+  interface fallbackProps {
+    error: Error;
+    resetError: () => void;
+  }
 
 export default function Router() {
+
   return (
     <BrowserRouter>
       <Sentry.ErrorBoundary fallback={fallbackRender}>
-        <ErrorBoundary FallbackComponent={fallbackRender}>
+        {/* <ErrorBoundary FallbackComponent={fallbackRender}> */}
           <Suspense fallback={<Loading />}>
             <Routes>
               <Route path="/" element={<OnBoarding />} />
@@ -85,20 +91,18 @@ export default function Router() {
               </Route>
             </Routes>
           </Suspense>
-        </ErrorBoundary>
+        {/* </ErrorBoundary> */}
       </Sentry.ErrorBoundary>
     </BrowserRouter>
   );
 }
 
-function fallbackRender({ error, resetErrorBoundary }: any) {
-  // if (error.response) {
-  //   if (error.response.data.code === 401) {
-  //     resetErrorBoundary();
-  //     removeCookie("accessToken");
-  //     return <Navigate to="/" />;
-  //   }
-  // } else {
-  return <ErrorPage resetErrorBoundary={resetErrorBoundary} />;
-  // }
+function fallbackRender({ error, resetError }:fallbackProps) {
+  if ( error instanceof AxiosError && error.response?.status === 401) {
+      resetError();
+      removeCookie("accessToken");
+      return <Navigate to="/" />;
+  } else {
+  return <ErrorPage resetErrorBoundary={resetError} />;
+  }
 }

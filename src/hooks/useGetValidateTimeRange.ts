@@ -1,4 +1,5 @@
 import { useQueries } from "react-query";
+
 import { getValidateTimeRange } from "../api/getValidateTimeRange ";
 
 export default function useGetValidateTimesRange(

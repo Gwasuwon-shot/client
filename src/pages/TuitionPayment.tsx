@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+
 import BankListBottomSheet from "../components/tuitionPayment/BankListBottomSheet";
 import Footer from "../components/tuitionPayment/Footer";
 import Header from "../components/tuitionPayment/Header";

@@ -1,9 +1,10 @@
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import { styled } from "styled-components";
 
 import { useEffect, useRef } from "react";
 import { Navigate } from "react-router-dom";
+import { styled } from "styled-components";
+
 import { getCookie, setCookie } from "../api/cookie";
 import {
   KakaoDefaultLoginIc,

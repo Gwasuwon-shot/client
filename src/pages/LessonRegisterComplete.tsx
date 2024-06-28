@@ -1,7 +1,9 @@
 import { Fragment } from "react";
+import REACTGA from "react-ga4";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
+
 import { CheckLargeIcon } from "../assets";
 import { studentNameState, subjectNameState } from "../atom/common/datePicker";
 import { dateState, dayState } from "../atom/timePicker/timePicker";
@@ -18,6 +20,22 @@ export default function LessonRegisterComplete() {
 
   function onHandleNavigate(path: string) {
     navigate(path);
+  }
+
+  function onClickShareButton() {
+    onHandleNavigate("/lesson-share");
+    REACTGA.event({
+      category: "학부모와 함께 관리",
+      action: "Click",
+    });
+  }
+
+  function onClickJumpButton() {
+    onHandleNavigate("/home");
+    REACTGA.event({
+      category: "건너뛰고 혼자 관리",
+      action: "Click",
+    });
   }
 
   return (
@@ -50,8 +68,8 @@ export default function LessonRegisterComplete() {
         <ButtonLayout
           buttonText="학부모님과 함께 관리하기"
           passText="건너뛰고 혼자 관리하기"
-          onClickButton={() => onHandleNavigate("/lesson-share")}
-          onClickJump={() => onHandleNavigate("/home")}
+          onClickButton={() => onClickShareButton()}
+          onClickJump={() => onClickJumpButton()}
         />
       </ButtonWrapper>
     </>
