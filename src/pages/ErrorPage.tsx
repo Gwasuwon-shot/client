@@ -31,7 +31,7 @@ export default function ErrorPage(prop: ErrorProps) {
         변경 혹은 삭제되어 페이지를 찾을 수 없어요
       </ErrorSub>
       <ButtonWrapper>
-        <RoundBottomButton buttonMessage="홈으로 가기" handleClick={handleMoveToHome} />
+        <RoundBottomButton buttonMessage="홈으로 가기" handleClick={() => handleMoveToHome} />
       </ButtonWrapper>
     </ErrorWrapper>
   );
