@@ -1,6 +1,7 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
+
 import { studentNameState } from "../atom/common/datePicker";
 import { lessonCodeAndPaymentId } from "../atom/tuitionPayment/tuitionPayment";
 import CommonBackButton from "../components/common/CommonBackButton";
@@ -18,7 +19,7 @@ export default function LessonInfo() {
   function moveToLinkShare() {
     setCodeAndId({
       ...codeAndId,
-      lessonCode: lessonCode,
+      lessonCode,
       lessonidx: idx,
     });
     setStudentNameForLinkShare(studentName);

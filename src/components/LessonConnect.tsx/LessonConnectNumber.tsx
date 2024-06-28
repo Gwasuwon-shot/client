@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
+
 import { parentsPhoneState } from "../../atom/registerLesson/registerLesson";
 import { BUTTON_TEXT } from "../../core/signup/signUpTextLabels";
 import useFormattedPhoneNumber from "../../hooks/signupLogin/usePhoneNumberFormat";

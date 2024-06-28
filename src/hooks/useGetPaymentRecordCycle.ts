@@ -1,4 +1,5 @@
 import { useQuery } from "react-query";
+
 import { getPaymentRecordCycle } from "../api/getPaymentRecordCycle";
 
 export default function useGetPaymentRecordCycle(paymentIdx: number) {

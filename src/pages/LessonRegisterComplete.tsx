@@ -1,14 +1,14 @@
 import { Fragment } from "react";
+import REACTGA from "react-ga4";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
+
 import { CheckLargeIcon } from "../assets";
 import { studentNameState, subjectNameState } from "../atom/common/datePicker";
 import { dateState, dayState } from "../atom/timePicker/timePicker";
 import ButtonLayout from "../components/welcomeSignup/ButtonLayout";
 import { STUDENT_COLOR } from "../core/common/studentColor";
-
-import REACTGA from "react-ga4";
 
 export default function LessonRegisterComplete() {
   const navigate = useNavigate();

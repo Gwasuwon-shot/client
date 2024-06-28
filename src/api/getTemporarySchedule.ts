@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { getCookie } from "./cookie";
 
 interface Day {
@@ -21,11 +22,11 @@ export async function getTemporarySchedule(props: temporaryProp) {
   const data = await axios.post(
     `${import.meta.env.VITE_APP_BASE_URL}/api/schedule/temporary`,
     {
-      studentName: studentName,
-      subject: subject,
-      count: count,
-      startDate: startDate,
-      regularScheduleList: regularScheduleList,
+      studentName,
+      subject,
+      count,
+      startDate,
+      regularScheduleList,
     },
     {
       headers: {

@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { RegisterPaymentTpye } from "../type/manageLesson/registerPaymentType";
 import { getCookie } from "./cookie";
 

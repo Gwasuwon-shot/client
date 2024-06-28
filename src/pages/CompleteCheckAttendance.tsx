@@ -1,8 +1,10 @@
 import Lottie from "lottie-react";
 import { useEffect, useState } from "react";
+import REACTGA from "react-ga4";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
+
 import { attendanceLesson } from "../atom/attendanceCheck/attendanceLesson";
 import { attendanceStatus } from "../atom/attendanceCheck/attendanceStatus";
 import { isModalOpen } from "../atom/common/isModalOpen";
@@ -17,19 +19,18 @@ import { ATTENDANCE_STATUS } from "../core/common/attendanceStatus";
 import { STUDENT_COLOR } from "../core/common/studentColor";
 import useModal from "../hooks/useModal";
 import useTeacherFooter from "../hooks/useTeacherFooter";
-import REACTGA from "react-ga4";
 
 export default function CompleteCheckAttendance() {
   const { state } = useLocation();
   const { isLastCount, attendanceSchedule } = state;
   const { date, dayOfWeek } = attendanceSchedule;
   const [attendanceDate, setAttendanceDate] = useState(
-    new Date(date).getFullYear() +
-      "년 " +
-      Number(new Date(date).getMonth() + 1) +
-      "월 " +
-      new Date(date).getDate() +
-      "일 ",
+    `${new Date(date).getFullYear() 
+      }년 ${ 
+      Number(new Date(date).getMonth() + 1) 
+      }월 ${ 
+      new Date(date).getDate() 
+      }일 `,
   );
   const [attendanceData, setAttendanceData] = useRecoilState(attendanceStatus);
   const navigate = useNavigate();
@@ -102,7 +103,7 @@ export default function CompleteCheckAttendance() {
             <RoundBottomMiniButton isGreen={false} onClick={handleMoveToHome}>
               확인
             </RoundBottomMiniButton>
-            <RoundBottomMiniButton isGreen={true} onClick={handleOpenSendAlarmModal}>
+            <RoundBottomMiniButton isGreen onClick={handleOpenSendAlarmModal}>
               학부모 알림 전송
             </RoundBottomMiniButton>
           </ButtonWrapper>

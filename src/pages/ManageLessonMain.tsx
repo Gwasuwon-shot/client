@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
+
 import { AddTreeCodeButtonManageIc } from "../assets";
 import { attendanceStatus } from "../atom/attendanceCheck/attendanceStatus";
 import { isModalOpen } from "../atom/common/isModalOpen";
@@ -39,7 +40,7 @@ export default function ManageLessonMain() {
   }, []);
 
   function finsihedLessons() {
-    let teacherLessonList = lessonList.filter((element: lessonListType) => {
+    const teacherLessonList = lessonList.filter((element: lessonListType) => {
       element.isFinished !== false;
     });
     return teacherLessonList;

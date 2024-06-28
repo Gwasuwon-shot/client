@@ -1,4 +1,5 @@
 import { useQuery } from "react-query";
+
 import { getLessonProgress } from "../api/getLessonProgress";
 
 export default function useGetLessonProgress(lessonIdx: number) {

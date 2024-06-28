@@ -33,18 +33,18 @@ export async function createLesson(props: createLessonProps) {
     `/api/lesson`,
     {
       lesson: {
-        studentName: studentName,
-        subject: subject,
-        payment: payment,
-        amount: amount,
-        count: count,
-        startDate: startDate,
-        regularScheduleList: regularScheduleList,
+        studentName,
+        subject,
+        payment,
+        amount,
+        count,
+        startDate,
+        regularScheduleList,
       },
       account: {
         // name: name,
-        bank: bank,
-        number: number,
+        bank,
+        number,
       },
     },
     {

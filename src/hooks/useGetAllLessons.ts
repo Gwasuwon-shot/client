@@ -1,4 +1,5 @@
 import { useQuery } from "react-query";
+
 import { getLessonByTeacher } from "../api/getLessonByTeacher";
 
 export default function useGetAllLessons() {
