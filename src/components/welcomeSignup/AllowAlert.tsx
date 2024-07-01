@@ -25,6 +25,7 @@ interface lessonListType {
 }
 
 //알림 활성화뷰
+// TODO 확인 후 삭제할 페이지
 export default function AllowAlert() {
   const userRole = useRecoilValue(userRoleData);
   const navigate = useNavigate();
@@ -34,8 +35,7 @@ export default function AllowAlert() {
   const [lessonInfo, setLessonInfo] = useState<lessonListType[]>();
 
   const MAIN_TEXT = `쉬운 관리를 위해\n알림을 활성화 해보세요 `;
-  const SUB_TEXT =
-    "푸시알림을 활성화를 통해 출결,\n수업비 관리 도움을 받을 수 있어요";
+  const SUB_TEXT = "푸시알림을 활성화를 통해 출결,\n수업비 관리 도움을 받을 수 있어요";
 
   async function checkIfLessonExists() {
     const data = await getLessonByTeacher();
@@ -66,9 +66,7 @@ export default function AllowAlert() {
   }
 
   useEffect(() => {
-    deviceToken?.token !== "" &&
-      deviceToken?.token !== undefined &&
-      patchingDeviceToken(deviceToken?.token);
+    deviceToken?.token !== "" && deviceToken?.token !== undefined && patchingDeviceToken(deviceToken?.token);
   }, [deviceToken]);
 
   // 디바이브 토큰 가져오기
@@ -89,7 +87,7 @@ export default function AllowAlert() {
       console.log(err);
     },
   });
-  
+
   function handleMoveToHome() {
     if (userRole == "선생님") {
       lessonInfo && lessonInfo.length ? navigate("/home") : navigate("/tree");
