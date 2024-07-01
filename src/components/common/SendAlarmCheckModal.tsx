@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
+import { SubjectLabel } from ".";
 import { requestAttendanceNotification } from "../../api/requestAttendanceNotification";
 import { attendanceStatus } from "../../atom/attendanceCheck/attendanceStatus";
 import { agreeSend } from "../../atom/common/agreeSend";
@@ -13,7 +14,6 @@ import useModal from "../../hooks/useModal";
 import useTeacherFooter from "../../hooks/useTeacherFooter";
 import ParentsDisabledAlarmModal from "../modal/ParentsDisabledAlarmModal";
 import RoundBottomMiniButton from "./RoundBottomMiniButton";
-import SubjectLabel from "./SubjectLabel";
 import ToastModal from "./ToastModal";
 
 interface SendAlarmCheckModalProps {
@@ -26,18 +26,17 @@ interface SendAlarmCheckModalProps {
 
 export default function SendAlarmCheckModal(props: SendAlarmCheckModalProps) {
   const { idx, studentName, subject, count, scheduleIdx } = props;
-  const [isClassExist, setIsClassExist] = useState(true);
-  const { modalRef, closeModal, unShowModal, showModal } = useModal();
+  const { unShowModal } = useModal();
   const navigate = useNavigate();
   const [isDisabledModalOpen, setIsDisabledModalOpen] = useState(false);
+  const [errMsg, setErrMsg] = useState<string>();
   const { handleMoveToPage } = useTeacherFooter();
   const [isAgreeSend, setIsAgreeSend] = useRecoilState<undefined | string>(agreeSend);
-  const [snackBarOpen, setSanckBarOpen] = useRecoilState(isSnackBarOpen);
-  const [attendanceData, setAttendanceData] = useRecoilState(attendanceStatus);
+  const setSnackBarOpen = useSetRecoilState(isSnackBarOpen);
+  const setAttendanceData = useSetRecoilState(attendanceStatus);
 
   function handleMoveToHomeWithoutAlarm() {
     unShowModal();
-    // handleMoveToPage(TEACHER_FOOTER_CATEGORY.home);
     navigate(-1);
   }
 
@@ -50,15 +49,17 @@ export default function SendAlarmCheckModal(props: SendAlarmCheckModalProps) {
       onSuccess: (res) => {
         if (res.data.message === "학부모에게 출결알람 보내기 성공") {
           handleMoveToHomeWithoutAlarm();
-          // setIsAgreeSend(undefined);
-          setSanckBarOpen(true);
+          setSnackBarOpen(true);
           setAttendanceData({ idx: 0, status: "" });
+          console.log(sendAlarm);
         }
       },
       onError: (error: any) => {
-        if (error?.response?.data?.message === "레슨에 학부모가 연결되지 않았습니다.") {
-          setIsDisabledModalOpen(true);
+        console.log(error);
+        if (error?.response?.data?.message) {
+          setErrMsg(error?.response?.data?.message);
         }
+        setIsDisabledModalOpen(true);
       },
       enabled: !!isAgreeSend,
       suspense: false,
@@ -68,7 +69,7 @@ export default function SendAlarmCheckModal(props: SendAlarmCheckModalProps) {
 
   function handleSendAlarm() {
     setIsAgreeSend("true");
-    queryClient.invalidateQueries("requestAttendanceNotification");
+    queryClient.invalidateQueries(["requestAttendanceNotification"]);
   }
 
   function handleCloseModal() {
@@ -81,7 +82,7 @@ export default function SendAlarmCheckModal(props: SendAlarmCheckModalProps) {
     <>
       {isDisabledModalOpen && (
         <ParentsDisabledAlarmModalWrapper>
-          <ParentsDisabledAlarmModal handleCloseModal={handleCloseModal} />
+          <ParentsDisabledAlarmModal handleCloseModal={handleCloseModal} errMsg={errMsg} />
         </ParentsDisabledAlarmModalWrapper>
       )}
       <ToastModal>
@@ -129,6 +130,7 @@ const StudentNameWrapper = styled.h1`
 `;
 
 const Content = styled.p`
+  margin: 0 0.2rem;
   color: ${({ theme }) => theme.colors.grey900};
   ${({ theme }) => theme.fonts.body02};
 `;
@@ -138,7 +140,7 @@ const ContentWrapper = styled.article`
   justify-content: center;
   align-items: center;
 
-  /* width: 18.7rem; */
+  width: 18.7rem;
   margin-bottom: 1rem;
 `;
 

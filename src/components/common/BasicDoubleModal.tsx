@@ -52,8 +52,8 @@ const ModalWrapper = styled.div<{ $position: string | undefined }>`
   flex-direction: column;
   z-index: 3;
 
-  width: 32rem;
-  height: 100vh;
+  width: 33rem;
+  height: 109vh;
   margin-top: -4rem;
 
   background-color: rgb(33 37 41 / 60%);
