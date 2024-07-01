@@ -3,26 +3,24 @@ import BasicSingleModal from "../common/BasicSingleModal";
 
 interface ParentsDisabledAlarmModalProp {
   handleCloseModal(): void;
+  errMsg?: string;
 }
 
 export default function ParentsDisabledAlarmModal(props: ParentsDisabledAlarmModalProp) {
-  const { handleCloseModal } = props;
+  const { handleCloseModal, errMsg } = props;
 
   return (
     <BasicSingleModal buttonName="확인" handleClickSingleButton={handleCloseModal}>
-      <CancleImpossibleTitle>
-        푸쉬알림 상대가
-        <br />
-        알림을 허용하지 않았습니다
-      </CancleImpossibleTitle>
+      <CancelImpossibleTitle>{errMsg}</CancelImpossibleTitle>
     </BasicSingleModal>
   );
 }
 
-const CancleImpossibleTitle = styled.h1`
+const CancelImpossibleTitle = styled.h1`
   display: flex;
   justify-content: center;
   text-align: center;
+  width: 50%;
 
   ${({ theme }) => theme.fonts.body02};
 `;
