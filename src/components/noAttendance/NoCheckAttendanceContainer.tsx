@@ -30,13 +30,13 @@ interface ScheduleData {
   expectedCount: number;
 }
 
-interface NoCheckAttendanceContanierProps {
+interface NoCheckAttendanceContainerProps {
   lesson: LessonData;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   schedule: scheduleType;
 }
 
-export default function NoCheckAttendanceContanier(props: NoCheckAttendanceContanierProps) {
+export default function NoCheckAttendanceContainer(props: NoCheckAttendanceContainerProps) {
   const { setOpenModal, lesson, schedule } = props;
   const { idx, studentName, subject } = lesson;
   const { startTime, endTime, expectedCount } = schedule;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { updateScheduleAttendance } from "../../api/updateScheduleAttendance";
 import { attendanceStatus } from "../../atom/attendanceCheck/attendanceStatus";
@@ -16,7 +16,7 @@ interface AttendanceDoubleCheckingModalProps {
 export default function AttendanceDoubleCheckingModal(props: AttendanceDoubleCheckingModalProps) {
   const { setIsCheckingModalOpen } = props;
   const navigate = useNavigate();
-  const [attendanceData, setAttendanceData] = useRecoilState(attendanceStatus);
+  const attendanceData = useRecoilValue(attendanceStatus);
   const [isImpossibleModalOpen, setIsImpossibleModalOpen] = useState(false);
 
   function handleBackToCheckAttendance() {
@@ -28,9 +28,7 @@ export default function AttendanceDoubleCheckingModal(props: AttendanceDoubleChe
       navigate("/complete-check-attendance", { state: ATTENDANCE_CHECK_RESPONSE });
     },
     onError: () => {
-      // if (err?.response?.data?.message) {
       setIsImpossibleModalOpen(true);
-      // }
     },
   });
 

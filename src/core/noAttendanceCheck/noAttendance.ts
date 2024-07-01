@@ -5,7 +5,7 @@ export const NO_ATTENDNACE_CHECK = {
     missingAttendanceDateList: [
       {
         date: "2023-07-07",
-        missingAttedanceScheduleList: [
+        missingAttendanceScheduleList: [
           {
             lesson: {
               idx: 2,
@@ -36,7 +36,7 @@ export const NO_ATTENDNACE_CHECK = {
       },
       {
         date: "2023-07-10",
-        missingAttedanceScheduleList: [
+        missingAttendanceScheduleList: [
           {
             lesson: {
               idx: 2,
