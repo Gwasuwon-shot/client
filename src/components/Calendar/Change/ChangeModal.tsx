@@ -6,18 +6,24 @@ import styled from "styled-components";
 import { deleteSchedule } from "../../../api/calendar/deleteSchedule";
 import { removeTrashCan } from "../../../assets";
 import { STUDENT_COLOR } from "../../../core/common/studentColor";
+import { TEACHER_FOOTER_CATEGORY } from "../../../core/teacherHome/teacherFooter";
 import useGetScheduleByUser from "../../../hooks/useGetScheduleByUser";
 import useModal from "../../../hooks/useModal";
+import useTeacherFooter from "../../../hooks/useTeacherFooter";
 import { modalType } from "../../../type/calendar/modalType";
 import { BasicDoubleModal } from "../../common";
 import StudentColorBox from "../../common/StudentColorBox";
 import ToastModal from "../../common/ToastModal";
+import ParentsDisabledAlarmModal from "../../modal/ParentsDisabledAlarmModal";
 import EditScheduleButton from "./EditScheduleButton";
 
 export default function ChangeModal(props: modalType) {
   const { selectedDate, setOpenModal, formattedMonth } = props;
+  const [isDisabledModalOpen, setIsDisabledModalOpen] = useState(false);
   const WEEKDAY: string[] = ["일", "월", "화", "수", "목", "금", "토"]; //TODO 이거 함수로 빼기
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const { isUserSchedule } = useGetScheduleByUser(formattedMonth);
+  const { handleMoveToPage } = useTeacherFooter();
   const queryClient = useQueryClient();
   const { unShowModal } = useModal();
 
@@ -41,8 +47,12 @@ export default function ChangeModal(props: modalType) {
       setModalOn(false);
       unShowModal();
     },
-    onError: () => {
-      alert("일정 삭제에 실패했습니다.");
+
+    onError: (error: any) => {
+      setIsDisabledModalOpen(true);
+      if (error?.response?.data?.message) {
+        setErrorMessage(error?.response?.data?.message);
+      }
     },
   });
 
@@ -55,8 +65,19 @@ export default function ChangeModal(props: modalType) {
     setIsEdit(true);
   }
 
+  function handleCloseModal() {
+    setIsDisabledModalOpen(false);
+    unShowModal();
+    handleMoveToPage(TEACHER_FOOTER_CATEGORY.home);
+  }
+
   return (
     <>
+      {isDisabledModalOpen && (
+        <ParentsDisabledAlarmModalWrapper>
+          <ParentsDisabledAlarmModal handleCloseModal={handleCloseModal} errMsg={errorMessage} />
+        </ParentsDisabledAlarmModalWrapper>
+      )}
       {modalOn && (
         <ConfirmModalWrapper>
           <BasicDoubleModal
@@ -65,7 +86,7 @@ export default function ChangeModal(props: modalType) {
             handleClickLeftButton={() => setModalOn(false)}
             handleClickRightButton={() => deleteScheduleStatus()}>
             <ContentWrapper>
-              {modalContents.year}년 {modalContents.month}월 {modalContents.day}일 {modalContents.dayOfWeekKor}요일{" "}
+              {modalContents.year}년 {modalContents.month}월 {modalContents.day}일 {modalContents.dayOfWeekKor}요일
               <br />
               {modalContents.startTime} - {modalContents.endTime} <br /> {modalContents.studentName}(
               {modalContents.subject}
@@ -228,4 +249,9 @@ const ConfirmModalWrapper = styled.div`
   width: 100vw;
   height: 100%;
   position: absolute;
+`;
+
+const ParentsDisabledAlarmModalWrapper = styled.div`
+  position: fixed;
+  z-index: 7;
 `;

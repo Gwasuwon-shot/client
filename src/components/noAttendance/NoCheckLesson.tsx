@@ -6,7 +6,7 @@ import { isModalOpen } from "../../atom/common/isModalOpen";
 import useGetMissingAttendanceSchedule from "../../hooks/useGetMissingAttendanceSchedule";
 import AttendanceCheckModal from "../common/AttendanceCheckModal";
 import AttendanceDoubleCheckingModal from "../common/AttendanceDoubleCheckingModal";
-import NoCheckAttendanceContanier from "./NoCheckAttendanceContanier";
+import NoCheckAttendanceContainer from "./NoCheckAttendanceContainer";
 
 interface LessonNScheduleData {
   lessonIdx: number;
@@ -47,16 +47,20 @@ export default function NoCheckLesson() {
       <NoAttendanceWrapper>
         {missingAttendanceSchedule &&
           missingAttendanceSchedule?.map(
-            ({ date, dayOfWeek, missingAttedanceScheduleList }: MissingAttendanceData, idx: number) => {
+            ({ date, dayOfWeek, missingAttedanceScheduleList }: MissingAttendanceData, index: number) => {
               return (
-                // TODO: unique key 에러 확인해보기
-                <NoAttendanceContainer key={idx}>
+                <NoAttendanceContainer key={index}>
                   <NoAttendanceDate>
                     {new Date(date).getMonth() + 1}월 {new Date(date).getDate()}일 ({dayOfWeek})
                   </NoAttendanceDate>
                   {missingAttedanceScheduleList?.map(({ lesson, schedule }) => {
                     return (
-                      <NoCheckAttendanceContanier lesson={lesson} schedule={schedule} setOpenModal={setOpenModal} />
+                      <NoCheckAttendanceContainer
+                        key={lesson.idx}
+                        lesson={lesson}
+                        schedule={schedule}
+                        setOpenModal={setOpenModal}
+                      />
                     );
                   })}
                 </NoAttendanceContainer>

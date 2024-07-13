@@ -56,9 +56,10 @@ const ModalWrapper = styled.div`
   position: fixed;
   z-index: 2;
 
-  width: 32rem;
-  height: 100dvh;
+  width: 33rem;
+  height: 104vh;
 
+  margin-top: -4rem;
   background-color: rgb(33 37 41 / 60%);
 
   cursor: pointer;
@@ -71,7 +72,7 @@ const Modal = styled.aside`
 
   width: 32rem;
   /* TODO 이 패딩이 버튼 세개인 모달에 맞는 패딩 */
-  padding: 1.6rem 1.4rem 4.5rem;
+  padding: 1.6rem 1.8rem 4.5rem;
   padding-top: 1.6rem;
 
   background-color: ${({ theme }) => theme.colors.white};
